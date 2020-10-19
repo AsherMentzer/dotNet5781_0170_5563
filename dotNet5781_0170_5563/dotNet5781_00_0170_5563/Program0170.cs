@@ -18,8 +18,8 @@ namespace dotNet5781_00_0170_5563
         private static void welcome0170()
         {
             Console.Write("Enter your name: ");
-            string name0 = Console.ReadLine();
-            Console.WriteLine("{0}, welcome to my first console application", name0);
+            string name = Console.ReadLine();
+            Console.WriteLine("{0} , welcome to my first console application",name);
         }
     }
 }
