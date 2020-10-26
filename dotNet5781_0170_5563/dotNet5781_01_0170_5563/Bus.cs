@@ -13,9 +13,11 @@ namespace Bus
         public int Kilometrage;
         bool dangerous;
         int fuel;
-        int kmAfterBusFixing;
+        int kmAfterBusFixing=20000;
         DateTime lastFix;
-        
+
+        public int Fuel { get; set; }
+        public int KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
         public Bus(string id, int year, int month, int day)
         {
             Id = id;
