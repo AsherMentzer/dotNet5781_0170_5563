@@ -16,7 +16,7 @@ namespace dotNet5781_01_0170_5563
         static void Main(string[] args)
         {
             // List<Bus> buses = new List<Bus>();
-            BusesFleetManagement b1= new BusesFleetManagement();
+            BusesFleetManagement fleet= new BusesFleetManagement();
             int choice;
             do
             {
@@ -34,12 +34,13 @@ namespace dotNet5781_01_0170_5563
                     case Menu.exit:
                         break;
                     case Menu.addBus:
-                      b1.addBus();
+                      fleet.addBus();
                         break;
                     case Menu.chooseBus:
-                        b1.chooseBusToTravel();
+                        fleet.chooseBusToTravel();
                         break;
                     case Menu.fuelBusOrfixBus:
+                        fleet.fuelOrFixBus();
                         break;
                     case Menu.showKmFromLastFix:
                         break;
@@ -50,9 +51,7 @@ namespace dotNet5781_01_0170_5563
             while (choice != 0);
 
 
-            Bus b1=new Bus("hello",1990,01,06);
-            b1.Id = b1.Id.Insert(3,"-");
-            Console.WriteLine(b1.Id);
+        
             Console.ReadKey();
         }
     }

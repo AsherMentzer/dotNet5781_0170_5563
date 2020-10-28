@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,22 @@ namespace Bus
 {
     public class Bus
     {
-        public string Id;
-        DateTime ActiveDate;
-        public int Kilometrage;
-        bool dangerous;
-        int fuel;
-        int kmAfterBusFixing=20000;
-        DateTime lastFix;
-
-        public int Fuel { get; set; }
-        public int KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
+        ///fields
+        private string Id;
+        private DateTime ActiveDate;
+        private int kilometrage;
+        private bool dangerous;
+        private int fuel;
+        private int kmAfterBusFixing=20000;
+        private DateTime lastFix;
+        ///properties
+        public string GetId{get=>Id;}
+        public DateTime active{get=>ActiveDate;}
+        public int Kilometrage{get=>kilometrage;private set=>kilometrage=value;}
+        public int Fuel { get=>fuel; set=>fuel=value; }
+        public int KmForTravel { get=>kmAfterBusFixing; set=>kmAfterBusFixing=value; }
+        public DateTime LastFix{get=>lastFix;set=>lastFix=value;}
+        //constructor
         public Bus(string id, int year, int month, int day)
         {
             Id = id;
@@ -25,18 +32,4 @@ namespace Bus
             lastFix = new DateTime(year, month, day);
         }
     }
-
-    //class Date
-    //{
-    //    int Year;
-    //    int Month;
-    //    int Day;
-
-    //    public Date(int y, int m, int d)
-    //    {
-    //        Year = y;
-    //        Month = m;
-    //        Day = d;
-    //    }
-    //}
 }
