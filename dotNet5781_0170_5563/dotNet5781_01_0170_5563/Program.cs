@@ -11,6 +11,7 @@ namespace dotNet5781_01_0170_5563
     
     class Program
     {
+        
         public enum Menu {exit,addBus,chooseBus,fuelBusOrfixBus,showKmFromLastFix};
    
         static void Main(string[] args)
@@ -34,15 +35,16 @@ namespace dotNet5781_01_0170_5563
                     case Menu.exit:
                         break;
                     case Menu.addBus:
-                      fleet.addBus();
+                      fleet.AddBus();
                         break;
                     case Menu.chooseBus:
-                        fleet.chooseBusToTravel();
+                        fleet.ChooseBusToTravel();
                         break;
                     case Menu.fuelBusOrfixBus:
-                        fleet.fuelOrFixBus();
+                        fleet.FuelOrFixBus();
                         break;
                     case Menu.showKmFromLastFix:
+                        fleet.ShowKmFromLastFix();
                         break;
                     default:
                         break;
