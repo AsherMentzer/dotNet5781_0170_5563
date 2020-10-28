@@ -20,7 +20,7 @@ namespace Bus
         ///properties
         public string GetId{get=>Id;}
         public DateTime active{get=>ActiveDate;}
-        public int Kilometrage{get=>kilometrage;private set=>kilometrage=value;}
+        public int Kilometrage{get=>kilometrage; set=>kilometrage=value;}
         public int Fuel { get=>fuel; set=>fuel=value; }
         public int KmForTravel { get=>kmAfterBusFixing; set=>kmAfterBusFixing=value; }
         public DateTime LastFix{get=>lastFix;set=>lastFix=value;}

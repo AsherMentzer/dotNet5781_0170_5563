@@ -11,10 +11,12 @@ namespace dotNet5781_01_0170_5563
     
     class Program
     {
+     
         public enum Menu {exit,addBus,chooseBus,fuelBusOrfixBus,showKmFromLastFix};
    
         static void Main(string[] args)
         {
+            Console.WriteLine(tostring(DateTime.Now.Year)); 
             // List<Bus> buses = new List<Bus>();
             BusesFleetManagement fleet= new BusesFleetManagement();
             int choice;
