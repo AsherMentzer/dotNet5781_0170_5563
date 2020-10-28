@@ -6,28 +6,37 @@ using System.Threading.Tasks;
 
 namespace Bus
 {
-    class Bus
+    public class Bus
     {
         public string Id;
-        public readonly DateTime ActiveDate;
+        DateTime ActiveDate;
         public int Kilometrage;
         bool dangerous;
         int fuel;
-        int kmAfterBusFixing;
+        int kmAfterBusFixing=20000;
         DateTime lastFix;
 
-        public Bus(string id, int day, int month, int year)
+        public int Fuel { get; set; }
+        public int KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
+        public Bus(string id, int year, int month, int day)
         {
             Id = id;
-            int[] gap = new int[] { 2, 6 };
-            if (Id.Length == 8)
-            {
-                gap[0] = 3;
-            }
-            Id = Id.Insert(gap[0], "-");
-            Id = Id.Insert(gap[1], "-");
             ActiveDate = new DateTime(year, month, day);
             lastFix = new DateTime(year, month, day);
         }
     }
+
+    //class Date
+    //{
+    //    int Year;
+    //    int Month;
+    //    int Day;
+
+    //    public Date(int y, int m, int d)
+    //    {
+    //        Year = y;
+    //        Month = m;
+    //        Day = d;
+    //    }
+    //}
 }
