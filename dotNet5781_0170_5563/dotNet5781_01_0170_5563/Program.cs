@@ -8,17 +8,16 @@ namespace dotNet5781_01_0170_5563
 {
     using Bus;
     //using BusesFleetManagement;
-    
+
     class Program
     {
-     
-        public enum Menu {exit,addBus,chooseBus,fuelBusOrfixBus,showKmFromLastFix};
-   
+
+        public enum Menu { exit, addBus, chooseBus, fuelBusOrfixBus, showKmFromLastFix };
+
         static void Main(string[] args)
         {
-            Console.WriteLine(tostring(DateTime.Now.Year)); 
             // List<Bus> buses = new List<Bus>();
-            BusesFleetManagement fleet= new BusesFleetManagement();
+            BusesFleetManagement fleet = new BusesFleetManagement();
             int choice;
             do
             {
@@ -27,7 +26,7 @@ namespace dotNet5781_01_0170_5563
                 Console.WriteLine("3: fix or fuel a bus");
                 Console.WriteLine("4: show how much km all the buses traveled from last fix");
                 Console.WriteLine("0: exit");
-               
+
                 while (!int.TryParse(Console.ReadLine(), out choice))
                     Console.WriteLine("Wrong input, enter a number again:");
 
@@ -36,15 +35,16 @@ namespace dotNet5781_01_0170_5563
                     case Menu.exit:
                         break;
                     case Menu.addBus:
-                      fleet.addBus();
+                        fleet.AddBus();
                         break;
                     case Menu.chooseBus:
-                        fleet.chooseBusToTravel();
+                        fleet.ChooseBusToTravel();
                         break;
                     case Menu.fuelBusOrfixBus:
-                        fleet.fuelOrFixBus();
+                        fleet.FuelOrFixBus();
                         break;
                     case Menu.showKmFromLastFix:
+                        fleet.ShowKmFromLastFix();
                         break;
                     default:
                         break;
@@ -53,7 +53,7 @@ namespace dotNet5781_01_0170_5563
             while (choice != 0);
 
 
-        
+
             Console.ReadKey();
         }
     }
