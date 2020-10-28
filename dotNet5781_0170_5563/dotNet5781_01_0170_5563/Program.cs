@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_0170_5563
 {
-    using Bus;
     class Program
     {
 

@@ -9,11 +9,9 @@ using System.Text.RegularExpressions;
 
 namespace dotNet5781_01_0170_5563
 {
-    using Bus;
- 
-
     public class BusesFleetManagement
     {
+
 
         static Random rand = new Random(DateTime.Now.Millisecond);
 
@@ -33,7 +31,7 @@ namespace dotNet5781_01_0170_5563
                 Console.Write("year: ");
                 while (!int.TryParse(Console.ReadLine(), out year))
                     Console.WriteLine("enter numbers only");
-                valid = checkInput(1950, DateTime.Now.Year, year) ;
+                valid = checkInput(1950, DateTime.Now.Year, year);
             } while (!valid);
 
             do
@@ -51,22 +49,76 @@ namespace dotNet5781_01_0170_5563
                 Console.Write("day: ");
                 while (!int.TryParse(Console.ReadLine(), out day))
                     Console.WriteLine("enter numbers only");
-                valid = checkInput(1, DateTime.DaysInMonth(year,month), day);
+                valid = checkInput(1, DateTime.DaysInMonth(year, month), day);
             } while (!valid);
 
             string id = InputId(year);
 
             foreach (Bus b in buses)
             {
-                if(b.GetId == id)
+                if (b.GetId == id)
                 {
                     Console.WriteLine("the bus is in fleet already");
                     return;
                 }
             }
 
-            Bus b1 = new Bus(id, year, month, day);
+            Console.WriteLine("if the bus is new press: 1\n if the bus is old press 2 ");
+            int condition;
+            while (!int.TryParse(Console.ReadLine(), out condition))
+                Console.WriteLine("enter 1 or 2 only");
+            Bus b1;
+            if (condition == 1)
+            {
+                b1 = new Bus(id, year, month, day);
+                buses.Add(b1);
+                return;
+            }
+
+            bool check;
+            double kilometrage, fuel, km;
+            do
+            {
+                check = false;
+                Console.WriteLine("enter the kilometrage of the bus");
+                while (!double.TryParse(Console.ReadLine(), out kilometrage))
+                    Console.WriteLine("enter number only");
+                check = checkInput(0, double.MaxValue, kilometrage);
+            } while (!check);
+
+            do
+            {
+                check = false;
+                Console.WriteLine("enter the amount of fuel in the tank ");
+                while (!double.TryParse(Console.ReadLine(), out fuel))
+                    Console.WriteLine("enter number only");
+                check = checkInput(0, 1200, fuel);
+            } while (!check);
+
+            do
+            {
+                check = false;
+                Console.WriteLine("enter the amount of the km this bus traveled since the last fix");
+                while (!double.TryParse(Console.ReadLine(), out km))
+                    Console.WriteLine("enter number only");
+                check = checkInput(0, 20000, km);
+            } while (!check);
+            km = 20000 - km;
+
+            DateTime date=DateTime.Now;
+            check = false;
+            while(!check)
+            {
+                Console.WriteLine("enter the date of the last fix");
+                check = DateTime.TryParse(Console.ReadLine(), out date);
+                 if (!check)
+                    Console.WriteLine("the date is not valid");
+            }
+
+            b1 = new Bus(id, year, month, day, kilometrage, fuel, km); 
+            b1.LastFix = date;
             buses.Add(b1);
+
         }
 
         public void ChooseBusToTravel()
@@ -129,7 +181,7 @@ namespace dotNet5781_01_0170_5563
         }
 
         public void FuelOrFixBus()
-        
+
         {
             Console.WriteLine("enter id number:");
             string id = Console.ReadLine();
@@ -192,7 +244,10 @@ namespace dotNet5781_01_0170_5563
                 id = Console.ReadLine();
                 //check if the length of the id is valid
                 if (id.Length != length)
-                    Console.WriteLine("the ID number not valid");
+                {
+                    Console.WriteLine("the length of the ID number not valid");
+                    Console.WriteLine("please enter ID in length {0}", length);
+                }
                 //check if the id is only numbers
                 else if (!Regex.IsMatch(id, ch))
                     Console.WriteLine("enter only numbers");
@@ -208,11 +263,11 @@ namespace dotNet5781_01_0170_5563
         /// <param name="max">the higest possible value</param>
         /// <param name="input">our input</param>
         /// <returns>if the input is between the limits return true, otherwise false</returns>
-        bool checkInput(int min, int max, int input)
+        bool checkInput(double min, double max, double input)
         {
             if (input < min || input > max)
             {
-                Console.WriteLine("the input not valid\nentr number between {0} - {1}", min , max);
+                Console.WriteLine("the input not valid\nentr number between {0} - {1}", min, max);
                 return false;
             }
             return true;

@@ -6,34 +6,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bus
+namespace dotNet5781_01_0170_5563
 {
     public class Bus
     {
         ///fields
         private string id;
         private DateTime ActiveDate;
-        private int kilometrage;
+        private double kilometrage;
         private bool dangerous;
-        private int fuel;
-        private int kmAfterBusFixing = 20000;
-        private DateTime lastFix;
-       
+        private double fuel;  //we asuming that when you enter a bus its tank already full
+        private double kmAfterBusFixing;  //we asuming  that when you enter a bus is fixed
+        private DateTime lastFix = DateTime.Now;
+
         ///properties
         public string GetId { get => id; }
         public DateTime active { get => ActiveDate; }
         public bool Dangerous { get => dangerous; set => dangerous = value; }
-        public int Kilometrage { get => kilometrage; set => kilometrage = value; }
-        public int Fuel { get => fuel; set => fuel = value; }
-        public int KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
+        public double Kilometrage { get => kilometrage; set => kilometrage = value; }
+        public double Fuel { get => fuel; set => fuel = value; }
+        public double KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
         public DateTime LastFix { get => lastFix; set => lastFix = value; }
-        
+
         //constructor
-        public Bus(string newId, int year, int month, int day)
+        public Bus(string newId, int year, int month, int day, double _kilometrage = 0,
+            double _fuel = 1200, double _kmAfterBusFixing = 20000)
         {
             id = newId;
             ActiveDate = new DateTime(year, month, day);
-            lastFix = DateTime.Now;
+            kilometrage = _kilometrage;
+            fuel = _fuel;
+            kmAfterBusFixing = _kmAfterBusFixing;
         }
 
         /// <summary>
