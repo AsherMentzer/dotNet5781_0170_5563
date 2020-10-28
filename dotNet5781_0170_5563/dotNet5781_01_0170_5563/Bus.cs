@@ -31,7 +31,7 @@ namespace Bus
         {
             id = newId;
             ActiveDate = new DateTime(year, month, day);
-            lastFix = new DateTime(year, month, day);
+            lastFix = DateTime.Now;
         }
 
         public string PrintID()
