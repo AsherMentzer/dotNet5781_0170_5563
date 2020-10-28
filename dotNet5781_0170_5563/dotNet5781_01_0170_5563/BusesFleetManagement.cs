@@ -27,17 +27,17 @@ namespace dotNet5781_01_0170_5563
             Bus b1 = new Bus(id, year, month, day);
             buses.Add(b1);
         }
-        public chooseBusToTravel()
+        public void chooseBusToTravel()
         {
             Console.WriteLine("enter id number:");
             string id = Console.ReadLine();
             Bus temp = null;
             foreach (Bus b1 in buses)
             {
-                if (b1.Id == id)
+                if (b1.GetId == id)
                 {
                     temp = b1;
-                    return;
+                    break;
                 }
 
             }
@@ -53,9 +53,14 @@ namespace dotNet5781_01_0170_5563
                 Console.WriteLine("there is not enough fuel for this travel");
             if(temp.KmForTravel<km)
                 Console.WriteLine("the Bus can not travel this amount of km before fixing");
-            // temp.Kilometrage += km;
-            // temp.KmForTravel -= km;
-            // temp.fuel -= km;
+            
+            temp.Kilometrage=km+temp.Kilometrage;
+            temp.KmForTravel=temp.KmForTravel-km;
+            temp.Fuel=temp.Fuel-km;
+        }
+        public void fuelOrFixBus()
+        {
+            Console.WriteLine("");
         }
     }
 }
