@@ -18,6 +18,7 @@ namespace Bus
         private int fuel;
         private int kmAfterBusFixing = 20000;
         private DateTime lastFix;
+       
         ///properties
         public string GetId { get => id; }
         public DateTime active { get => ActiveDate; }
@@ -26,6 +27,7 @@ namespace Bus
         public int Fuel { get => fuel; set => fuel = value; }
         public int KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
         public DateTime LastFix { get => lastFix; set => lastFix = value; }
+        
         //constructor
         public Bus(string newId, int year, int month, int day)
         {
@@ -34,6 +36,10 @@ namespace Bus
             lastFix = DateTime.Now;
         }
 
+        /// <summary>
+        /// the function copies the id and adds hyphens betwwen the parts of the id
+        /// </summary>
+        /// <returns>the function returns string that contain the id with hyphens between the parts of the id</returns>
         public string PrintID()
         {
             string temp = id.Insert(5, "-");
@@ -42,7 +48,6 @@ namespace Bus
                 temp = temp.Insert(2, "-");
                 temp = temp + '\0';
             }
-
             else
                 temp = temp.Insert(3, "-");
             return temp;

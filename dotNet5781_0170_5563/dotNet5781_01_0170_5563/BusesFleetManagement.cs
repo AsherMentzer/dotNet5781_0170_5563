@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace dotNet5781_01_0170_5563
 {
     using Bus;
-    using System.Linq.Expressions;
-    using System.Text.RegularExpressions;
+ 
 
     public class BusesFleetManagement
     {
@@ -17,11 +18,15 @@ namespace dotNet5781_01_0170_5563
         static Random rand = new Random(DateTime.Now.Millisecond);
 
         private List<Bus> buses = new List<Bus>();
+        /// <summary>
+        /// the function add a new bus to the fleet
+        /// </summary>
         public void AddBus()
         {
             bool valid = false;
             int year, month, day;
             Console.WriteLine("enter the active date:");
+            // get the year of activitie of the bus. between 1950 to today
             do
             {
                 valid = false;
@@ -49,8 +54,16 @@ namespace dotNet5781_01_0170_5563
                 valid = checkInput(1, DateTime.DaysInMonth(year,month), day);
             } while (!valid);
 
-
             string id = InputId(year);
+
+            foreach (Bus b in buses)
+            {
+                if(b.GetId == id)
+                {
+                    Console.WriteLine("the bus is in fleet already");
+                    return;
+                }
+            }
 
             Bus b1 = new Bus(id, year, month, day);
             buses.Add(b1);
@@ -153,10 +166,10 @@ namespace dotNet5781_01_0170_5563
 
         public void ShowKmFromLastFix()
         {
-            Console.WriteLine("Bus ID:     KM from last fix");
+            Console.WriteLine("  Bus ID:      KM from last fix");
             foreach (Bus b in buses)
             {
-                Console.WriteLine("{0} {1 ,13}", b.PrintID(), 20000 - b.KmForTravel);
+                Console.WriteLine("{0} {1 ,12}", b.PrintID(), 20000 - b.KmForTravel);
             }
         }
 
