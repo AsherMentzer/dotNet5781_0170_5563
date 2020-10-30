@@ -11,8 +11,6 @@ namespace dotNet5781_01_0170_5563
 {
     public class BusesFleetManagement
     {
-
-
         static Random rand = new Random(DateTime.Now.Millisecond);
         /// <summary>
         /// this is fleet of buses stored in list
@@ -24,6 +22,18 @@ namespace dotNet5781_01_0170_5563
         /// </summary>
         public void AddBus()
         {
+            //check, if the bus is new so we have default to km fuel and fix,
+            //if it is old so we will get all the details
+            int condition;
+            do
+            {
+                Console.WriteLine("what is the condition of the bus\n" +
+                    "for new press: 1,  for used press: 2 ");
+                condition = int.Parse(Console.ReadLine());
+                if(condition != 1 && condition != 2)
+                    Console.WriteLine("enter 1 or 2 only");
+            } while (condition != 1 && condition != 2);
+
             bool valid = false;
             int year, month, day;
             Console.WriteLine("enter the active date:");
@@ -68,28 +78,24 @@ namespace dotNet5781_01_0170_5563
                     return;
                 }
             }
-            //check if the bus is new so we have default to km fuel and fix or
-            //he is old so we will get all this details
-            Console.WriteLine("if the bus is new press: 1\n if the bus is old press 2 ");
-            int condition;
-            while (!int.TryParse(Console.ReadLine(), out condition))
-                Console.WriteLine("enter 1 or 2 only");
+                        
             Bus b1;
-            //in case he is new
+            //in case the bus is new
             if (condition == 1)
             {
                 b1 = new Bus(id, year, month, day);
                 buses.Add(b1);
                 return;
             }
-            //in case he is old
+
+            //in case the bus is used we take hole following details
             bool check;
             double kilometrage, fuel, km;
             //loop to get the kilometrage and check the input
             do
             {
                 check = false;
-                Console.WriteLine("enter the kilometrage of the bus");
+                Console.Write("enter the kilometrage of the bus: ");
                 while (!double.TryParse(Console.ReadLine(), out kilometrage))
                     Console.WriteLine("enter number only");
                 check = checkInput(0, double.MaxValue, kilometrage);
@@ -99,7 +105,7 @@ namespace dotNet5781_01_0170_5563
             do
             {
                 check = false;
-                Console.WriteLine("enter the amount of fuel in the tank ");
+                Console.Write("enter the amount of fuel in the tank: ");
                 while (!double.TryParse(Console.ReadLine(), out fuel))
                     Console.WriteLine("enter number only");
                 check = checkInput(0, 1200, fuel);
@@ -109,7 +115,7 @@ namespace dotNet5781_01_0170_5563
             do
             {
                 check = false;
-                Console.WriteLine("enter the amount of the km this bus traveled since the last fix");
+                Console.Write("enter the amount of the km this bus traveled since the last fix: ");
                 while (!double.TryParse(Console.ReadLine(), out km))
                     Console.WriteLine("enter number only");
                 check = checkInput(0, 20000, km);
@@ -121,10 +127,17 @@ namespace dotNet5781_01_0170_5563
             check = false;
             while (!check)
             {
-                Console.WriteLine("enter the date of the last fix");
+                Console.Write("enter the date of the last fix: ");
                 check = DateTime.TryParse(Console.ReadLine(), out date);
                 if (!check)
+                {
                     Console.WriteLine("the date is not valid");
+                    continue;
+                }
+
+                // ensure that the last fix date is between active year to todays year
+                if (!checkInput(year, DateTime.Now.Year, date.Year))
+                    check = false;
             }
 
             b1 = new Bus(id, year, month, day, kilometrage, fuel, km);
@@ -141,7 +154,10 @@ namespace dotNet5781_01_0170_5563
         {
             //check if the list is empty
             if (buses.Count == 0)
+            {
                 Console.WriteLine("you don't have any bus in the fleet");
+                return;
+            }
 
             // get the id number to find the bus in the list
             Console.WriteLine("enter id number:");
@@ -199,6 +215,7 @@ namespace dotNet5781_01_0170_5563
             if (temp.KmForTravel == 0)
                 temp.Dangerous = true;
         }
+
         /// <summary>
         /// this funk get number of the bus and fuel or fix the bus
         /// </summary>
@@ -206,8 +223,11 @@ namespace dotNet5781_01_0170_5563
         {
             //check if the list is empty
             if (buses.Count == 0)
+            {
                 Console.WriteLine("you don't have any bus in the fleet");
-
+                return;
+            }
+            
             // get the id number to find the bus in the list
             Console.WriteLine("enter id number:");
             string id = Console.ReadLine();
@@ -243,6 +263,7 @@ namespace dotNet5781_01_0170_5563
                 }
             } while (choice != 1 && choice != 2);
         }
+
         /// <summary>
         /// this funk is to print how many km left to each bus in the fleet
         /// to travel before he will need fix
@@ -251,7 +272,10 @@ namespace dotNet5781_01_0170_5563
         {
             //check if the list is empty
             if (buses.Count == 0)
-                Console.WriteLine("you don't have any bus in the fleet");
+            {
+                Console.WriteLine("you have not any bus in the fleet");
+                return;
+            }
 
             Console.WriteLine("  Bus ID:      KM from last fix");
             foreach (Bus b in buses)
@@ -281,7 +305,7 @@ namespace dotNet5781_01_0170_5563
                 if (id.Length != length)
                 {
                     Console.WriteLine("the length of the licenseId number not valid");
-                    Console.WriteLine("please enter licenseId in length {0}", length);
+                    Console.WriteLine("please enter licenseId in length of {0} digits", length);
                 }
                 //check if the id is only numbers
                 else if (!Regex.IsMatch(id, ch))
@@ -302,11 +326,10 @@ namespace dotNet5781_01_0170_5563
         {
             if (input < min || input > max)
             {
-                Console.WriteLine("the input not valid\nentr number between {0} - {1}", min, max);
+                Console.WriteLine("the input not valid\nenter number between {0} - {1}", min, max);
                 return false;
             }
             return true;
         }
-
     }
 }

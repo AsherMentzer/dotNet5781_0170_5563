@@ -8,9 +8,12 @@ namespace dotNet5781_01_0170_5563
 {
     class Program
     {
-
         public enum Menu { exit, addBus, chooseBus, fuelBusOrfixBus, showKmFromLastFix };
 
+        /// <summary>
+        /// this is the main function to manage fleet of buses
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             BusesFleetManagement fleet = new BusesFleetManagement();

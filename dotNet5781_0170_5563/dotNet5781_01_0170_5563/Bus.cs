@@ -12,16 +12,16 @@ namespace dotNet5781_01_0170_5563
     {
         ///fields
         private string licenseId;
-        private DateTime ActiveDate;
+        private DateTime activeDate;
         private double kilometrage;
         private bool dangerous;
-        private double fuel;  
-        private double kmAfterBusFixing;  
+        private double fuel;
+        private double kmAfterBusFixing;
         private DateTime lastFix = DateTime.Now;
 
         ///properties
         public string GetId { get => licenseId; }
-        public DateTime active { get => ActiveDate; }
+        public DateTime Active { get => activeDate; }
         public bool Dangerous { get => dangerous; set => dangerous = value; }
         public double Kilometrage { get => kilometrage; set => kilometrage = value; }
         public double Fuel { get => fuel; set => fuel = value; }
@@ -45,7 +45,7 @@ namespace dotNet5781_01_0170_5563
             double _fuel = 1200, double _kmAfterBusFixing = 20000)
         {
             licenseId = newId;
-            ActiveDate = new DateTime(year, month, day);
+            activeDate = new DateTime(year, month, day);
             kilometrage = _kilometrage;
             fuel = _fuel;
             kmAfterBusFixing = _kmAfterBusFixing;
@@ -54,7 +54,8 @@ namespace dotNet5781_01_0170_5563
         /// <summary>
         /// the function copies the id and adds hyphens betwwen the parts of the id
         /// </summary>
-        /// <returns>the function returns string that contain the id with hyphens between the parts of the id</returns>
+        /// <returns>the function returns string that contain the id with hyphens 
+        /// between the parts of the id</returns>
         public string PrintID()
         {
             string temp = licenseId.Insert(5, "-");
