@@ -214,6 +214,8 @@ namespace dotNet5781_01_0170_5563
             // in case the bus traveled 20k KM from the last fix
             if (temp.KmForTravel == 0)
                 temp.Dangerous = true;
+
+            Console.WriteLine("the bus is ready to travel");
         }
 
         /// <summary>
@@ -255,11 +257,16 @@ namespace dotNet5781_01_0170_5563
                 Console.WriteLine("To fuel press 1\nTo fix press 2");
                 choice = int.Parse(Console.ReadLine());
                 if (choice == 1)
+                {
                     temp.Fuel = 1200;
+                    Console.WriteLine("the fueling success you have full tank");
+                }
                 else if (choice == 2)
                 {
                     temp.KmForTravel = 20000;
                     temp.LastFix = DateTime.Now;
+                    temp.Dangerous = false;
+                    Console.WriteLine("the bus is fix now");
                 }
             } while (choice != 1 && choice != 2);
         }
