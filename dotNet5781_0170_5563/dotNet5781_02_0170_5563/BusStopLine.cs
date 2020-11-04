@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
-    class BusStopLine
+    public class BusStopLine
     {
         BusStop stop;
-        float distanceFromLastStop;
-        float timeFromLastStop;
+        double distanceFromLastStop;
+        double timeFromLastStop;
 
-        BusStopLine(BusStop newStop, float distance, float time)
+        BusStopLine(BusStop newStop, float distance=0, float time=0)
         {
             stop = newStop;
             distanceFromLastStop = distance;
             timeFromLastStop = time;
         }
+        public BusStop GetStop{get=>stop;}
+        public double DistanceFromLastStop { get => distanceFromLastStop;
+            set => distanceFromLastStop = value; }
+        public double TimeFromLastStop { get => timeFromLastStop; set => timeFromLastStop = value; }
+
     }
 }
