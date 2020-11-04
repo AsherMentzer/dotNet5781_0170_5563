@@ -34,7 +34,7 @@ namespace dotNet5781_02_0170_5563
         private float longitude;
         private string busStopAddress;
 
-        BusStop(int _busStopNumber, float _latitude, float _longitude, string _busStopAddress=null)
+        public BusStop(int _busStopNumber, float _latitude, float _longitude, string _busStopAddress=null)
         {
             busStopNumber = _busStopNumber;
             latitude = _latitude;
