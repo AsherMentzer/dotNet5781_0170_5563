@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace dotNet5781_02_0170_5563
 {
     enum areas { General, North, West, Center, Jerusalem };
-    class BusLine: IComparable
+    public class BusLine: IComparable
     {
         int busLine;
         BusStopLine firstStop;
@@ -23,6 +23,10 @@ namespace dotNet5781_02_0170_5563
             area = _area;
             Stations = stops;
         }
+
+        public int GetBusLine { get => busLine; }
+        public BusStopLine FirstStop { get => firstStop; }
+        public BusStopLine LastStop { get => lastStop; }
 
         public override string ToString()
         {
