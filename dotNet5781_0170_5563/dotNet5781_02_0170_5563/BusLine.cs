@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
-    enum areas { General, North, West, Center, Jerusalem };
+   public enum areas { General, North, West, Center, Jerusalem };
     public class BusLine: IComparable
     {
         int busLine;
@@ -14,20 +14,20 @@ namespace dotNet5781_02_0170_5563
         BusStopLine lastStop;
         areas area;
         List<BusStopLine> Stations;
-        BusLine(int _busLine, BusStopLine first, BusStopLine last,
-            areas _area, List<BusStopLine> stops = null)
+       public BusLine(int _busLine, BusStopLine first, BusStopLine last,
+            /*areas _area,*/ List<BusStopLine> stops = null)
         {
             busLine = _busLine;
             firstStop = first;
             lastStop = last;
-            area = _area;
+            //area = _area;
             Stations = stops;
         }
 
         public int GetBusLine { get => busLine; }
         public BusStopLine FirstStop { get => firstStop; }
         public BusStopLine LastStop { get => lastStop; }
-
+         public List<BusStopLine> stations { get=>Stations; }
         public override string ToString()
         {
             string temp = $"bus line: {busLine}, area: {area}, from : {firstStop} to: {lastStop}\nstations numbers: ";
@@ -119,7 +119,7 @@ namespace dotNet5781_02_0170_5563
         public BusLine SubLine(BusStopLine first, BusStopLine last)
         {
             List<BusStopLine> SubStations = new List<BusStopLine>();
-            BusLine subLine = new BusLine(busLine, firstStop, lastStop, area, SubStations);
+            BusLine subLine = new BusLine(busLine, firstStop, lastStop/*, area, SubStations*/);//---fixxxxxx-------------------------------
             // int index = Stations.FindIndex(first);
 
             for (int i = 0; i < Stations.Count; i++)

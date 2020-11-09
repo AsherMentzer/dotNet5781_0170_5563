@@ -12,7 +12,7 @@ namespace dotNet5781_02_0170_5563
         double distanceFromLastStop;
         double timeFromLastStop;
 
-        BusStopLine(BusStop newStop, float distance=0, float time=0)
+        public BusStopLine(BusStop newStop, float distance=0, float time=0)
         {
             stop = newStop;
             distanceFromLastStop = distance;
