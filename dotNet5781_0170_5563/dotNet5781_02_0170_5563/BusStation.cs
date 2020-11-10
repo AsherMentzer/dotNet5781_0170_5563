@@ -25,30 +25,29 @@ namespace dotNet5781_02_0170_5563
         public float GetLongitude { get => longitude; }
     }*/
 
-    public class BusStop
+    public class BusStation
     {
         static Random r = new Random(DateTime.Now.Millisecond);
-        private int busStopNumber;
-        // private Location busStopLocation = new Location();
+        private int busStationNumber;
         private float latitude;
         private float longitude;
-        private string busStopAddress;
+        private string busStationAddress;
 
-        public BusStop(int _busStopNumber, float _latitude, float _longitude, string _busStopAddress=null)
+        public BusStation(int _busStationNumber, float _latitude, float _longitude, string _busStationAddress=null)
         {
-            busStopNumber = _busStopNumber;
+            busStationNumber = _busStationNumber;
             latitude = _latitude;
             longitude = _longitude;
-            busStopAddress = _busStopAddress;
+            busStationAddress = _busStationAddress;
         }
-       
-        public int BusStopNumber { get => busStopNumber; }
+      //properties
+        public int BusStationNumber { get => busStationNumber; }
         public float Latitude { get => latitude; }
         public float Longitude { get => longitude; }
-        public string BusStopAddress { get => busStopAddress; }
+        public string BusStationAddress { get => busStationAddress; }
         override public string ToString()
         {
-            return $"Bus Station Code: { busStopNumber}, {latitude}\u00b0N { longitude}\u00b0E";
+            return $"Bus Station Code: { busStationNumber}, {latitude}\u00b0N { longitude}\u00b0E";
         }
 
         

@@ -10,12 +10,13 @@ namespace dotNet5781_02_0170_5563
 {
     public class LinesCollection : IEnumerable
     {
-        List<BusStopLine> Stations = new List<BusStopLine>();
+        //List<BusStationLine> Stations = new List<BusStationLine>();
 
         List<BusLine> lines = new List<BusLine>();
 
-        public LinesCollection(List<BusLine> _lines) => lines = _lines;
-        public List<BusLine> Lines { get; set; }
+        // public LinesCollection(List<BusLine> _lines) => lines = _lines;
+        public LinesCollection() { }
+        public List<BusLine> Lines { get=>lines; set=>lines=value; }
         public IEnumerator GetEnumerator()
         {
             return ((IEnumerable)lines).GetEnumerator();
@@ -37,10 +38,11 @@ namespace dotNet5781_02_0170_5563
             {
                 lines.Add(newLine);
                 Console.WriteLine("the addition successed");
+                return;
             }
             else if (count == 1)
             {
-                if (temp.FirstStop == newLine.LastStop && temp.LastStop == newLine.FirstStop)
+                if (temp.FirstStation == newLine.LastStation && temp.LastStation == newLine.FirstStation)
                 {
                     lines.Add(newLine);
                     Console.WriteLine("the addition successed");
@@ -60,7 +62,7 @@ namespace dotNet5781_02_0170_5563
             {
                 temp = (BusLine)enumerator.Current;
                 if (temp.GetBusLine == lineNumber &&
-                    temp.FirstStop.GetStop.BusStopNumber == firstStationNum)
+                    temp.FirstStation.GetBusStationNumber == firstStationNum)
                 {
                     lines.Remove(temp);
                     return;
@@ -74,9 +76,9 @@ namespace dotNet5781_02_0170_5563
             List<BusLine> StationLines = new List<BusLine>();
             foreach (BusLine line in lines)
             {
-                foreach (BusStopLine station in line.stations)
+                foreach (BusStationLine station in line.stations)
                 {
-                    if (station.GetStop.BusStopNumber == busId)
+                    if (station.GetBusStationNumber == busId)
                         StationLines.Add(line);
                 }
             }
@@ -84,7 +86,7 @@ namespace dotNet5781_02_0170_5563
            // if (StationLines.Count == 0) throw Exception;//////////////////////////--------------------------
             return StationLines;
         }
-
+       //--------------------------------------------need more check
         public List<BusLine> SortLines()
         {
             List<BusLine> SortedLines = new List<BusLine>();
@@ -103,6 +105,7 @@ namespace dotNet5781_02_0170_5563
             }
             return SortedLines;
         }
+
         public int ComparTwoLine(BusLine busLineA, BusLine busLineB)
         {
             return busLineA.CompareTo(busLineB);

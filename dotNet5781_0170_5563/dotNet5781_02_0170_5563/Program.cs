@@ -12,38 +12,42 @@ namespace dotNet5781_02_0170_5563
         public enum Menu { exit, add, delete, search, print };
         static void Main(string[] args)
         {
-            BusStop b1 = new BusStop(1234561, (float)31.01, (float)32.01);
-            BusStop b2 = new BusStop(1234562, (float)31.02, (float)32.02);
-            BusStop b3 = new BusStop(1234563, (float)31.03, (float)32.03);
-            BusStop b4 = new BusStop(1234564, (float)31.04, (float)32.04);
-            BusStop b5 = new BusStop(1234565, (float)31.05, (float)32.05);
-            BusStop b6 = new BusStop(1234566, (float)31.06, (float)32.06);
-            BusStop b7 = new BusStop(1234567, (float)31.07, (float)32.07);
-            BusStop b8 = new BusStop(1234568, (float)31.08, (float)32.08);
-            BusStop b9 = new BusStop(1234569, (float)31.09, (float)32.09);
-            BusStop b10 = new BusStop(1234510, (float)31.10, (float)32.10);
-            BusStop b11 = new BusStop(1234511, (float)31.11, (float)32.11);
+            areas a1=areas.Center;
+            areas a2=areas.General;
+           
+           
+            BusStation b1 = new BusStation(1234561, (float)31.01, (float)32.01);
+            BusStation b2 = new BusStation(1234562, (float)31.02, (float)32.02);
+            BusStation b3 = new BusStation(1234563, (float)31.03, (float)32.03);
+            BusStation b4 = new BusStation(1234564, (float)31.04, (float)32.04);
+            BusStation b5 = new BusStation(1234565, (float)31.05, (float)32.05);
+            BusStation b6 = new BusStation(1234566, (float)31.06, (float)32.06);
+            BusStation b7 = new BusStation(1234567, (float)31.07, (float)32.07);
+            BusStation b8 = new BusStation(1234568, (float)31.08, (float)32.08);
+            BusStation b9 = new BusStation(1234569, (float)31.09, (float)32.09);
+            BusStation b10 = new BusStation(1234510, (float)31.10, (float)32.10);
+            BusStation b11 = new BusStation(1234511, (float)31.11, (float)32.11);
 
-            BusStopLine bl1 = new BusStopLine(b1);
-            BusStopLine bl2 = new BusStopLine(b2, 30, 50);
-            BusStopLine bl3 = new BusStopLine(b3, 20, 15);
-            BusStopLine bl4 = new BusStopLine(b4);
-            BusStopLine bl5 = new BusStopLine(b5);
-            BusStopLine bl6 = new BusStopLine(b6, 15, 5);
-            BusStopLine bl7 = new BusStopLine(b7);
-            BusStopLine bl8 = new BusStopLine(b8);
-            BusStopLine bl9 = new BusStopLine(b9);
-            BusStopLine bl10 = new BusStopLine(b10);
-            BusStopLine bl11 = new BusStopLine(b11);
+            BusStationLine bl1 = new BusStationLine(b1);
+            BusStationLine bl2 = new BusStationLine(b2);
+            BusStationLine bl3 = new BusStationLine(b3);
+            BusStationLine bl4 = new BusStationLine(b4);
+            BusStationLine bl5 = new BusStationLine(b5);
+            BusStationLine bl6 = new BusStationLine(b6);
+            BusStationLine bl7 = new BusStationLine(b7);
+            BusStationLine bl8 = new BusStationLine(b8);
+            BusStationLine bl9 = new BusStationLine(b9);
+            BusStationLine bl10 = new BusStationLine(b10);
+            BusStationLine bl11 = new BusStationLine(b11);
 
-            BusLine l1 = new BusLine(1, bl1, bl3);
-            BusLine l2 = new BusLine(1, bl3, bl1);
-            BusLine l3 = new BusLine(2, bl5, bl10);
-            BusLine l4 = new BusLine(3, bl8, bl10);
+            BusLine l1 = new BusLine(1, bl1, bl3,a1);
+            BusLine l2 = new BusLine(1, bl3, bl1,a1);
+            BusLine l3 = new BusLine(2, bl5, bl10,a1);
+            BusLine l4 = new BusLine(3, bl8, bl10,a1);
 
-            List<BusStop> busStops = new List<BusStop> { b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11};
+            List<BusStation> busStops = new List<BusStation> { b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11};
             List<BusLine> lines = new List<BusLine> { l1, l2, l3 };
-            LinesCollection linesCo = new LinesCollection (lines);
+            LinesCollection linesCo = new LinesCollection ();
             int choice;
             do
             {
@@ -60,17 +64,18 @@ namespace dotNet5781_02_0170_5563
                 switch ((Menu)choice)
                 {
                     case Menu.add:
-                        linesCo.AddLine(l4);
+                        linesCo.AddLine(l3);                      
                         break;
                     case Menu.delete:
-
+                        linesCo.RemoveLine(2, 1234565);
                         break;
                     case Menu.search:
 
                         break;
                     case Menu.print:
-
-
+                        BusLine line = linesCo.Lines[0];
+                        string l=line.ToString();
+                        Console.WriteLine(l);
                         break;
                     default:
                         break;
