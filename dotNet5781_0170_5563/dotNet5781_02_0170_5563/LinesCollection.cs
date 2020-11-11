@@ -47,11 +47,11 @@ namespace dotNet5781_02_0170_5563
                     lines.Add(newLine);
                     Console.WriteLine("the addition successed");
                 }
-                else
-                    Console.WriteLine("the first or last station of the new line isn't valid");
+                else throw new ArgumentException("the first or last station of the new line isn't valid");
+                // Console.WriteLine("the first or last station of the new line isn't valid");
             }
-            else
-                Console.WriteLine("the addition failed, the line is in the lines' list 2 time alraedy");
+            else throw new ArgumentException("the addition failed, the line is in the lines' list 2 time alraedy");
+              //  Console.WriteLine("the addition failed, the line is in the lines' list 2 time alraedy");
         }
 
         public void RemoveLine(int lineNumber, int firstStationNum)
@@ -68,7 +68,8 @@ namespace dotNet5781_02_0170_5563
                     return;
                 }
             }
-            Console.WriteLine("the requested line not found");
+            throw new KeyNotFoundException("the requested line not found");
+            //Console.WriteLine("the requested line not found");
         }
 
         public List<BusLine> GetLinesinStation(int stationNum)

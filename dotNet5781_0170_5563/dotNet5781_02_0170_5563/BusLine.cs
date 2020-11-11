@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
-   public enum areas { General, North, West, Center, Jerusalem };
+   public enum areas { General=1, North, West, Center, Jerusalem };
     public class BusLine: IComparable
     {
         int busLine;
@@ -43,10 +44,11 @@ namespace dotNet5781_02_0170_5563
         {
             BusStationLine newStation = new BusStationLine(station);
             if (isStationInLine(newStation))
-            {
+                throw new DuplicateNameException("this station already in the line");
+           /* {
                 Console.WriteLine("this station already in the line");
                 return;
-            }
+            }*/
 
             Console.WriteLine("please enter the number of the location of the station in the line");
             int index;
@@ -90,10 +92,12 @@ namespace dotNet5781_02_0170_5563
         public void DeleteStstion(BusStationLine station)
         {
             if (!isStationInLine(station))
-            {
+                throw new KeyNotFoundException("error: this station not exist");
+           /* {
                 Console.WriteLine("error: this station not exist");
                 return;
-            }
+            }*/
+
 
             for (int index = 0; index < Stations.Count; index++)
             {
@@ -194,7 +198,6 @@ namespace dotNet5781_02_0170_5563
             BusLine SubLineA = busLineA.SubLine(first, last);
             BusLine SubLineB = busLineB.SubLine(first, last);
             return  SubLineA.CompareTo(SubLineB);
-            ////check in main and print wich is bigger--------------------------------
         }
 
         public int CompareTo(object obj)

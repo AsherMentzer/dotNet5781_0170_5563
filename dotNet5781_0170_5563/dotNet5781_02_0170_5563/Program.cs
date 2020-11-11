@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Dynamic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -84,19 +86,36 @@ namespace dotNet5781_02_0170_5563
             BusLine l9 = new BusLine(7, s8, s36, a2);
             BusLine l10 = new BusLine(8, s28, s2, a2);
 
-            l1.addStationToLine(s2);
+           /* l1.addStationToLine(s2);
             l1.addStationToLine(s21);
             l1.addStationToLine(s5);
             l1.addStationToLine(s22);
             l1.addStationToLine(s6);
             l1.addStationToLine(s23);
             l1.addStationToLine(s9);
-            l1.addStationToLine(s24);
+            l1.addStationToLine(s24);*/
 
-            List<BusStation> busStops = new List<BusStation> { s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15
+            List<BusStation> busStations = new List<BusStation> { s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15
             ,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31,s32,s33,s34,s35,s36,s37,s38,s39,s40};
-
-            LinesCollection linesCo = new LinesCollection();
+            /* bool isStation(int stationNumber)
+            {
+                foreach (var station in busStations)
+                {
+                    if (station.BusStationNumber == stationNumber)
+                        return true;
+                }
+                return false;
+            }*/
+            BusStation findStation(int stationNum)
+            {
+                foreach (var station in busStations)
+                {
+                    if (station.BusStationNumber == stationNum)
+                        return station;
+                }
+                return null;
+            }
+            LinesCollection lines = new LinesCollection();
             int choice;
             do
             {
@@ -113,16 +132,145 @@ namespace dotNet5781_02_0170_5563
                 switch ((Menu)choice)
                 {
                     case Menu.add:
-                        linesCo.AddLine(l1);
-                        break;
+                        {
+                            Console.WriteLine(" 1: add line\n   2: add station to line");
+                            int choose;
+                            while (!int.TryParse(Console.ReadLine(), out choose)
+                                || (choose != 1 && choose != 2))
+                                Console.WriteLine("enter only 1 or 2");
+                            if (choose == 1)
+                            {
+                                Console.WriteLine("enter line number");
+                                int lineNumber;
+                                while (!int.TryParse(Console.ReadLine(), out lineNumber)
+                           || (lineNumber < 1 || lineNumber > 999))
+                                    Console.WriteLine("enter only number between 1-999");
+
+                                Console.WriteLine("enter the area: 1:General,2:North,3:west,4:Center,5:jerusalem");
+                                int area;
+                                while (!int.TryParse(Console.ReadLine(), out area)
+                          || (lineNumber < 1 || lineNumber > 6))
+                                    Console.WriteLine("enter only number between 1-5");
+
+                                Console.WriteLine("enter first station number");
+                                int stationNumber;
+                                while (!int.TryParse(Console.ReadLine(), out stationNumber)
+                              || (stationNumber < 1 || stationNumber > 999999))
+                                    Console.WriteLine("enter only number between 1-999999");
+                                BusStation stationF = findStation(stationNumber);
+                                if (stationF == null)
+                                {
+                                    Console.WriteLine("this station not exist");
+                                    break;
+                                }
+                                Console.WriteLine("enter last station number");
+                
+                                while (!int.TryParse(Console.ReadLine(), out stationNumber)
+                              || (stationNumber < 1 || stationNumber > 999999))
+                                    Console.WriteLine("enter only number between 1-999999");
+                                BusStation stationL = findStation(stationNumber);
+                                if (stationL == null)
+                                {
+                                    Console.WriteLine("this station not exist");
+                                    break;
+                                }
+                               BusLine newBusLine = new BusLine(lineNumber,stationF,stationL,(areas)area);
+                             
+                                try
+                                {
+                                    lines.AddLine(newBusLine);
+                                }
+                                catch(ArgumentException ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("enter line number");
+                                int lineNumber;
+                                while (!int.TryParse(Console.ReadLine(), out lineNumber)
+                           || (lineNumber < 1 || lineNumber > 999))
+                                    Console.WriteLine("enter only number between 1-999");
+                                List<BusLine> lin = null;
+                                try
+                                {
+                                    lin = lines[lineNumber];
+                                }
+                                catch (KeyNotFoundException ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                    break;
+                                }
+                                Console.WriteLine("enter station number");
+                                int stationNumber;
+                                while (!int.TryParse(Console.ReadLine(), out stationNumber)
+                              || (stationNumber < 1 || stationNumber > 999999))
+                                    Console.WriteLine("enter only number between 1-999999");
+                                BusStation station = findStation(stationNumber);
+                                if (station == null)
+                                {
+                                    Console.WriteLine("this station not exist");
+                                    break;
+                                }
+
+                                else if (lin.Count == 1)
+                                    try
+                                    {
+                                        lin[0].addStationToLine(station);
+                                    }
+                                    catch (DuplicateNameException ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                        break;
+                                    }
+                                else
+                                {
+                                    Console.WriteLine($"1: from station {0}\n2: from station {1}"
+                                        , lin[0].FirstStation.GetBusStationNumber, lin[1].FirstStation.GetBusStationNumber);
+                                    while (!int.TryParse(Console.ReadLine(), out choose) || (choose != 1 && choose != 2))
+                                        Console.WriteLine("enter only 1 or 2");
+                                    if (choose == 1)
+                                    {
+                                        try
+                                        {
+                                            lin[0].addStationToLine(station);
+                                        }
+                                        catch (DuplicateNameException ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            lin[1].addStationToLine(station);
+                                        }
+                                        catch (DuplicateNameException ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                            break;
+                        }
+                        
+
+
                     case Menu.delete:
-                        linesCo.RemoveLine(1, 1234565);
+                        lines.RemoveLine(1, 1234565);
                         break;
                     case Menu.search:
 
                         break;
                     case Menu.print:
-                        BusLine line = linesCo.Lines[0];
+                        BusLine line = lines.Lines[0];
                         string l = line.ToString();
                         Console.WriteLine(l);
                         break;
