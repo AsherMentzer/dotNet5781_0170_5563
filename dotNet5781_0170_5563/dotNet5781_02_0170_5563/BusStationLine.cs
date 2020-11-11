@@ -14,7 +14,7 @@ namespace dotNet5781_02_0170_5563
         private float longitude;
         private string busStationAddress;
         private double distanceFromLastStation;
-        private double timeFromLastStation;
+        private TimeSpan timeFromLastStation=new TimeSpan();
 
         public BusStationLine(BusStation station)
         {
@@ -32,7 +32,7 @@ namespace dotNet5781_02_0170_5563
         public string GetBusStationAddress { get => busStationAddress; }
         public double DistanceFromLastStation { get => distanceFromLastStation;
             set => distanceFromLastStation = value; }
-        public double TimeFromLastStation { get => timeFromLastStation; set => timeFromLastStation = value; }
+        public TimeSpan TimeFromLastStation { get => timeFromLastStation; set => timeFromLastStation = value; }
 
     }
 }

@@ -40,6 +40,13 @@ namespace dotNet5781_02_0170_5563
             longitude = _longitude;
             busStationAddress = _busStationAddress;
         }
+        public BusStation(int _busStationNumber, string _busStationAddress = null)
+        {
+            busStationNumber = _busStationNumber;
+            latitude = (float)((r.NextDouble() * 2.3) + 31);
+            longitude = (float)((r.NextDouble() * 1.2) + 34.3);
+            busStationAddress = _busStationAddress;
+        }
       //properties
         public int BusStationNumber { get => busStationNumber; }
         public float Latitude { get => latitude; }

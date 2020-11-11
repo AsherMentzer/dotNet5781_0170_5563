@@ -12,11 +12,11 @@ namespace dotNet5781_02_0170_5563
     {
         //List<BusStationLine> Stations = new List<BusStationLine>();
 
-        List<BusLine> lines = new List<BusLine>();
+       private List<BusLine> lines = new List<BusLine>();
 
         // public LinesCollection(List<BusLine> _lines) => lines = _lines;
         public LinesCollection() { }
-        public List<BusLine> Lines { get=>lines; set=>lines=value; }
+        public List<BusLine> Lines { get => lines; set => lines = value; }
         public IEnumerator GetEnumerator()
         {
             return ((IEnumerable)lines).GetEnumerator();
@@ -71,61 +71,63 @@ namespace dotNet5781_02_0170_5563
             Console.WriteLine("the requested line not found");
         }
 
-        public List<BusLine> GetLinesinStation(int busId)
+        public List<BusLine> GetLinesinStation(int stationNum)
         {
             List<BusLine> StationLines = new List<BusLine>();
             foreach (BusLine line in lines)
             {
                 foreach (BusStationLine station in line.stations)
                 {
-                    if (station.GetBusStationNumber == busId)
+                    if (station.GetBusStationNumber == stationNum)
+                    {
                         StationLines.Add(line);
+                        break;
+                    }
                 }
             }
 
-           // if (StationLines.Count == 0) throw Exception;//////////////////////////--------------------------
+            if (StationLines.Count == 0) throw new KeyNotFoundException("there is no lines in this station");
             return StationLines;
         }
-       //--------------------------------------------need more check
+        //--------------------------------------------need more check of run time calculate
         public List<BusLine> SortLines()
         {
             List<BusLine> SortedLines = new List<BusLine>();
             for (int i = 0; i < lines.Count; i++)
             {
-                for (int j = i + 1; j < lines.Count; j++)
-                {
-                    int check = ComparTwoLine(lines[i], lines[j]);
-                    if (check < 0)
+                BusLine temp = lines[i];
+                for (int j = 0; j < lines.Count; j++)
+                {                  
+                    if (lines[i].CompareTo(lines[j]) < 0)
                     {
-                        BusLine temp = lines[i];
-                        lines[i] = lines[j];
-                        lines[j] = temp;
+                       temp= lines[j];
                     }
                 }
+                SortedLines.Add(temp);
             }
             return SortedLines;
         }
 
-        public int ComparTwoLine(BusLine busLineA, BusLine busLineB)
-        {
-            return busLineA.CompareTo(busLineB);
-            ////check in main and print wich is bigger--------------------------------
-        }
         public List<BusLine> this[int index]
         {
             get
             {
+                if (index < 1 || index > 999)
+                    throw new ArgumentOutOfRangeException("the lines numbers are between 1-999");
+
                 List<BusLine> indexLines = new List<BusLine>();
                 foreach (BusLine line in lines)
                 {
                     if (line.GetBusLine == index)
                         indexLines.Add(line);
+                    if(indexLines.Count == 2)
+                        return indexLines;
                 }
-                //if (indexLines.Count == 0) throw;////////////-------------------------------------
+                if (indexLines.Count == 0)
+                    throw new KeyNotFoundException("this line not exist");
                 return indexLines;
             }
         }
-
 
     }
 }
