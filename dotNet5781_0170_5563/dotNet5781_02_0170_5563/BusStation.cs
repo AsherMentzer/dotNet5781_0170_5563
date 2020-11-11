@@ -6,25 +6,6 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
-    /*public class Location
-    {
-        static Random r = new Random(DateTime.Now.Millisecond);
-        private float latitude;
-        private float longitude;
-        public Location()
-        {
-            latitude = (float)((r.NextDouble() * 2.3) + 31);
-            longitude = (float)((r.NextDouble() * 1.2) + 34.3);
-        }
-        public Location(float _latitude, float _longitude)
-        {
-            latitude = _latitude;
-            longitude = _longitude;
-        }
-        public float GetLatitude { get => latitude; }
-        public float GetLongitude { get => longitude; }
-    }*/
-
     public class BusStation
     {
         static Random r = new Random(DateTime.Now.Millisecond);
@@ -33,7 +14,7 @@ namespace dotNet5781_02_0170_5563
         private float longitude;
         private string busStationAddress;
 
-        public BusStation(int _busStationNumber, float _latitude, float _longitude, string _busStationAddress=null)
+        public BusStation(int _busStationNumber, float _latitude, float _longitude, string _busStationAddress = null)
         {
             busStationNumber = _busStationNumber;
             latitude = _latitude;
@@ -47,7 +28,7 @@ namespace dotNet5781_02_0170_5563
             longitude = (float)((r.NextDouble() * 1.2) + 34.3);
             busStationAddress = _busStationAddress;
         }
-      //properties
+        //properties
         public int BusStationNumber { get => busStationNumber; }
         public float Latitude { get => latitude; }
         public float Longitude { get => longitude; }
@@ -57,6 +38,6 @@ namespace dotNet5781_02_0170_5563
             return $"Bus Station Code: { busStationNumber}, {latitude}\u00b0N { longitude}\u00b0E";
         }
 
-        
+
     }
 }

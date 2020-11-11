@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
-   public enum areas { General=1, North, West, Center, Jerusalem };
-    public class BusLine: IComparable
+    public enum areas { General = 1, North, West, Center, Jerusalem };
+    public class BusLine : IComparable
     {
         int busLine;
         BusStationLine firstStation;
         BusStationLine lastStation;
         areas area;
-        List<BusStationLine> Stations= new List<BusStationLine>();
-        double speedAverage=0.04;
-       public BusLine(int _busLine, BusStation first, BusStation last,areas _area)
+        List<BusStationLine> Stations = new List<BusStationLine>();
+        double speedAverage = 40;
+        public BusLine(int _busLine, BusStation first, BusStation last, areas _area)
         {
             busLine = _busLine;
-            firstStation =new BusStationLine(first);
+            firstStation = new BusStationLine(first);
             lastStation = new BusStationLine(last);
             area = _area;
             Stations.Add(firstStation);
-            lastStation.DistanceFromLastStation = GetDistance(firstStation,lastStation);
+            lastStation.DistanceFromLastStation = GetDistance(firstStation, lastStation);
             lastStation.TimeFromLastStation = TimeSpan.FromMinutes(lastStation.DistanceFromLastStation / speedAverage);
             stations.Add(lastStation);
         }
@@ -32,10 +32,11 @@ namespace dotNet5781_02_0170_5563
         public BusStationLine FirstStation { get => firstStation; }
         public BusStationLine LastStation { get => lastStation; }
         public areas GetArea { get => area; }
-         public List<BusStationLine> stations { get=>Stations; }
+        public List<BusStationLine> stations { get => Stations; }
         public override string ToString()
         {
-            string temp = $"bus line: {busLine}, area: {area}, from : {firstStation.GetBusStationNumber} to: {lastStation.GetBusStationNumber}\nstations numbers: ";
+            string temp = $"bus line: {busLine}, area: {area}, from : {firstStation.GetBusStationNumber} " +
+                $"to: {lastStation.GetBusStationNumber}\nstations numbers: ";
             foreach (var station in Stations) { temp += $"{station.GetBusStationNumber} "; };
             return temp;
         }
@@ -45,21 +46,21 @@ namespace dotNet5781_02_0170_5563
             BusStationLine newStation = new BusStationLine(station);
             if (isStationInLine(newStation))
                 throw new DuplicateNameException("this station already in the line");
-           /* {
-                Console.WriteLine("this station already in the line");
-                return;
-            }*/
+            /* {
+                 Console.WriteLine("this station already in the line");
+                 return;
+             }*/
 
             Console.WriteLine("please enter the number of the location of the station in the line");
             int index;
             while (!int.TryParse(Console.ReadLine(), out index)
-                || index < 0 || index > Stations.Count+1)
+                || index < 0 || index > Stations.Count + 1)
             {
                 Console.WriteLine("enter only number in the range of the list");
             }
             if (index == 0)
             {
-                Stations.Insert(0,newStation);
+                Stations.Insert(0, newStation);
                 Stations[index + 1].DistanceFromLastStation =
                     GetDistance(newStation, Stations[index + 1]);
                 Stations[index + 1].TimeFromLastStation =
@@ -67,11 +68,11 @@ namespace dotNet5781_02_0170_5563
                 firstStation = newStation;
                 return;
             }
-            else if (index == Stations.Count+1)
+            else if (index == Stations.Count + 1)
             {
                 Stations.Add(newStation);
-               Stations[index].DistanceFromLastStation =
-                    GetDistance(newStation, Stations[index - 1]);
+                Stations[index].DistanceFromLastStation =
+                     GetDistance(newStation, Stations[index - 1]);
                 Stations[index].TimeFromLastStation =
                    TimeSpan.FromMinutes(Stations[index].DistanceFromLastStation / speedAverage);
                 lastStation = newStation;
@@ -93,27 +94,27 @@ namespace dotNet5781_02_0170_5563
         {
             if (!isStationInLine(station))
                 throw new KeyNotFoundException("error: this station not exist");
-           /* {
-                Console.WriteLine("error: this station not exist");
-                return;
-            }*/
+            /* {
+                 Console.WriteLine("error: this station not exist");
+                 return;
+             }*/
 
 
             for (int index = 0; index < Stations.Count; index++)
             {
                 if (Stations[index] == station)
                 {
-                    if(index==0)
+                    if (index == 0)
                     {
                         firstStation = Stations[index + 1];
                         firstStation.DistanceFromLastStation = 0;
-                        firstStation.TimeFromLastStation =new TimeSpan();
+                        firstStation.TimeFromLastStation = new TimeSpan();
                         Stations.RemoveAt(index);
                         return;
                     }
-                    else if(index== Stations.Count)
+                    else if (index == Stations.Count)
                     {
-                        lastStation= Stations[index - 1];
+                        lastStation = Stations[index - 1];
                         Stations.RemoveAt(index);
                         return;
                     }
@@ -125,7 +126,7 @@ namespace dotNet5781_02_0170_5563
                 }
             }
         }
-       public bool isStationInLine(BusStationLine station)
+        public bool isStationInLine(BusStationLine station)
         {
             foreach (var stationLine in Stations)
                 if (stationLine.GetBusStationNumber == station.GetBusStationNumber)
@@ -136,7 +137,7 @@ namespace dotNet5781_02_0170_5563
         public double GetDistance(BusStationLine busStopA, BusStationLine busStopB)
         {
             return Math.Sqrt(Math.Pow(busStopA.GetLatitude - busStopB.GetLatitude, 2) +
-                Math.Pow(busStopA.GetLongitude - busStopB.GetLongitude, 2));
+                Math.Pow(busStopA.GetLongitude - busStopB.GetLongitude, 2)) * 100;
         }
         public TimeSpan GetTravelTime(BusStationLine busStopA, BusStationLine busStopB)
         {
@@ -163,8 +164,8 @@ namespace dotNet5781_02_0170_5563
         public BusLine SubLine(BusStation first, BusStation last)
         {
             BusLine subLine = new BusLine(busLine, first, last, area);
-           
-            bool exist=false;
+
+            bool exist = false;
             for (int i = 0; i < Stations.Count; i++)
             {
                 if (Stations[i].GetBusStationNumber == first.BusStationNumber)
@@ -173,7 +174,7 @@ namespace dotNet5781_02_0170_5563
                     subLine.addS(Stations[i]);
                     subLine.stations[0].DistanceFromLastStation = 0;
                     subLine.stations[0].TimeFromLastStation = new TimeSpan();
-                    for (++i ; i < Stations.Count; ++i)
+                    for (++i; i < Stations.Count; ++i)
                     {
                         subLine.addS(Stations[i]);
                         if (Stations[i].GetBusStationNumber == last.BusStationNumber)
@@ -181,7 +182,7 @@ namespace dotNet5781_02_0170_5563
                     }
                 }
             }
-            if (! exist)
+            if (!exist)
                 Console.WriteLine("the first bus station not exist in this line");
             else
                 Console.WriteLine("the last station not exist from " +
@@ -192,12 +193,12 @@ namespace dotNet5781_02_0170_5563
         {
             Stations.Add(station);
         }
-        public int ComparTwoLines(BusStation first,BusStation last,
-            BusLine busLineA,BusLine busLineB)
+        public int ComparTwoLines(BusStation first, BusStation last,
+            BusLine busLineA, BusLine busLineB)
         {
             BusLine SubLineA = busLineA.SubLine(first, last);
             BusLine SubLineB = busLineB.SubLine(first, last);
-            return  SubLineA.CompareTo(SubLineB);
+            return SubLineA.CompareTo(SubLineB);
         }
 
         public int CompareTo(object obj)
@@ -205,6 +206,6 @@ namespace dotNet5781_02_0170_5563
             return GetTravelTime(firstStation, lastStation).CompareTo(((BusLine)obj)
                 .GetTravelTime(((BusLine)obj).firstStation, ((BusLine)obj).lastStation));
         }
-       
+
     }
 }

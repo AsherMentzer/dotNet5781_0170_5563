@@ -14,7 +14,7 @@ namespace dotNet5781_02_0170_5563
 
        private List<BusLine> lines = new List<BusLine>();
 
-        // public LinesCollection(List<BusLine> _lines) => lines = _lines;
+        public LinesCollection(List<BusLine> _lines) => lines = _lines;
         public LinesCollection() { }
         public List<BusLine> Lines { get => lines; set => lines = value; }
         public IEnumerator GetEnumerator()

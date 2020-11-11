@@ -86,14 +86,14 @@ namespace dotNet5781_02_0170_5563
             BusLine l9 = new BusLine(7, s8, s36, a2);
             BusLine l10 = new BusLine(8, s28, s2, a2);
 
-           /* l1.addStationToLine(s2);
+            l1.addStationToLine(s2);
             l1.addStationToLine(s21);
             l1.addStationToLine(s5);
             l1.addStationToLine(s22);
             l1.addStationToLine(s6);
             l1.addStationToLine(s23);
             l1.addStationToLine(s9);
-            l1.addStationToLine(s24);*/
+            l1.addStationToLine(s24);
 
             List<BusStation> busStations = new List<BusStation> { s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15
             ,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31,s32,s33,s34,s35,s36,s37,s38,s39,s40};
@@ -120,10 +120,10 @@ namespace dotNet5781_02_0170_5563
             do
             {
                 Console.WriteLine("press number to choose");
-                Console.WriteLine("1: add new bus line\n or add station to bus line");
-                Console.WriteLine("2: delete bus line\n or delete station from bus line ");
-                Console.WriteLine("3: all the lines in the station\no r quick line to destanition");
-                Console.WriteLine("4: print all the lines\n or print all stations and the lines inside them");
+                Console.WriteLine("1: add new bus line\n    or add station to bus line");
+                Console.WriteLine("2: delete bus line\n    or delete station from bus line");
+                Console.WriteLine("3: all the lines in the station\n    or quick line to destanition");
+                Console.WriteLine("4: print all the lines\n    or print all stations and the lines inside them");
                 Console.WriteLine("0: exit");
 
                 while (!int.TryParse(Console.ReadLine(), out choice))
@@ -133,7 +133,7 @@ namespace dotNet5781_02_0170_5563
                 {
                     case Menu.add:
                         {
-                            Console.WriteLine(" 1: add line\n   2: add station to line");
+                            Console.WriteLine("  1: add line\n  2: add station to line");
                             int choose;
                             while (!int.TryParse(Console.ReadLine(), out choose)
                                 || (choose != 1 && choose != 2))
@@ -164,7 +164,7 @@ namespace dotNet5781_02_0170_5563
                                     break;
                                 }
                                 Console.WriteLine("enter last station number");
-                
+
                                 while (!int.TryParse(Console.ReadLine(), out stationNumber)
                               || (stationNumber < 1 || stationNumber > 999999))
                                     Console.WriteLine("enter only number between 1-999999");
@@ -174,13 +174,13 @@ namespace dotNet5781_02_0170_5563
                                     Console.WriteLine("this station not exist");
                                     break;
                                 }
-                               BusLine newBusLine = new BusLine(lineNumber,stationF,stationL,(areas)area);
-                             
+                                BusLine newBusLine = new BusLine(lineNumber, stationF, stationL, (areas)area);
+
                                 try
                                 {
                                     lines.AddLine(newBusLine);
                                 }
-                                catch(ArgumentException ex)
+                                catch (ArgumentException ex)
                                 {
                                     Console.WriteLine(ex.Message);
                                 }
@@ -260,25 +260,187 @@ namespace dotNet5781_02_0170_5563
                             }
                             break;
                         }
-                        
-
-
                     case Menu.delete:
-                        lines.RemoveLine(1, 1234565);
-                        break;
+                        {
+                            Console.WriteLine("  1: delete line\n  2: delete station from line");
+                            int input;
+                            while (!int.TryParse(Console.ReadLine(), out input)
+                                || (input != 1 && input != 2))
+                                Console.WriteLine("enter only 1 or 2");
+                            if (input == 1)
+                            {
+                                Console.WriteLine("enter line number");
+                                while (!int.TryParse(Console.ReadLine(), out input)
+                           || (input < 1 || input > 999))
+                                    Console.WriteLine("enter only number between 1-999");
+                                try
+                                {
+                                    List<BusLine> tempList = lines[input];
+                                    if (tempList.Count == 1)
+                                        lines.RemoveLine(input, tempList[0].FirstStation.GetBusStationNumber);
+                                    else
+                                        Console.WriteLine($"  1: delete the lie from {0}\n  2: delete the line from {1}," +
+                                            $" tempList[0].FirstStation.GetBusStationNumber, tempList[1].FirstStation.GetBusStationNumber");
+                                    int choose;
+                                    while (!int.TryParse(Console.ReadLine(), out choose)
+                                || (choose != 1 && choose != 2))
+                                        Console.WriteLine("enter only 1 or 2");
+                                    if (choose == 1)
+                                        lines.RemoveLine(input, tempList[0].FirstStation.GetBusStationNumber);
+                                    else
+                                        lines.RemoveLine(input, tempList[1].FirstStation.GetBusStationNumber);
+                                }
+                                catch (KeyNotFoundException ex) { Console.WriteLine(ex.Message); }
+                            }
+                            else
+                            {
+                                Console.WriteLine("enter line number");
+                                while (!int.TryParse(Console.ReadLine(), out input)
+                           || (input < 1 || input > 999))
+                                    Console.WriteLine("enter only number between 1-999");
+                                try
+                                {
+                                    List<BusLine> tempList = lines[input];
+                                    int stationNumber;
+                                    Console.WriteLine("enter the numbet of the station to delete");
+                                    while (!int.TryParse(Console.ReadLine(), out stationNumber)
+                                  || (stationNumber < 1 || stationNumber > 999999))
+                                        Console.WriteLine("enter only number between 1-999999");
+                                    if (tempList.Count == 1)
+                                    {  //lines[input][0].DeleteStstion(;
+                                        foreach (var stationInLine in tempList[0].stations)
+                                        {
+                                            if (stationNumber == stationInLine.GetBusStationNumber)
+                                            {
+                                                tempList[0].DeleteStstion(stationInLine);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                        Console.WriteLine($"  1: delete station of line from {0}\n  2: delete station of line from {1}," +
+                                            $" tempList[0].FirstStation.GetBusStationNumber, tempList[1].FirstStation.GetBusStationNumber");
+                                    int choose;
+                                    while (!int.TryParse(Console.ReadLine(), out choose)
+                                || (choose != 1 && choose != 2))
+                                        Console.WriteLine("enter only 1 or 2");
+                                    if (choose == 1)
+                                        foreach (var stationInLine in tempList[0].stations)
+                                        {
+                                            if (stationNumber == stationInLine.GetBusStationNumber)
+                                            {
+                                                tempList[0].DeleteStstion(stationInLine);
+                                                break;
+                                            }
+                                        }
+                                    else
+                                        foreach (var stationInLine in tempList[0].stations)
+                                        {
+                                            if (stationNumber == stationInLine.GetBusStationNumber)
+                                            {
+                                                tempList[1].DeleteStstion(stationInLine);
+                                                break;
+                                            }
+                                        }
+                                }
+                                catch (KeyNotFoundException ex) { Console.WriteLine(ex.Message); }
+                            }
+                            break;
+                        }
                     case Menu.search:
+                        {
+                            int input;
+                            Console.WriteLine("  1: search buses which stop instation\n  " +
+                                "2: print the options to travel from one statin to another");
+                            while (!int.TryParse(Console.ReadLine(), out input)
+                                || (input != 1 && input != 2))
+                                Console.WriteLine("enter only 1 or 2");
+                            if (input == 1)
+                            {
+                                Console.WriteLine("enter station number");
+                                int stationNumber;
+                                while (!int.TryParse(Console.ReadLine(), out stationNumber)
+                              || (stationNumber < 1 || stationNumber > 999999))
+                                    Console.WriteLine("enter only number between 1-999999");
+                                List<BusLine> linesStation = linesInStation(stationNumber, lines.Lines);
+                            }
+                            else
+                            {
+                                Console.WriteLine("enter station number");
+                                int stationNum1;
+                                while (!int.TryParse(Console.ReadLine(), out stationNum1)
+                              || (stationNum1 < 1 || stationNum1 > 999999))
+                                    Console.WriteLine("enter only number between 1-999999");
 
-                        break;
+                                Console.WriteLine("enter station number");
+                                int stationNum2;
+                                while (!int.TryParse(Console.ReadLine(), out stationNum2)
+                              || (stationNum2 < 1 || stationNum2 > 999999)) ;
+                                Console.WriteLine("enter only number between 1-999999");
+
+                                List<BusLine> linesStation1 = linesInStation(stationNum1, lines.Lines);
+                                List<BusLine> finalList = linesInStation(stationNum2, linesStation1);
+                                LinesCollection tempCol = new LinesCollection(finalList);
+                                tempCol.SortLines();
+                                foreach (BusLine item in tempCol.Lines)
+                                {
+                                    Console.WriteLine(item.ToString());
+                                }
+                            }
+                            break;
+                        }
                     case Menu.print:
-                        BusLine line = lines.Lines[0];
-                        string l = line.ToString();
-                        Console.WriteLine(l);
-                        break;
+                        {
+                            int input;
+                            Console.WriteLine("  1: print all lines\n  2: print all stations and the lines which stop there");
+                            while (!int.TryParse(Console.ReadLine(), out input)
+                                || (input != 1 && input != 2))
+                                Console.WriteLine("enter only 1 or 2");
+
+                            if (input == 1)
+                                foreach (var busline in lines)
+                                {
+                                    Console.WriteLine(busline.ToString());
+                                }
+                            else
+                            {
+                                foreach (var station in busStations)
+                                {
+                                    Console.Write($"station num: {station.BusStationNumber}, lines: ");
+                                    List<BusLine> lst = linesInStation(station.BusStationNumber, lines.Lines);
+                                    foreach (BusLine line in lst)
+                                    {
+                                        Console.Write(line.GetBusLine + ", ");
+                                    }
+                                    Console.WriteLine();
+                                }
+                            }
+                            break;
+                        }
                     default:
                         break;
                 }
             }
             while (choice != 0);
+
+
+            List<BusLine> linesInStation(int stationNum, List<BusLine> list)
+            {
+                List<BusLine> linesStation = new List<BusLine>();
+
+                foreach (BusLine line in list)
+                {
+                    foreach (var station in line.stations)
+                    {
+                        if (station.GetBusStationNumber == stationNum)
+                        {
+                            linesStation.Add(line);
+                            break;
+                        }
+                    }
+                }
+                return linesStation;
+            }
         }
     }
 }
