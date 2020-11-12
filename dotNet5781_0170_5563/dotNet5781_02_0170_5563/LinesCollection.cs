@@ -42,7 +42,8 @@ namespace dotNet5781_02_0170_5563
             }
             else if (count == 1)
             {
-                if (temp.FirstStation == newLine.LastStation && temp.LastStation == newLine.FirstStation)
+                if (temp.FirstStation.GetBusStationNumber == newLine.LastStation.GetBusStationNumber
+                    && temp.LastStation.GetBusStationNumber == newLine.FirstStation.GetBusStationNumber)
                 {
                     lines.Add(newLine);
                     Console.WriteLine("the addition successed");

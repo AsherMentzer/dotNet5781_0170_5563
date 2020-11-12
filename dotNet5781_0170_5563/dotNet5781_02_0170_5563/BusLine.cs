@@ -87,19 +87,15 @@ namespace dotNet5781_02_0170_5563
             Stations[index].DistanceFromLastStation =
                    GetDistance(newStation, Stations[index - 1]);
             Stations[index].TimeFromLastStation =
-               TimeSpan.FromMinutes(Stations[index - 1].DistanceFromLastStation / speedAverage);
+               TimeSpan.FromMinutes(Stations[index].DistanceFromLastStation / speedAverage);
             return;
         }
         public void DeleteStstion(BusStationLine station)
         {
+           /// if(Stations.Count==2)throw new exce
             if (!isStationInLine(station))
                 throw new KeyNotFoundException("error: this station not exist");
-            /* {
-                 Console.WriteLine("error: this station not exist");
-                 return;
-             }*/
-
-
+          
             for (int index = 0; index < Stations.Count; index++)
             {
                 if (Stations[index] == station)
@@ -137,7 +133,7 @@ namespace dotNet5781_02_0170_5563
         public double GetDistance(BusStationLine busStopA, BusStationLine busStopB)
         {
             return Math.Sqrt(Math.Pow(busStopA.GetLatitude - busStopB.GetLatitude, 2) +
-                Math.Pow(busStopA.GetLongitude - busStopB.GetLongitude, 2)) * 100;
+                Math.Pow(busStopA.GetLongitude - busStopB.GetLongitude, 2)) * 400;
         }
         public TimeSpan GetTravelTime(BusStationLine busStopA, BusStationLine busStopB)
         {

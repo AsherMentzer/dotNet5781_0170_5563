@@ -76,7 +76,7 @@ namespace dotNet5781_02_0170_5563
                BusStationLine bl11 = new BusStationLine(s11);*/
 
             BusLine l1 = new BusLine(1, s31, s40, a1);
-            BusLine l2 = new BusLine(1, s10, s1, a1);
+            BusLine l2 = new BusLine(11, s10, s1, a1);
             BusLine l3 = new BusLine(2, s11, s20, a1);
             BusLine l4 = new BusLine(2, s20, s11, a1);
             BusLine l5 = new BusLine(3, s35, s25, a1);
@@ -97,25 +97,20 @@ namespace dotNet5781_02_0170_5563
 
             List<BusStation> busStations = new List<BusStation> { s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15
             ,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31,s32,s33,s34,s35,s36,s37,s38,s39,s40};
-            /* bool isStation(int stationNumber)
-            {
-                foreach (var station in busStations)
-                {
-                    if (station.BusStationNumber == stationNumber)
-                        return true;
-                }
-                return false;
-            }*/
-            BusStation findStation(int stationNum)
-            {
-                foreach (var station in busStations)
-                {
-                    if (station.BusStationNumber == stationNum)
-                        return station;
-                }
-                return null;
-            }
+           
+            
             LinesCollection lines = new LinesCollection();
+            lines.AddLine(l1);
+            lines.AddLine(l2);
+            lines.AddLine(l3);
+            lines.AddLine(l4);
+            lines.AddLine(l5);
+            lines.AddLine(l6);
+            lines.AddLine(l7);
+            lines.AddLine(l8);
+            lines.AddLine(l9);
+            lines.AddLine(l10);
+           
             int choice;
             do
             {
@@ -277,9 +272,13 @@ namespace dotNet5781_02_0170_5563
                                 {
                                     List<BusLine> tempList = lines[input];
                                     if (tempList.Count == 1)
+                                    {
                                         lines.RemoveLine(input, tempList[0].FirstStation.GetBusStationNumber);
+                                        Console.WriteLine("the line removed");
+                                        break;
+                                    }
                                     else
-                                        Console.WriteLine($"  1: delete the lie from {0}\n  2: delete the line from {1}," +
+                                        Console.WriteLine($"  1: delete the line from {0}\n  2: delete the line from {1}," +
                                             $" tempList[0].FirstStation.GetBusStationNumber, tempList[1].FirstStation.GetBusStationNumber");
                                     int choose;
                                     while (!int.TryParse(Console.ReadLine(), out choose)
@@ -307,7 +306,7 @@ namespace dotNet5781_02_0170_5563
                                   || (stationNumber < 1 || stationNumber > 999999))
                                         Console.WriteLine("enter only number between 1-999999");
                                     if (tempList.Count == 1)
-                                    {  //lines[input][0].DeleteStstion(;
+                                    {  
                                         foreach (var stationInLine in tempList[0].stations)
                                         {
                                             if (stationNumber == stationInLine.GetBusStationNumber)
@@ -316,6 +315,7 @@ namespace dotNet5781_02_0170_5563
                                                 break;
                                             }
                                         }
+                                        break;
                                     }
                                     else
                                         Console.WriteLine($"  1: delete station of line from {0}\n  2: delete station of line from {1}," +
@@ -440,6 +440,15 @@ namespace dotNet5781_02_0170_5563
                     }
                 }
                 return linesStation;
+            }
+            BusStation findStation(int stationNum)
+            {
+                foreach (var station in busStations)
+                {
+                    if (station.BusStationNumber == stationNum)
+                        return station;
+                }
+                return null;
             }
         }
     }
