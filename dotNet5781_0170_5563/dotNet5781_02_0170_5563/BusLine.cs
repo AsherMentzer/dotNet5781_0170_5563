@@ -27,7 +27,24 @@ namespace dotNet5781_02_0170_5563
             lastStation.TimeFromLastStation = TimeSpan.FromMinutes(lastStation.DistanceFromLastStation / speedAverage);
             stations.Add(lastStation);
         }
-
+        public BusLine(int _busLine, areas _area,List<BusStation> stations)
+        {
+            busLine = _busLine;
+            
+            BusStationLine sLine = new BusStationLine(stations[0]);
+            Stations.Add(sLine);
+            for (int i=1;i< stations.Count;++i)
+            {
+                BusStationLine stationLine = new BusStationLine(stations[i]);
+                Stations.Add(stationLine);
+                Stations[i].DistanceFromLastStation = GetDistance(Stations[i-1], Stations[i]);
+                Stations[i].TimeFromLastStation = TimeSpan.FromMinutes(stationLine.DistanceFromLastStation / speedAverage);
+               
+            }
+            firstStation = Stations[0];
+            lastStation = Stations[Stations.Count-1];
+            area = _area;
+        }
         public int GetBusLine { get => busLine; }
         public BusStationLine FirstStation { get => firstStation; }
         public BusStationLine LastStation { get => lastStation; }
