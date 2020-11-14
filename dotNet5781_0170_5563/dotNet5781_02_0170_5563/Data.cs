@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
+    /// <summary>
+    ///class for initial 40 stations and 10 lines that in each station will stop at least
+    ///one line and in at least 10 station will stop more that 1 line 
+    /// </summary>
     class Data
     {
-      public  LinesCollection lines = new LinesCollection();
-      public  List<BusStation> busStations = new List<BusStation>();
+        public LinesCollection lines = new LinesCollection();//list of all the lines
+        public List<BusStation> busStations = new List<BusStation>();//list of all the stations
         static Random r = new Random(DateTime.Now.Millisecond);
         public Data()
         {
+            ///get 40 station and random deatails
             for (int i = 0; i < 40; ++i)
             {
                 bool flag = true;
@@ -32,35 +37,35 @@ namespace dotNet5781_02_0170_5563
                 BusStation busStation = new BusStation(num);
                 busStations.Add(busStation);
             }
-            
-           /* for (int i = 0; i < 8; ++i)
-            {
-                int area = r.Next(1, 6);
-                List<BusStation> lstA = new List<BusStation>();
-                int numOfStations = r.Next(2,40);
-               // int sts;
-                for (int j = 0; j < numOfStations; ++j)
-                {
-                    //sts = r.Next(0,40);
-                    //bool flag = true;
-                   /* do
-                    {
-                        sts = r.Next(0, 40);
-                        foreach (var station in lstA)
-                        {
-                            if (station.BusStationNumber == busStations[sts].BusStationNumber)
-                            {
-                                flag = false;
-                                break;
-                            }
-                        }
-                    } while (!flag);
-                    lstA.Add(busStations[i+j]);
-                }
-                BusLine newLine = new BusLine(i, (areas)area, lstA);
-                lines.AddLine(newLine);
-            }*/
-   
+
+            /* for (int i = 0; i < 8; ++i)
+             {
+                 int area = r.Next(1, 6);
+                 List<BusStation> lstA = new List<BusStation>();
+                 int numOfStations = r.Next(2,40);
+                // int sts;
+                 for (int j = 0; j < numOfStations; ++j)
+                 {
+                     //sts = r.Next(0,40);
+                     //bool flag = true;
+                    /* do
+                     {
+                         sts = r.Next(0, 40);
+                         foreach (var station in lstA)
+                         {
+                             if (station.BusStationNumber == busStations[sts].BusStationNumber)
+                             {
+                                 flag = false;
+                                 break;
+                             }
+                         }
+                     } while (!flag);
+                     lstA.Add(busStations[i+j]);
+                 }
+                 BusLine newLine = new BusLine(i, (areas)area, lstA);
+                 lines.AddLine(newLine);
+             }*/
+            //initial 10 lines
             List<BusStation> lst1 = new List<BusStation>
             { busStations[1], busStations[3], busStations[5], busStations[7], busStations[8], };
             BusLine l1 = new BusLine(1, (areas)1, lst1);
@@ -124,6 +129,6 @@ namespace dotNet5781_02_0170_5563
 
 
 
-           
+
     }
 }

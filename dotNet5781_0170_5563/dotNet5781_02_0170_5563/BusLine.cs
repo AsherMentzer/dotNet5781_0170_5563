@@ -280,10 +280,25 @@ namespace dotNet5781_02_0170_5563
                     "staion : {0} in this line", first.BusStationNumber);
             return null;
         }
+
+        /// <summary>
+        /// add station 
+        /// </summary>
+        /// <param name="station"></param>
         private void addS(BusStationLine station)
         {
             Stations.Add(station);
         }
+
+        /// <summary>
+        /// for IComperable compare the travel time between 2 station of 2 line wich travel time is shorter
+        /// </summary>
+        /// <param name="first">first station</param>
+        /// <param name="last">last station</param>
+        /// <param name="busLineA">line 1</param>
+        /// <param name="busLineB">line 2</param>
+        /// <returns>return int>0 if line A longer return int==0 if they
+        /// are equal and int>0 if lineA shorter</returns>
         public int ComparTwoLines(BusStation first, BusStation last,
             BusLine busLineA, BusLine busLineB)
         {
@@ -291,7 +306,12 @@ namespace dotNet5781_02_0170_5563
             BusLine SubLineB = busLineB.SubLine(first, last);
             return SubLineA.CompareTo(SubLineB);
         }
-
+        /// <summary>
+        /// compare 2 lines witch one total travel time is longer
+        /// </summary>
+        /// <param name="obj">line b</param>
+        /// <returns>/// <returns>return int>0 if line A longer return int==0 if they
+        /// are equal and int>0 if lineA shorter</returns></returns>
         public int CompareTo(object obj)
         {
             return GetTravelTime(firstStation, lastStation).CompareTo(((BusLine)obj)
