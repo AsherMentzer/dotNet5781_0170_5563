@@ -12,7 +12,6 @@ namespace dotNet5781_02_0170_5563
 
     class Program
     {
-        //static Random r = new Random(DateTime.Now.Millisecond);
         public enum Menu { exit, add, delete, search, print };
         static void Main(string[] args)
         {
@@ -251,6 +250,7 @@ namespace dotNet5781_02_0170_5563
                                         }
                                 }
                                 catch (KeyNotFoundException ex) { Console.WriteLine(ex.Message); }
+                                catch (MinimumStationsException ex) { Console.WriteLine(ex.Message); }
                             }
                             break;
                         }
@@ -272,25 +272,26 @@ namespace dotNet5781_02_0170_5563
                                 List<BusLine> linesStation = linesInStation(stationNumber, d.lines.Lines);
                                 foreach(BusLine busLine in linesStation)
                                     Console.Write(busLine.GetBusLine+", ");
+                                Console.WriteLine();
                             }
                             else
                             {
-                                Console.WriteLine("enter station number");
+                                Console.WriteLine("enter starting station number");
                                 int stationNum1;
                                 while (!int.TryParse(Console.ReadLine(), out stationNum1)
                               || (stationNum1 < 1 || stationNum1 > 999999))
                                     Console.WriteLine("enter only number between 1-999999");
 
-                                Console.WriteLine("enter station number");
+                                Console.WriteLine("enter destination station number");
                                 int stationNum2;
                                 while (!int.TryParse(Console.ReadLine(), out stationNum2)
-                              || (stationNum2 < 1 || stationNum2 > 999999)) ;
+                              || (stationNum2 < 1 || stationNum2 > 999999))
                                 Console.WriteLine("enter only number between 1-999999");
 
                                 List<BusLine> linesStation1 = linesInStation(stationNum1, d.lines.Lines);
                                 List<BusLine> finalList = linesInStation(stationNum2, linesStation1);
                                 LinesCollection tempCol = new LinesCollection(finalList);
-                               finalList= tempCol.SortLines();
+                               finalList = tempCol.SortLines();
                                 foreach (var item in finalList)
                                 {
                                     Console.WriteLine(item.GetBusLine);

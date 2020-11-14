@@ -99,7 +99,8 @@ namespace dotNet5781_02_0170_5563
             {
                 BusLine temp = lines[i];
                 for (int j = 0; j < lines.Count; j++)
-                {                  
+                {
+                   
                     if (lines[i].CompareTo(lines[j]) < 0)
                     {
                        temp= lines[j];

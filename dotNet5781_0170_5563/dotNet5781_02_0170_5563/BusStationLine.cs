@@ -6,24 +6,30 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
+    /// <summary>
+    /// class for bus station line is logical station for that
+    /// created for speciped line and contain all the details of the staion and
+    /// the deatails for the line the time and the distance from last station
+    /// </summary>
     public class BusStationLine
     {
-        //BusStation stop;
         private int busStationNumber;
         private float latitude;
         private float longitude;
         private string busStationAddress;
         private double distanceFromLastStation;
         private TimeSpan timeFromLastStation=new TimeSpan();
-
+        /// <summary>
+        /// constructor who get station and update the details 
+        /// for the bus station line
+        /// </summary>
+        /// <param name="station">real station</param>
         public BusStationLine(BusStation station)
         {
             busStationNumber = station.BusStationNumber;
             latitude = station.Latitude;
             longitude = station.Longitude;
             busStationAddress = station.BusStationAddress;
-           // distanceFromLastStation = distance;
-            //timeFromLastStation = time;
         }
         //properties
         public int GetBusStationNumber{ get => busStationNumber; }

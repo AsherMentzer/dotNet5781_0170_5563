@@ -7,7 +7,15 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0170_5563
 {
+    /// <summary>
+    /// enum for the area of the line
+    /// </summary>
     public enum areas { General = 1, North, West, Center, Jerusalem };
+    /// <summary>
+    /// class for bus line have deatails of the bus line number
+    /// list if all the stationd in line and the first and last station
+    /// is heir from Icomperable so we can compare 2 lines 
+    /// </summary>
     public class BusLine : IComparable
     {
         int busLine;
@@ -15,7 +23,16 @@ namespace dotNet5781_02_0170_5563
         BusStationLine lastStation;
         areas area;
         List<BusStationLine> Stations = new List<BusStationLine>();
-        double speedAverage = 40;
+        double speedAverage = 40;//speed average for bus is 40 km per hour
+        /// <summary>
+        /// constructor that get the deatails of the first and last stations and 
+        /// build line with this 2 stations  claculate the
+        ///distance and the time from first to last station
+        /// </summary>
+        /// <param name="_busLine">the line number</param>
+        /// <param name="first">first station</param>
+        /// <param name="last">last station</param>
+        /// <param name="_area">the area of the line</param>
         public BusLine(int _busLine, BusStation first, BusStation last, areas _area)
         {
             busLine = _busLine;
@@ -27,12 +44,21 @@ namespace dotNet5781_02_0170_5563
             lastStation.TimeFromLastStation = TimeSpan.FromMinutes(lastStation.DistanceFromLastStation / speedAverage);
             stations.Add(lastStation);
         }
+        /// <summary>
+        /// constructor that get the deatails of the line list of stations and 
+        /// build line with this  stations and claculate the
+        ///distance and the time from station to next station
+        /// </summary>
+        /// <param name="_busLine">the num of line</param>
+        /// <param name="_area">the area</param>
+        /// <param name="stations">list of the stations</param>
         public BusLine(int _busLine, areas _area,List<BusStation> stations)
         {
             busLine = _busLine;
             
             BusStationLine sLine = new BusStationLine(stations[0]);
             Stations.Add(sLine);
+            //foreach station calculate the time and distance and add to stations list
             for (int i=1;i< stations.Count;++i)
             {
                 BusStationLine stationLine = new BusStationLine(stations[i]);
@@ -50,6 +76,11 @@ namespace dotNet5781_02_0170_5563
         public BusStationLine LastStation { get => lastStation; }
         public areas GetArea { get => area; }
         public List<BusStationLine> stations { get => Stations; }
+        /// <summary>
+        ///  all the deatails of the line num-area-first and last
+        ///  station and all the station in the line 
+        /// </summary>
+        /// <returns>the string with all the deatails</returns>
         public override string ToString()
         {
             string temp = $"bus line: {busLine}, area: {area}, from : {firstStation.GetBusStationNumber} " +
@@ -57,24 +88,28 @@ namespace dotNet5781_02_0170_5563
             foreach (var station in Stations) { temp += $"{station.GetBusStationNumber} "; };
             return temp;
         }
-        //need to add all the details to busStopLine class
+        /// <summary>
+        /// get station and aad it to the line
+        /// </summary>
+        /// <param name="station">real station</param>
         public void addStationToLine(BusStation station)
         {
             BusStationLine newStation = new BusStationLine(station);
+
+            //if this station already exist in this line
             if (isStationInLine(newStation))
                 throw new DuplicateNameException("this station already in the line");
-            /* {
-                 Console.WriteLine("this station already in the line");
-                 return;
-             }*/
-
-            Console.WriteLine("please enter the number of the location of the station in the line");
+            
+            //in witch place in line you want this staion like stop number 5 etc..
+                Console.WriteLine("please enter the number of the location of the station in the line");
             int index;
             while (!int.TryParse(Console.ReadLine(), out index)
                 || index < 0 || index > Stations.Count + 1)
             {
                 Console.WriteLine("enter only number in the range of the list");
             }
+            //if is the first sattion in the line time and distance=0
+            //and update the old first station time and distance details  
             if (index == 0)
             {
                 Stations.Insert(0, newStation);
@@ -85,6 +120,8 @@ namespace dotNet5781_02_0170_5563
                 firstStation = newStation;
                 return;
             }
+            //if is the last station no need to update the old last station deatails
+            //only this satation 
             else if (index == Stations.Count + 1)
             {
                 Stations.Add(newStation);
@@ -95,7 +132,8 @@ namespace dotNet5781_02_0170_5563
                 lastStation = newStation;
                 return;
             }
-
+            //if is in the middle of the line need to update this station and 
+            //the station after this one with time and distance
             Stations.Insert(index, newStation);
             Stations[index + 1].DistanceFromLastStation =
                    GetDistance(newStation, Stations[index + 1]);
@@ -107,9 +145,15 @@ namespace dotNet5781_02_0170_5563
                TimeSpan.FromMinutes(Stations[index].DistanceFromLastStation / speedAverage);
             return;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="station"></param>
         public void DeleteStstion(BusStationLine station)
         {
-           /// if(Stations.Count==2)throw new exce
+            if (Stations.Count == 2) throw new MinimumStationsException
+                        ("there is only 2 stations in this line so you can't delete anymore");
+
             if (!isStationInLine(station))
                 throw new KeyNotFoundException("error: this station not exist");
           
@@ -221,4 +265,15 @@ namespace dotNet5781_02_0170_5563
         }
 
     }
+}
+
+[System.Serializable]
+public class MinimumStationsException : Exception
+{
+    public MinimumStationsException() { }
+    public MinimumStationsException(string message) : base(message) { }
+    public MinimumStationsException(string message, Exception inner) : base(message, inner) { }
+    protected MinimumStationsException(
+      System.Runtime.Serialization.SerializationInfo info,
+      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
