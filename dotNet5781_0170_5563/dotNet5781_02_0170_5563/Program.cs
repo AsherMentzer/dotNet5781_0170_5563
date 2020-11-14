@@ -257,7 +257,7 @@ namespace dotNet5781_02_0170_5563
                     case Menu.search:
                         {
                             int input;
-                            Console.WriteLine("  1: search buses which stop instation\n  " +
+                            Console.WriteLine("  1: search lines which stop in a station\n  " +
                                 "2: print the options to travel from one statin to another");
                             while (!int.TryParse(Console.ReadLine(), out input)
                                 || (input != 1 && input != 2))
@@ -270,8 +270,8 @@ namespace dotNet5781_02_0170_5563
                               || (stationNumber < 1 || stationNumber > 999999))
                                     Console.WriteLine("enter only number between 1-999999");
                                 List<BusLine> linesStation = linesInStation(stationNumber, d.lines.Lines);
-                                foreach(BusLine busLine in linesStation)
-                                    Console.Write(busLine.GetBusLine+", ");
+                                foreach (BusLine busLine in linesStation)
+                                    Console.Write(busLine.GetBusLine + ", ");
                                 Console.WriteLine();
                             }
                             else
@@ -286,16 +286,27 @@ namespace dotNet5781_02_0170_5563
                                 int stationNum2;
                                 while (!int.TryParse(Console.ReadLine(), out stationNum2)
                               || (stationNum2 < 1 || stationNum2 > 999999))
-                                Console.WriteLine("enter only number between 1-999999");
+                                    Console.WriteLine("enter only number between 1-999999");
 
-                                List<BusLine> linesStation1 = linesInStation(stationNum1, d.lines.Lines);
-                                List<BusLine> finalList = linesInStation(stationNum2, linesStation1);
+                                List<BusLine> finalList = new List<BusLine>(); 
+                                foreach(BusLine line in d.lines.Lines)
+                                {
+                                    bool first = false;
+                                    foreach (var station in line.stations)
+                                    {
+                                        if (station.GetBusStationNumber == stationNum1)
+                                            first = true;
+                                        if (first && station.GetBusStationNumber == stationNum2)
+                                            finalList.Add(line);
+                                    }
+                                }
                                 LinesCollection tempCol = new LinesCollection(finalList);
-                               finalList = tempCol.SortLines();
+                                finalList = tempCol.SortLines();
                                 foreach (var item in finalList)
                                 {
-                                    Console.WriteLine(item.GetBusLine);
+                                    Console.Write(item.GetBusLine + ", ");
                                 }
+                                Console.WriteLine();
                             }
                             break;
                         }

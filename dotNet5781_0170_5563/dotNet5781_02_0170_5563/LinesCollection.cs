@@ -91,23 +91,17 @@ namespace dotNet5781_02_0170_5563
             if (StationLines.Count == 0) throw new KeyNotFoundException("there is no lines in this station");
             return StationLines;
         }
-        //--------------------------------------------need more check of run time calculate
+
         public List<BusLine> SortLines()
         {
             List<BusLine> SortedLines = new List<BusLine>();
-            for (int i = 0; i < lines.Count; i++)
+            foreach(BusLine item in lines)
             {
-                BusLine temp = lines[i];
-                for (int j = 0; j < lines.Count; j++)
-                {
-                   
-                    if (lines[i].CompareTo(lines[j]) < 0)
-                    {
-                       temp= lines[j];
-                    }
-                }
-                SortedLines.Add(temp);
+                SortedLines.Add(item);
             }
+
+            SortedLines.Sort();
+            
             return SortedLines;
         }
 

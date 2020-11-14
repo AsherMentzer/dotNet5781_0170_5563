@@ -52,23 +52,23 @@ namespace dotNet5781_02_0170_5563
         /// <param name="_busLine">the num of line</param>
         /// <param name="_area">the area</param>
         /// <param name="stations">list of the stations</param>
-        public BusLine(int _busLine, areas _area,List<BusStation> stations)
+        public BusLine(int _busLine, areas _area, List<BusStation> stations)
         {
             busLine = _busLine;
-            
+
             BusStationLine sLine = new BusStationLine(stations[0]);
             Stations.Add(sLine);
             //foreach station calculate the time and distance and add to stations list
-            for (int i=1;i< stations.Count;++i)
+            for (int i = 1; i < stations.Count; ++i)
             {
                 BusStationLine stationLine = new BusStationLine(stations[i]);
                 Stations.Add(stationLine);
-                Stations[i].DistanceFromLastStation = GetDistance(Stations[i-1], Stations[i]);
+                Stations[i].DistanceFromLastStation = GetDistance(Stations[i - 1], Stations[i]);
                 Stations[i].TimeFromLastStation = TimeSpan.FromMinutes(stationLine.DistanceFromLastStation / speedAverage);
-               
+
             }
             firstStation = Stations[0];
-            lastStation = Stations[Stations.Count-1];
+            lastStation = Stations[Stations.Count - 1];
             area = _area;
         }
         public int GetBusLine { get => busLine; }
@@ -99,9 +99,9 @@ namespace dotNet5781_02_0170_5563
             //if this station already exist in this line
             if (isStationInLine(newStation))
                 throw new DuplicateNameException("this station already in the line");
-            
+
             //in witch place in line you want this staion like stop number 5 etc..
-                Console.WriteLine("please enter the number of the location of the station in the line");
+            Console.WriteLine("please enter the number of the location of the station in the line");
             int index;
             while (!int.TryParse(Console.ReadLine(), out index)
                 || index < 0 || index > Stations.Count + 1)
@@ -146,43 +146,57 @@ namespace dotNet5781_02_0170_5563
             return;
         }
         /// <summary>
-        /// 
+        /// delete a station from the line and aupdates the the rest of satation in the line
         /// </summary>
-        /// <param name="station"></param>
+        /// <param name="station">the station to delelte</param>
         public void DeleteStstion(BusStationLine station)
         {
+            // if there is only 2 stations in the line (line must contain at least 2 stations)
             if (Stations.Count == 2) throw new MinimumStationsException
                         ("there is only 2 stations in this line so you can't delete anymore");
 
+            // in case the station not in the line
             if (!isStationInLine(station))
                 throw new KeyNotFoundException("error: this station not exist");
-          
+
+            // fined the station in stations list and delete it
             for (int index = 0; index < Stations.Count; index++)
             {
                 if (Stations[index] == station)
                 {
+                    // if the first station is deleted 
                     if (index == 0)
                     {
-                        firstStation = Stations[index + 1];
-                        firstStation.DistanceFromLastStation = 0;
-                        firstStation.TimeFromLastStation = new TimeSpan();
-                        Stations.RemoveAt(index);
+                        firstStation = Stations[index + 1];         // update the first station of the line
+                        firstStation.DistanceFromLastStation = 0;   // update the distance to 0
+                        firstStation.TimeFromLastStation = new TimeSpan(); // update the travel tim to 0
+                        Stations.RemoveAt(index);                   // delete
                         return;
                     }
+                    // if the last station is deleted 
                     else if (index == Stations.Count)
                     {
-                        lastStation = Stations[index - 1];
-                        Stations.RemoveAt(index);
+                        lastStation = Stations[index - 1];  // update the last stop of the line
+                        Stations.RemoveAt(index);           // delete
                         return;
                     }
+
+                    // if the station that deleted is in the middle of the line
                     Stations[index + 1].DistanceFromLastStation =
-                   GetDistance(Stations[index - 1], Stations[index + 1]);
+                    GetDistance(Stations[index - 1], Stations[index + 1]); // updeate the distance
                     Stations[index + 1].TimeFromLastStation =
-                     TimeSpan.FromMinutes(Stations[index + 1].DistanceFromLastStation / speedAverage);
+                    TimeSpan.FromMinutes(Stations[index + 1].DistanceFromLastStation / speedAverage); // update the travel time
                     Stations.RemoveAt(index);
                 }
             }
         }
+
+
+        /// <summary>
+        /// check if he station is in line
+        /// </summary>
+        /// <param name="station">the station to check</param>
+        /// <returns>true if the station is in line, false if the station is not in the line</returns>
         public bool isStationInLine(BusStationLine station)
         {
             foreach (var stationLine in Stations)
@@ -191,11 +205,25 @@ namespace dotNet5781_02_0170_5563
 
             return false;
         }
+
+        /// <summary>
+        /// get the distance between 2 station, the caculation is by pitagoras sentence
+        /// </summary>
+        /// <param name="busStopA">first station</param>
+        /// <param name="busStopB">second station</param>
+        /// <returns>return the distance between two stations</returns>
         public double GetDistance(BusStationLine busStopA, BusStationLine busStopB)
         {
             return Math.Sqrt(Math.Pow(busStopA.GetLatitude - busStopB.GetLatitude, 2) +
                 Math.Pow(busStopA.GetLongitude - busStopB.GetLongitude, 2)) * 400;
         }
+
+        /// <summary>
+        /// compute the tavel time between 2 statipn by the distance divide the avavrage speed
+        /// </summary>
+        /// <param name="busStopA">first station</param>
+        /// <param name="busStopB">last station</param>
+        /// <returns>return the travel time</returns>
         public TimeSpan GetTravelTime(BusStationLine busStopA, BusStationLine busStopB)
         {
             TimeSpan TravelTime = new TimeSpan();
@@ -207,17 +235,23 @@ namespace dotNet5781_02_0170_5563
                     flag = true;
                     continue;
                 }
-
+                // after the first station found caculate the distance
                 if (flag)
                 {
                     TravelTime += station.TimeFromLastStation;
                 }
-                if (station == busStopB)
+                if (station == busStopB) // if is calculated the distance to the scond station
                     break;
             }
             return TravelTime;
         }
 
+        /// <summary>
+        /// build and retun line that is sub line
+        /// </summary>
+        /// <param name="first">first stop in the sub line</param>
+        /// <param name="last">last stop in the sub line</param>
+        /// <returns>return new line that is sub line with same numbe line</returns>
         public BusLine SubLine(BusStation first, BusStation last)
         {
             BusLine subLine = new BusLine(busLine, first, last, area);
