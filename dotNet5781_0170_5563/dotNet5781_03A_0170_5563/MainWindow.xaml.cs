@@ -21,7 +21,7 @@ namespace dotNet5781_03A_0170_5563
     /// </summary>
     public partial class MainWindow : Window
     {
-        //LinesCollection busLines = new LinesCollection();
+        
         private BusLine currentDisplayBusLine;
         Data linesData;
 
@@ -32,7 +32,6 @@ namespace dotNet5781_03A_0170_5563
             cbBusLines.ItemsSource = linesData.lines;
             cbBusLines.DisplayMemberPath = " GetBusLine ";
             cbBusLines.SelectedIndex = 0;
-            //tbArea.DisplayMemberPath  = "GetArea";
         }
 
         void ShowBusLine(int index)

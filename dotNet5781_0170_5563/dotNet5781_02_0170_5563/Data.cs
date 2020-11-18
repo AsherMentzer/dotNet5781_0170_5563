@@ -38,33 +38,33 @@ namespace dotNet5781_02_0170_5563
                 busStations.Add(busStation);
             }
 
-            /* for (int i = 0; i < 8; ++i)
-             {
-                 int area = r.Next(1, 6);
-                 List<BusStation> lstA = new List<BusStation>();
-                 int numOfStations = r.Next(2,40);
-                // int sts;
-                 for (int j = 0; j < numOfStations; ++j)
-                 {
-                     //sts = r.Next(0,40);
-                     //bool flag = true;
-                    /* do
-                     {
-                         sts = r.Next(0, 40);
-                         foreach (var station in lstA)
-                         {
-                             if (station.BusStationNumber == busStations[sts].BusStationNumber)
-                             {
-                                 flag = false;
-                                 break;
-                             }
-                         }
-                     } while (!flag);
-                     lstA.Add(busStations[i+j]);
-                 }
-                 BusLine newLine = new BusLine(i, (areas)area, lstA);
-                 lines.AddLine(newLine);
-             }*/
+            //for (int i = 0; i < 8; ++i)
+            //{
+            //    int area = r.Next(1, 6);
+            //    List<BusStation> lstA = new List<BusStation>();
+            //    int numOfStations = r.Next(2,3);
+            //    int sts;
+            //    for (int j = 0; j < numOfStations; ++j)
+            //    {
+            //       // sts = r.Next(0,40);
+            //        bool flag = true;
+            //       do
+            //        {
+            //            sts = r.Next(0, 40);
+            //            foreach (var station in lstA)
+            //            {
+            //                if (station.BusStationNumber == busStations[sts].BusStationNumber)
+            //                {
+            //                    flag = false;
+            //                    break;
+            //                }
+            //            }
+            //        } while (!flag);
+            //        lstA.Add(busStations[i+j]);
+            //    }
+            //    BusLine newLine = new BusLine(i, (areas)area, lstA);
+            //    lines.AddLine(newLine);
+            //}
             //initial 10 lines
             List<BusStation> lst1 = new List<BusStation>
             { busStations[1], busStations[3], busStations[5], busStations[7], busStations[8], };
@@ -78,7 +78,7 @@ namespace dotNet5781_02_0170_5563
 
             List<BusStation> lst3 = new List<BusStation>
             { busStations[18], busStations[16], busStations[14], busStations[12], busStations[10], };
-            BusLine l3 = new BusLine(2, (areas)1, lst3);
+            BusLine l3 = new BusLine(280, (areas)1, lst3);
             lines.AddLine(l3);
 
             List<BusStation> lst4 = new List<BusStation>
