@@ -151,7 +151,7 @@ namespace dotNet5781_02_0170_5563
         {
             get
             {
-                if (index < 1 || index > 999)
+                if (index < 0 || index > 999)
                     throw new ArgumentOutOfRangeException("the lines numbers are between 1-999");
 
                 List<BusLine> indexLines = new List<BusLine>();
