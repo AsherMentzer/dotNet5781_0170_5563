@@ -5,23 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03A_0170_5563"
         mc:Ignorable="d"
+       Icon="C:\Users\ashme\Desktop\מיני פרוייקט\buses.jpg"
         Title="MyFleet" Height="640" Width="800">
     <Grid Name="MainGrid" Margin="0,-6,0.333,5.667">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
-       
+
         <Grid Name="UpGrid"
               HorizontalAlignment="Stretch" Height="Auto"
               Grid.Row="0" VerticalAlignment="Stretch" Width="Auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="199*"/>
-                <ColumnDefinition Width="198.667"/>
-                <ColumnDefinition Width="198*"/>
-                <ColumnDefinition Width="198*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-             <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Center"
+            <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Center"
                        VerticalAlignment="Center" SelectionChanged="cbBusLines_SelectionChanged" FontSize="20">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -31,11 +33,65 @@
                 </ComboBox.Background>
             </ComboBox>
             <TextBox Name="tbArea" Grid.Column="3" HorizontalAlignment="Center" 
-                 Text="{Binding Path = GetArea, Mode=OneWay}" VerticalAlignment="Center" FontFamily="Segoe UI Black" FontSize="22" />
-        <Label Content="Bus Line Number:" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="22" FontFamily="Malgun Gothic" Background="#FF00FF64" Foreground="Red"/>
-        <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="22" Background="#FFFF0044" Foreground="#FF3800FF"/>
-       
+                 Text="{Binding Path = GetArea, Mode=OneWay}" VerticalAlignment="Center" FontFamily="Segoe UI Black" FontSize="22" Opacity="0.5" Cursor="No" >
+                <TextBox.LayoutTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="2" Y="3"/>
+                    </TransformGroup>
+                </TextBox.LayoutTransform>
+            </TextBox>
+            <Label Content="Bus Line Number:" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="22" FontFamily="Malgun Gothic" Background="#FF00FF64" Foreground="Red"/>
+            <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="22" Background="#FFD4FF00" Foreground="#FF0024FF"/>
+
         </Grid>
-        <ListBox Name="lbBusLineStations" ItemsSource="{Binding}"  Grid.Row="1"/>
+        <Grid Name="MidGrid"
+              HorizontalAlignment="Stretch" Height="Auto"
+              Grid.Row="1" VerticalAlignment="Stretch" Width="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Station Number:" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+            <Label Content="Latitude" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+            <Label Content="Longitude" Grid.Column="2" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+            <Label Content="time from previos station" Grid.Column="3" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+
+        </Grid>
+        <Grid Name="LowGrid"
+              HorizontalAlignment="Stretch" Height="Auto"
+              Grid.Row="2" VerticalAlignment="Stretch" Width="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}                  {0}                                     {1}   
+                                                               {2}                                 {3} ">
+                                    <Binding Path="GetBusStationNumber"/>
+                                    <Binding Path="GetLatitude" />
+                                    <Binding Path="GetLongitude" />
+                                    <Binding Path="TimeFromLastStation" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!--ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="1" Grid.Row="2"/>
+        <!ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="2" Grid.Row="2"/>
+        <!ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="3" Grid.Row="2"/-->
+        </Grid>
     </Grid>
 </Window>
