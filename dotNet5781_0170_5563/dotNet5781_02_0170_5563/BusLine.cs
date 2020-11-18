@@ -83,9 +83,14 @@ namespace dotNet5781_02_0170_5563
         /// <returns>the string with all the deatails</returns>
         public override string ToString()
         {
-            string temp = $"bus line: {busLine}, area: {area}, from : {firstStation.GetBusStationNumber} " +
-                $"to: {lastStation.GetBusStationNumber}\nstations numbers: ";
-            foreach (var station in Stations) { temp += $"{station.GetBusStationNumber} "; };
+            //string temp = $"bus line: {busLine}, area: {area}, from : {firstStation.GetBusStationNumber} " +
+            //    $"to: {lastStation.GetBusStationNumber}\nstations numbers: ";
+            string temp = "";
+            foreach (var station in Stations) 
+            { 
+                temp += $"{station.GetBusStationNumber} " +
+                    $"{station.GetLatitude} {station.GetLongitude} {station.TimeFromLastStation}\n";
+            };
             return temp;
         }
         /// <summary>

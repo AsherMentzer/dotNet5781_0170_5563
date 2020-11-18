@@ -10,7 +10,7 @@ namespace dotNet5781_02_0170_5563
     ///class for initial 40 stations and 10 lines that in each station will stop at least
     ///one line and in at least 10 station will stop more that 1 line 
     /// </summary>
-    class Data
+    public class Data
     {
         public LinesCollection lines = new LinesCollection();//list of all the lines
         public List<BusStation> busStations = new List<BusStation>();//list of all the stations
