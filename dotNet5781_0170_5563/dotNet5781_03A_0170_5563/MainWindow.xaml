@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03A_0170_5563"
         mc:Ignorable="d"
-       Icon="C:\Users\ashme\Desktop\מיני פרוייקט\buses.jpg"
-        Title="MyFleet" Height="640" Width="800">
+        Title="MyFleet" Height="640" Width="800"
+        Icon="C:\Users\josh5\source\repos\dotNet5781_0170_5563\dotNet5781_0170_5563\dotNet5781_03A_0170_5563\bin\Debug\images.jpg">
     <Grid Name="MainGrid" Margin="0,-6,0.333,5.667">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -43,8 +43,8 @@
                     </TransformGroup>
                 </TextBox.LayoutTransform>
             </TextBox>
-            <Label Content="Bus Line Number:" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="22" FontFamily="Malgun Gothic" Background="#FF00FF64" Foreground="Red"/>
-            <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="22" Background="#FFD4FF00" Foreground="#FF0024FF"/>
+            <Label Content="Bus Line Number:" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="22" FontFamily="Malgun Gothic" />
+            <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="22"/>
 
         </Grid>
         <Grid Name="MidGrid"
@@ -57,10 +57,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Station Number:" HorizontalAlignment="Center"  VerticalAlignment="Center" />
-            <Label Content="Latitude" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-            <Label Content="Longitude" Grid.Column="2" HorizontalAlignment="Center"  VerticalAlignment="Center" />
-            <Label Content="time from previos station" Grid.Column="3" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+            <Label Content="Station Number:" HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" FontSize="20"/>
+            <Label Content="Latitude" Grid.Column="1" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontSize="20"/>
+            <Label Content="Longitude" Grid.Column="2" HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" FontSize="20"/>
+            <Label Content="time from previos station" Grid.Column="3" 
+                   HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="16"/>
 
         </Grid>
         <Grid Name="LowGrid"
@@ -72,16 +76,58 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" >
+            <ListBox Name="lbBusLineStations0" ItemsSource="{Binding}" Grid.Column="0" 
+                     Grid.Row="2">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}                  {0}                                     {1}   
-                                                               {2}                                 {3} ">
+                        <TextBlock Margin="65,0,0,0">
+                            <TextBlock.Text >
+                                <MultiBinding StringFormat="{}{0}">
                                     <Binding Path="GetBusStationNumber"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ListBox Name="lbBusLineStations1" ItemsSource="{Binding}" Grid.Column="1" 
+                     Grid.Row="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="65,0,0,0">
+                            <TextBlock.Text >
+                                <MultiBinding StringFormat="{}{0}">
                                     <Binding Path="GetLatitude" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ListBox Name="lbBusLineStations2" ItemsSource="{Binding}" Grid.Column="2" 
+                     Grid.Row="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="65,0,0,0">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}">
                                     <Binding Path="GetLongitude" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ListBox Name="lbBusLineStations3" ItemsSource="{Binding}" Grid.Column="3" 
+                     Grid.Row="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="65,0,0,0">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0:hh\:mm\:ss}">
                                     <Binding Path="TimeFromLastStation" />
                                 </MultiBinding>
                             </TextBlock.Text>
@@ -89,9 +135,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <!--ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="1" Grid.Row="2"/>
-        <!ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="2" Grid.Row="2"/>
-        <!ListBox Name="lbBusLineStations" ItemsSource="{Binding}" Grid.Column="3" Grid.Row="2"/-->
         </Grid>
     </Grid>
 </Window>

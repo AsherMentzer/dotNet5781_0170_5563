@@ -38,7 +38,10 @@ namespace dotNet5781_03A_0170_5563
         {
             currentDisplayBusLine = linesData.lines[index].First();
             UpGrid.DataContext = currentDisplayBusLine;
-            lbBusLineStations.DataContext = currentDisplayBusLine.stations;
+            lbBusLineStations0.DataContext = currentDisplayBusLine.stations;
+            lbBusLineStations1.DataContext = currentDisplayBusLine.stations;
+            lbBusLineStations2.DataContext = currentDisplayBusLine.stations;
+            lbBusLineStations3.DataContext = currentDisplayBusLine.stations;
         }
        
 
