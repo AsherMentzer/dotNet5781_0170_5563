@@ -11,23 +11,24 @@
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="199*"/>
-            <ColumnDefinition Width="198.667"/>
-            <ColumnDefinition Width="198*"/>
-            <ColumnDefinition Width="198*"/>
-        </Grid.ColumnDefinitions>
+       
         <Grid Name="UpGrid"
               HorizontalAlignment="Stretch" Height="Auto"
               Grid.Row="0" VerticalAlignment="Stretch" Width="Auto">
-        </Grid>
-        <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Center"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="199*"/>
+                <ColumnDefinition Width="198.667"/>
+                <ColumnDefinition Width="198*"/>
+                <ColumnDefinition Width="198*"/>
+            </Grid.ColumnDefinitions>
+             <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Center"
                        VerticalAlignment="Center" SelectionChanged="cbBusLines_SelectionChanged" FontSize="20"/>
         <TextBox Name="tbArea" Grid.Column="3" HorizontalAlignment="Stretch" 
-                 Text="{Binding Path=Area}" VerticalAlignment="Stretch" FontFamily="Segoe UI Black" FontSize="14"/>
+                 Text="{Binding Path = GetArea, Mode=OneWay}" VerticalAlignment="Stretch" FontFamily="Segoe UI Black" FontSize="14" />
         <Label Content="Bus Line Number:" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="22"/>
         <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="22"/>
-        <ListBox Name="lbBusLineStations" Grid.ColumnSpan="4" ItemsSource="{Binding}" 
-                 Grid.Row="1"/>
+       
+        </Grid>
+        <ListBox Name="lbBusLineStations" ItemsSource="{Binding}"  Grid.Row="1"/>
     </Grid>
 </Window>

@@ -32,6 +32,7 @@ namespace dotNet5781_03A_0170_5563
             cbBusLines.ItemsSource = linesData.lines;
             cbBusLines.DisplayMemberPath = " GetBusLine ";
             cbBusLines.SelectedIndex = 0;
+            //tbArea.DisplayMemberPath  = "GetArea";
         }
 
         void ShowBusLine(int index)
@@ -40,11 +41,13 @@ namespace dotNet5781_03A_0170_5563
             UpGrid.DataContext = currentDisplayBusLine;
             lbBusLineStations.DataContext = currentDisplayBusLine.stations;
         }
+       
 
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ShowBusLine((cbBusLines.SelectedValue as BusLine).GetBusLine);
 
         }
+
     }
 }

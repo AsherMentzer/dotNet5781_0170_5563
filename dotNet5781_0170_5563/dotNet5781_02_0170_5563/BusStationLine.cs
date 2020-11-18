@@ -39,6 +39,11 @@ namespace dotNet5781_02_0170_5563
         public double DistanceFromLastStation { get => distanceFromLastStation;
             set => distanceFromLastStation = value; }
         public TimeSpan TimeFromLastStation { get => timeFromLastStation; set => timeFromLastStation = value; }
+        override public string ToString()
+        {
+            return $"Bus Station Code: { busStationNumber}, {latitude}\u00b0N { longitude}\u00b0E"
+              + $"  {timeFromLastStation.ToString(@"hh\:mm\:ss")} ";
+        }
 
     }
 }
