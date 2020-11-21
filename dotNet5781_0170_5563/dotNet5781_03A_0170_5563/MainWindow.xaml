@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03A_0170_5563"
         mc:Ignorable="d"
-        Title="MyFleet" Height="640" Width="800"
-        Icon="C:\Users\josh5\source\repos\dotNet5781_0170_5563\dotNet5781_0170_5563\dotNet5781_03A_0170_5563\bin\Debug\images.jpg">
+        Title="Bus-Sa" Height="640" Width="800"
+        Icon="Icon.jpg">
+
     <Grid Name="MainGrid" Margin="0,-6,0.333,5.667">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -23,17 +24,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Center"
-                       VerticalAlignment="Center" SelectionChanged="cbBusLines_SelectionChanged" FontSize="20">
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
-                        <GradientStop Color="#FF00FFF6" Offset="1"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
+            
+            <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="left"
+                       VerticalAlignment="Center" SelectionChanged="cbBusLines_SelectionChanged" FontSize="15">
             </ComboBox>
+            
             <TextBox Name="tbArea" Grid.Column="3" HorizontalAlignment="Center" 
-                 Text="{Binding Path = GetArea, Mode=OneWay}" VerticalAlignment="Center" FontFamily="Segoe UI Black" FontSize="22" Opacity="0.5" Cursor="No" >
+                 Text="{Binding Path = GetArea, Mode=OneWay}" VerticalAlignment="Center" 
+                     FontFamily="Segoe UI Black" FontSize="22"  BorderThickness="0">
                 <TextBox.LayoutTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -43,10 +41,13 @@
                     </TransformGroup>
                 </TextBox.LayoutTransform>
             </TextBox>
-            <Label Content="Bus Line Number:" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="22" FontFamily="Malgun Gothic" />
-            <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="22"/>
-
+            
+            <Label Content="Bus Line Number:" HorizontalAlignment="Right"  
+                   VerticalAlignment="Center" FontSize="22" FontFamily="Malgun Gothic" />
+            <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Right" 
+                   VerticalAlignment="Center" FontSize="22"/>
         </Grid>
+        
         <Grid Name="MidGrid"
               HorizontalAlignment="Stretch" Height="Auto"
               Grid.Row="1" VerticalAlignment="Stretch" Width="Auto">
@@ -57,27 +58,29 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Station Number:" HorizontalAlignment="Center" 
+            <Label Content="Station Number" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" FontSize="20"/>
             <Label Content="Latitude" Grid.Column="1" HorizontalAlignment="Center"
                    VerticalAlignment="Center" FontSize="20"/>
             <Label Content="Longitude" Grid.Column="2" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" FontSize="20"/>
-            <Label Content="time from previos station" Grid.Column="3" 
+            <Label Content="Time from previos station" Grid.Column="3" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="16"/>
-
         </Grid>
+        
         <Grid Name="LowGrid"
               HorizontalAlignment="Stretch" Height="Auto"
               Grid.Row="2" VerticalAlignment="Stretch" Width="Auto">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+
             <ListBox Name="lbBusLineStations0" ItemsSource="{Binding}" Grid.Column="0" 
-                     Grid.Row="2">
+                     Grid.Row="2" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Margin="65,0,0,0">
@@ -92,7 +95,7 @@
             </ListBox>
 
             <ListBox Name="lbBusLineStations1" ItemsSource="{Binding}" Grid.Column="1" 
-                     Grid.Row="2">
+                     Grid.Row="2" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Margin="65,0,0,0">
@@ -107,7 +110,7 @@
             </ListBox>
 
             <ListBox Name="lbBusLineStations2" ItemsSource="{Binding}" Grid.Column="2" 
-                     Grid.Row="2">
+                     Grid.Row="2" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Margin="65,0,0,0">
@@ -122,7 +125,7 @@
             </ListBox>
 
             <ListBox Name="lbBusLineStations3" ItemsSource="{Binding}" Grid.Column="3" 
-                     Grid.Row="2">
+                     Grid.Row="2" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Margin="65,0,0,0">
@@ -135,6 +138,9 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Image Source="backGround.jpg" Grid.Column="1" Grid.ColumnSpan="2" 
+                   VerticalAlignment="Bottom" Opacity="0.5"/>
+
         </Grid>
     </Grid>
 </Window>

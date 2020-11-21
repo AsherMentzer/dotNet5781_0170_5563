@@ -21,7 +21,7 @@ namespace dotNet5781_03A_0170_5563
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         private BusLine currentDisplayBusLine;
         Data linesData;
 
@@ -43,13 +43,11 @@ namespace dotNet5781_03A_0170_5563
             lbBusLineStations2.DataContext = currentDisplayBusLine.stations;
             lbBusLineStations3.DataContext = currentDisplayBusLine.stations;
         }
-       
 
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ShowBusLine((cbBusLines.SelectedValue as BusLine).GetBusLine);
 
         }
-
     }
 }
