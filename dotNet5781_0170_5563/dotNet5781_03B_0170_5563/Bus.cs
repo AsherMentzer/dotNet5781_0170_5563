@@ -44,11 +44,11 @@ namespace dotNet5781_03B_0170_5563
         /// <param name="_fuel">fuel in bus default is 1200(full tank)</param>
         /// <param name="_kmAfterBusFixing">how much he can travel till he will need fix
         /// the default is 20000 we assuming he fixed when you get the bus</param>
-        public Bus(string newId, int year, int month, int day, DateTime _lastFix, double _kilometrage = 0,
+        public Bus(string newId,DateTime active, DateTime _lastFix, double _kilometrage = 0,
             double _fuel = 1200, double _kmAfterBusFixing = 20000)
         {
             licenseId = newId;
-            activeDate = new DateTime(year, month, day);
+            activeDate = active;
             kilometrage = _kilometrage;
             fuel = _fuel;
             kmAfterBusFixing = _kmAfterBusFixing;
