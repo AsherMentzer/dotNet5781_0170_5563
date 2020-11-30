@@ -14,10 +14,11 @@
 
         <Grid x:Name="upGrid" Grid.Row="0" >
             <Button x:Name="add" Content="Add Bus" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="75" Click="Button_Click"/>
+            <Button x:Name="Button" Content="cc" HorizontalAlignment="Center" Margin="520,10,198.6,11" Width="75" Click="ccButton_Click"/>
 
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
-        <ListBox Name="lbBuses" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="ListBox_SelectionChanged" />
+            <ListBox Name="lbBuses" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="ListBox_SelectionChanged" />
         </Grid>
     </Grid>
 </Window>

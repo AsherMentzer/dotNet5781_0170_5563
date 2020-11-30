@@ -59,9 +59,9 @@ namespace dotNet5781_03B_0170_5563
         {
             activeDate = randDate();
             if (activeDate.Year < 2018)
-                licenseId = r.Next(0000000, 9999999).ToString();
+                licenseId = r.Next(1000000, 9999999).ToString();
             else
-                licenseId = r.Next(00000000, 99999999).ToString();
+                licenseId = r.Next(10000000, 99999999).ToString();
             kilometrage = 0;
             fuel = 1200;
             kmAfterBusFixing = 0;

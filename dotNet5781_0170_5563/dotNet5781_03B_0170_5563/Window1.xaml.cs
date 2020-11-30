@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,19 +19,18 @@ namespace dotNet5781_03B_0170_5563
     /// Interaction logic for Window1.xaml
     /// </summary>
     public partial class Window1 : Window
-    {
-        Bus bus;
+    { 
         DateTime date;
         string licenseId;
         double kilometrage;
-        bool dangerous;
         double fuel;
         double kmAfterBusFixing;
         DateTime lastFix;
-
-        public Window1()
+        ObservableCollection<Bus> bu;
+        public Window1(ObservableCollection<Bus> b)
         {
             InitializeComponent();
+            bu = b;
             dpActivityDate.SelectedDateChanged += DpActivityDate_SelectedDateChanged;
             dpFixDate.SelectedDateChanged += DpFixDate_SelectedDateChanged;
         }
@@ -54,34 +54,46 @@ namespace dotNet5781_03B_0170_5563
 
         private void tbId_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var id = sender as string;
-
-            if (date.Year < 2018)
+            var v = sender as TextBox;
+            //string v = d.Text;
+            if (v != null)
             {
-                if (id.Length != 7)
-                    MessageBox.Show("the id must be 7 digits", "invalid id");
+                string id = v.Text;
+                if (date.Year < 2018)
+                {
+                    //if (id.Length != 7)
+                    //    MessageBox.Show("the id must be 7 digits", "invalid id");
+                    //else
+                        licenseId = id;
+                }
                 else
-                    licenseId = id;
-            }
-            else
-            {
-                if (id.Length != 8)
-                    MessageBox.Show("the id must be 8 digits", "invalid id");
-                else
-                    licenseId = id;
+                {
+                    //if (id.Length != 8)
+                    //    MessageBox.Show("the id must be 8 digits", "invalid id");
+                    //else
+                        licenseId = id;
+                }
             }
         }
         private void tbKm_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var k = sender as string;
-            kilometrage = double.Parse(k);
+            var v = sender as TextBox;
+            
+            if (v != null)
+            {
+                kilometrage = double.Parse(v.Text);
+            }
         }
 
         private void tbKmAfterFix_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var k = sender as string;
-            kmAfterBusFixing = double.Parse(k);
-
+            var v = sender as TextBox;
+            //string v = d.Text;
+            if (v != null)
+            {
+               
+                kmAfterBusFixing = double.Parse(v.Text);
+            }
         }
 
         private void DpFixDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -98,13 +110,17 @@ namespace dotNet5781_03B_0170_5563
         }
         private void tbFuel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var k = sender as string;
-            fuel = double.Parse(k);
+            var v = sender as TextBox;
+            if (v != null)
+            {
+                fuel = double.Parse(v.Text);
+            }
         }
         public void Button_Click(object sender, RoutedEventArgs e)
         {
-            bus = new Bus(licenseId, date, lastFix, kilometrage, fuel, kmAfterBusFixing);
-          
+            Bus bus = new Bus(licenseId, date, lastFix, kilometrage, fuel, kmAfterBusFixing);
+            bu.Add(bus);
+            this.Close();
         }
 
       
