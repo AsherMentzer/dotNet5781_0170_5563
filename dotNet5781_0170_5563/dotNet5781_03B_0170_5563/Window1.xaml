@@ -23,14 +23,14 @@
                 </DatePicker>
             </StackPanel>
         </Grid>
-        <TextBox Name="tbId" Grid.Row="1" HorizontalAlignment="Stretch"  Text="license Id number" VerticalAlignment="Stretch" TextChanged="tbId_TextChanged"/>
-        <TextBox x:Name="tbKm" Grid.Row="2" HorizontalAlignment="Stretch"  Text="kilometrage" VerticalAlignment="Stretch" TextChanged="tbKm_TextChanged" />
-        <TextBox x:Name="tbKmAfterFix" Grid.Row="3" HorizontalAlignment="Stretch"  Text="kilometrage since last fix" VerticalAlignment="Stretch" TextChanged="tbKmAfterFix_TextChanged" />
+        <TextBox Name="tbId"  Grid.Row="1" HorizontalAlignment="Stretch"  Text="" VerticalAlignment="Stretch" TextChanged="tbId_TextChanged"/>
+        <TextBox x:Name="tbKm" Grid.Row="2" HorizontalAlignment="Stretch"  Text="" VerticalAlignment="Stretch" TextChanged="tbKm_TextChanged" />
+        <TextBox x:Name="tbKmAfterFix" Grid.Row="3" HorizontalAlignment="Stretch"  Text="" VerticalAlignment="Stretch" TextChanged="tbKmAfterFix_TextChanged" />
         <StackPanel Grid.Row="4">
             <DatePicker Name="dpFixDate" DisplayDateStart="01.01.1990" DisplayDateEnd="01.01.2021">
             </DatePicker>
         </StackPanel>
-        <TextBox Name="tbFuel" Grid.Row="5" HorizontalAlignment="Stretch"  Text="fuel" VerticalAlignment="Stretch" TextChanged="tbFuel_TextChanged" />
+        <TextBox Name="tbFuel" Grid.Row="5" HorizontalAlignment="Stretch"  Text="" VerticalAlignment="Stretch" TextChanged="tbFuel_TextChanged" />
         <Button Content="Button" HorizontalAlignment="Left" Margin="337,30,0,0" Grid.Row="6" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
 
     </Grid>
