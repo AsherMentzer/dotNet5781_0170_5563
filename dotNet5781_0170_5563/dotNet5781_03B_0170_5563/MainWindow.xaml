@@ -18,7 +18,30 @@
 
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
-            <ListBox Name="lbBuses" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="ListBox_SelectionChanged" />
+            <ListView Name="lbBuses" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="ListView_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="200"/>
+
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="ab" Content="click"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="text">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="dd" Content="click me"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+                     
+            
         </Grid>
     </Grid>
 </Window>

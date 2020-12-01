@@ -62,7 +62,7 @@ namespace dotNet5781_03B_0170_5563
         }
 
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
