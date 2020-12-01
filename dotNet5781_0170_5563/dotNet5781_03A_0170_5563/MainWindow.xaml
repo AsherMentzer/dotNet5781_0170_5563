@@ -100,7 +100,7 @@
                     <DataTemplate>
                         <TextBlock Margin="65,0,0,0">
                             <TextBlock.Text >
-                                <MultiBinding StringFormat="{}{0}">
+                                <MultiBinding StringFormat="{}{0}°N">
                                     <Binding Path="GetLatitude" />
                                 </MultiBinding>
                             </TextBlock.Text>
@@ -115,7 +115,7 @@
                     <DataTemplate>
                         <TextBlock Margin="65,0,0,0">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0}">
+                                <MultiBinding StringFormat="{}{0}°E">
                                     <Binding Path="GetLongitude" />
                                 </MultiBinding>
                             </TextBlock.Text>
