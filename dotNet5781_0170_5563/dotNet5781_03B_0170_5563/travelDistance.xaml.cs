@@ -29,25 +29,42 @@ namespace dotNet5781_03B_0170_5563
 
         private void KM_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+
             double km;
             var varKm = sender as TextBox;
 
             double.TryParse(varKm.Text, out km);
-            if (varKm == null) return;
-            if (e == null) return;
-            if (e.Key == Key.Enter || e.Key == Key.Return)
+                            
+            if (km > 0)
             {
-                // ------------------------ need to do checks before updating------------------------
-                // update the detailes of the bus
-                currentBus.Kilometrage += km;
-                currentBus.KmForTravel +=  km;
-                currentBus.Fuel -= km;
+                if (varKm == null) return;
+                if (e == null) return;           
+                if (currentBus.Fuel - km < 0)
+                    MessageBox.Show("thre is no enough fuel for this travel");
+                else if (currentBus.KmForTravel + km > 20000)
+                    MessageBox.Show($"the bus can travel {20000 - currentBus.KmForTravel} kilometers only");
+                else if (currentBus.Status != Status.ready)
+                    MessageBox.Show($"the status is {currentBus.Status}, the bus is not ready", "status failed");
+                else if (e.Key == Key.Enter || e.Key == Key.Return)
+                {
+                    // update the detailes of the bus
+                    currentBus.Kilometrage += km;
+                    currentBus.KmForTravel += km;
+                    currentBus.Fuel -= km;
+                    // --------------------------------maby no need because the threads----------------------------------
+                    if (currentBus.KmForTravel == 20000)
+                        currentBus.Status = Status.needFix;
+                    else 
+                        currentBus.Status = Status.traveling;
 
-                e.Handled = true;
-                this.Close();
-                return;
+
+
+                    e.Handled = true;
+                    this.Close();
+                    return;
+                }
             }
-            
+
         }
     }
 }

@@ -14,8 +14,6 @@
 
         <Grid x:Name="upGrid" Grid.Row="0" >
             <Button x:Name="add" Content="Add Bus" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="75" Click="Button_Click"/>
-            <Button x:Name="Button" Content="cc" HorizontalAlignment="Center" Margin="520,10,198.6,11" Width="75" Click="ccButton_Click"/>
-
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
             <ListView Name="lbBuses" HorizontalAlignment="Stretch" 
@@ -27,14 +25,14 @@
                             <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="bTravel" Content="Travrl" Click="bTravel_Click"/>
+                                    <Button x:Name="bTravel" Content="TRAVEL" Click="bTravel_Click"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="text">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="dd" Content="click me"/>
+                                    <Button x:Name="bFueling" Content="FUEL" Click="bFueling_Click"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

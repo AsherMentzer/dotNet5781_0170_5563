@@ -50,10 +50,8 @@ namespace dotNet5781_03B_0170_5563
                 } while (!flag);
                 myBuses.Add(b1);
             }
-
-
-
         }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -68,11 +66,7 @@ namespace dotNet5781_03B_0170_5563
             //lbBuses.Items.Refresh();
             //myBuses.Add(w1.bus);
         }
-        public void ccButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("hi");
-        }
-  
+          
         private void bTravel_Click(object sender, RoutedEventArgs e)
         {
             var temp = sender as FrameworkElement;
@@ -81,17 +75,25 @@ namespace dotNet5781_03B_0170_5563
             newTravel.Show();
         }
 
+        private void bFueling_Click(object sender, RoutedEventArgs e)
+        {
+            var temp = sender as FrameworkElement;
+            Bus bus = temp.DataContext as Bus;
+            if (bus.Fuel < 1200)
+            {
+                bus.Fuel = 1200;
+                bus.Status = Status.fuelling;
+            }
+            else
+                MessageBox.Show("the tank is full already");
+        }
+
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var temp = lbBuses.SelectedItem;
             Bus bus = (Bus)temp;
             busDetails chosenBus = new busDetails(bus);
             chosenBus.Show();
-        }
-
-        private void lbBuses_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+        }       
     }
 }

@@ -33,5 +33,25 @@ namespace dotNet5781_03B_0170_5563
             status.Text = currentBus.Status.ToString();
         }
 
+        private void bFuel_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentBus.Fuel < 1200)
+            {
+                currentBus.Fuel = 1200;
+                currentBus.Status = Status.fuelling;
+                this.Close();
+            }
+            else
+                MessageBox.Show("the tank is full already");
+        }
+
+        private void bFix_Click(object sender, RoutedEventArgs e)
+        {
+            currentBus.KmForTravel = 0;
+            currentBus.LastFix = DateTime.Now;
+            currentBus.Fuel = 1200;
+            currentBus.Status = Status.fixing;
+            this.Close();
+        }
     }
 }

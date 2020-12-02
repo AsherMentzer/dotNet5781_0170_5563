@@ -33,8 +33,10 @@ namespace dotNet5781_03B_0170_5563
             bu = b;
             tbId.MaxLength = 8;
             // dpActivityDate.SelectedDateChanged += DpActivityDate_SelectedDateChanged;
-            dpFixDate.SelectedDateChanged += DpFixDate_SelectedDateChanged;
+            //dpFixDate.SelectedDateChanged += DpFixDate_SelectedDateChanged;
         }
+
+        private void dpActivityDate_CalendarClosed(object sender, RoutedEventArgs e){ }
 
         private void DpActivityDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -58,8 +60,9 @@ namespace dotNet5781_03B_0170_5563
                         length = 8;
                     if (tbId.Text.Length < length)
                         va.Text = "not valid";
+                    dpFixDate.IsEnabled = true;
                 }
-
+                tbId.IsEnabled = true;
             }
         }
 
@@ -82,12 +85,16 @@ namespace dotNet5781_03B_0170_5563
                 //{
                 if (id.Length != length)
                 {
+                    tbId.BorderBrush = bordColor.BorderBrush;
+                    tbId.Background = bordColor.Background;
                     va.Text = "not valid";
                     //MessageBox.Show("the id must be 8 digits", "invalid id");
                     licenseId = null;
                 }
                 else
                 {
+                    tbId.BorderBrush = default;
+                    tbId.Background = default;
                     double a;
                     if (double.TryParse(id, out a))
                     {
@@ -99,23 +106,31 @@ namespace dotNet5781_03B_0170_5563
         }
         private void tbKm_TextChanged(object sender, TextChangedEventArgs e)
         {
+            double check;
             var v = sender as TextBox;
 
             if (v != null)
             {
-                double.TryParse(v.Text, out kilometrage);
+                double.TryParse(v.Text, out check);
+                if (check >= 0)
+                    kilometrage = check;
+                else
+                    MessageBox.Show("the kilometrage can not to be negative");
             }
         }
 
         private void tbKmAfterFix_TextChanged(object sender, TextChangedEventArgs e)
         {
+            double check;
             var v = sender as TextBox;
-            //string v = d.Text;
             if (v != null)
             {
 
-                double.TryParse(v.Text, out (kmAfterBusFixing));
-                kmAfterBusFixing = 20000 - kmAfterBusFixing;
+                double.TryParse(v.Text, out check);
+                if (check >= 0)
+                    kmAfterBusFixing = check;
+                else
+                    MessageBox.Show("the kilometrage can not to be negative");
             }
         }
 
@@ -127,10 +142,13 @@ namespace dotNet5781_03B_0170_5563
             {
                 if (d < date)
                     MessageBox.Show("the last fix date must be later than active date", "invalid date");
-                lastFix = (DateTime)d;
+                else if (d > DateTime.Now)
+                    MessageBox.Show("the last fix can not be later than today", "invalid date");
+                else
+                    lastFix = (DateTime)d;
             }
-
         }
+
         private void tbFuel_TextChanged(object sender, TextChangedEventArgs e)
         {
             var v = sender as TextBox;
@@ -138,37 +156,25 @@ namespace dotNet5781_03B_0170_5563
             {
                 double test;
                 double.TryParse(v.Text, out test);
-               if(test>=0 && test <1201)
-                { 
-                    fuel=test;
+                if (test >= 0 && test < 1201)
+                {
+                    fuel = test;
                 }
+                else
+                    MessageBox.Show("The tank contain between 0 to 1200 litter");
             }
         }
 
-
-        public void Button_Click(object sender, RoutedEventArgs e)
+        private void addButton_Click(object sender, RoutedEventArgs e)
         {
             int length;
             if (date.Year < 2018) length = 7;
             else length = 8;
-            if ((licenseId.Length != length) || date == default || lastFix == default || kilometrage == default
+            if ((licenseId == null || licenseId.Length != length) || date == default || lastFix == default || kilometrage == default
                 || fuel == default || kmAfterBusFixing == default) { MessageBox.Show("fill all the fields"); return; }
             Bus bus = new Bus(licenseId, date, lastFix, kilometrage, fuel, kmAfterBusFixing);
             bu.Add(bus);
             this.Close();
         }
-
-        //private void tbId_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    int length = 7;
-        //    if (date.Year >= 2018)
-        //        length = 8;
-        //    if (tbId.Text.Length < length)
-        //    {
-        //        tbId.Focus();
-        //        tbId.Background = "(Color)Red";
-        //    }
-        //}
     }
-
 }
