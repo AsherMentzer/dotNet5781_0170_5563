@@ -19,7 +19,7 @@ namespace dotNet5781_03B_0170_5563
     /// Interaction logic for Window1.xaml
     /// </summary>
     public partial class Window1 : Window
-    { 
+    {
         DateTime date;
         string licenseId;
         double kilometrage;
@@ -35,21 +35,13 @@ namespace dotNet5781_03B_0170_5563
             dpFixDate.SelectedDateChanged += DpFixDate_SelectedDateChanged;
         }
 
-
-
         private void DpActivityDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as DatePicker;
             DateTime? d = picker.SelectedDate;
 
             if (d != null)
-                date =(DateTime)d;
-            //    this.Title = "No date";
-            //}
-            //else
-            //{
-            //   this.title = date.Value.ToShortDateString();
-            //}
+                date = (DateTime)d;
         }
 
         private void tbId_TextChanged(object sender, TextChangedEventArgs e)
@@ -64,24 +56,24 @@ namespace dotNet5781_03B_0170_5563
                     //if (id.Length != 7)
                     //    MessageBox.Show("the id must be 7 digits", "invalid id");
                     //else
-                        licenseId = id;
+                    licenseId = id;
                 }
                 else
                 {
                     //if (id.Length != 8)
                     //    MessageBox.Show("the id must be 8 digits", "invalid id");
                     //else
-                        licenseId = id;
+                    licenseId = id;
                 }
             }
         }
         private void tbKm_TextChanged(object sender, TextChangedEventArgs e)
         {
             var v = sender as TextBox;
-            
+
             if (v != null)
             {
-                kilometrage = double.Parse(v.Text);
+                double.TryParse(v.Text, out kilometrage);
             }
         }
 
@@ -91,8 +83,8 @@ namespace dotNet5781_03B_0170_5563
             //string v = d.Text;
             if (v != null)
             {
-               
-                kmAfterBusFixing = double.Parse(v.Text);
+
+                double.TryParse(v.Text, out kmAfterBusFixing);
             }
         }
 
@@ -113,17 +105,24 @@ namespace dotNet5781_03B_0170_5563
             var v = sender as TextBox;
             if (v != null)
             {
-                fuel = double.Parse(v.Text);
+                double.TryParse(v.Text, out fuel);
             }
         }
+
+         
         public void Button_Click(object sender, RoutedEventArgs e)
         {
+            int length;
+            if (date.Year < 2018) length = 7;
+            else length = 8;
+            if ((licenseId.Length != length) || date == default || lastFix == default || kilometrage == default
+                || fuel == default || kmAfterBusFixing == default) { MessageBox.Show("fill all the fields"); return; }
             Bus bus = new Bus(licenseId, date, lastFix, kilometrage, fuel, kmAfterBusFixing);
             bu.Add(bus);
             this.Close();
         }
 
-      
+
     }
-    
+
 }

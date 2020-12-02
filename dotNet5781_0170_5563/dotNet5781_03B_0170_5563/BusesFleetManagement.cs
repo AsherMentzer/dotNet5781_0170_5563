@@ -30,7 +30,7 @@
 //                Console.WriteLine("what is the condition of the bus\n" +
 //                    "for new press: 1,  for used press: 2 ");
 //                condition = int.Parse(Console.ReadLine());
-//                if(condition != 1 && condition != 2)
+//                if (condition != 1 && condition != 2)
 //                    Console.WriteLine("enter 1 or 2 only");
 //            } while (condition != 1 && condition != 2);
 
@@ -78,7 +78,7 @@
 //                    return;
 //                }
 //            }
-                        
+
 //            Bus b1;
 //            //in case the bus is new
 //            if (condition == 1)
@@ -229,7 +229,7 @@
 //                Console.WriteLine("you don't have any bus in the fleet");
 //                return;
 //            }
-            
+
 //            // get the id number to find the bus in the list
 //            Console.WriteLine("enter id number:");
 //            string id = Console.ReadLine();

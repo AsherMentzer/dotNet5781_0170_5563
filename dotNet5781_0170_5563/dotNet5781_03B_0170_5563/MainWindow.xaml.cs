@@ -60,13 +60,7 @@ namespace dotNet5781_03B_0170_5563
             Buses();
             lbBuses.ItemsSource = myBuses;
         }
-
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+       
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             Window1 w1 = new Window1(myBuses);
@@ -77,6 +71,22 @@ namespace dotNet5781_03B_0170_5563
         public void ccButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("hi");
+        }
+  
+        private void bTravel_Click(object sender, RoutedEventArgs e)
+        {
+            var temp = sender as FrameworkElement;
+            Bus bus = temp.DataContext as Bus;
+            travelDistance newTravel = new travelDistance(bus);
+            newTravel.Show();
+        }
+
+        private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var temp = sender as FrameworkElement;
+            Bus bus = temp.DataContext as Bus;
+            busDetails chosenBus = new busDetails(bus);
+            chosenBus.Show();
         }
     }
 }
