@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,8 +38,23 @@ namespace dotNet5781_03B_0170_5563
         {
             if (currentBus.Fuel < 1200)
             {
-                currentBus.Fuel = 1200;
-                currentBus.Status = Status.fuelling;
+                Thread thread;
+                new Thread(() =>
+                 {
+
+                     thread = Thread.CurrentThread;
+                     currentBus.Fuel = 1200;
+                     currentBus.Status = Status.fuelling;
+                     Thread.Sleep(12000);
+                     currentBus.Status = Status.ready;
+                     ////thread.Join();
+                     ////if (thread.IsAlive)
+                     ////    MessageBox.Show("alive");
+                     ////else if(! thread.IsAlive)
+                     ////    MessageBox.Show("not alive");
+                 }).Start();
+
+
                 this.Close();
             }
             else
@@ -47,11 +63,23 @@ namespace dotNet5781_03B_0170_5563
 
         private void bFix_Click(object sender, RoutedEventArgs e)
         {
-            currentBus.KmForTravel = 0;
-            currentBus.LastFix = DateTime.Now;
-            currentBus.Fuel = 1200;
-            currentBus.Status = Status.fixing;
+            Thread thread;
+            new Thread(() =>
+            {
+                thread = Thread.CurrentThread;
+
+                currentBus.KmForTravel = 0;
+                currentBus.LastFix = DateTime.Now;
+                currentBus.Fuel = 1200;
+                currentBus.Status = Status.fixing;
+                new Thread(()=> { MessageBox.Show("start fixing"); }).Start();
+                Thread.Sleep(144000);
+                currentBus.Status = Status.ready;
+                MessageBox.Show("finish fixing");
+               
+            }).Start();
             this.Close();
         }
+            
     }
 }
