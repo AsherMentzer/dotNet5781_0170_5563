@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace dotNet5781_03B_0170_5563
 {
 
-    public enum Status { ready, traveling, fuelling, fixing };
+    public enum Status { ready, traveling, fuelling, fixing, needFix };
     public class Bus
     {
         static Random r = new Random(DateTime.Now.Millisecond);
@@ -21,7 +21,7 @@ namespace dotNet5781_03B_0170_5563
         private double fuel;
         private double kmAfterBusFixing;
         private DateTime lastFix = DateTime.Now;
-        private Status status = Status.ready;
+        private Status status;
         ///properties
         public string GetId { get => licenseId; }
         public DateTime Active { get => activeDate; }
@@ -44,8 +44,8 @@ namespace dotNet5781_03B_0170_5563
         /// <param name="_fuel">fuel in bus default is 1200(full tank)</param>
         /// <param name="_kmAfterBusFixing">how much he can travel till he will need fix
         /// the default is 20000 we assuming he fixed when you get the bus</param>
-        public Bus(string newId,DateTime active, DateTime _lastFix, double _kilometrage = 0,
-            double _fuel = 1200, double _kmAfterBusFixing = 20000)
+        public Bus(string newId, DateTime active, DateTime _lastFix, double _kilometrage = 0,
+            double _fuel = 1200, double _kmAfterBusFixing = 0, Status _status = Status.ready)
         {
             licenseId = newId;
             activeDate = active;
@@ -53,6 +53,19 @@ namespace dotNet5781_03B_0170_5563
             fuel = _fuel;
             kmAfterBusFixing = _kmAfterBusFixing;
             lastFix = _lastFix;
+            if (_status != Status.ready && _status != Status.traveling)
+                status = _status;
+            else
+            {
+                DateTime t = lastFix.AddYears(1);
+                if (t < DateTime.Now)
+                    status = Status.needFix;
+                else if (kmAfterBusFixing > 20000)
+                    status = Status.needFix;
+                else
+                    status = Status.ready;
+            }
+
         }
 
         public Bus()
@@ -65,10 +78,11 @@ namespace dotNet5781_03B_0170_5563
             kilometrage = 0;
             fuel = 1200;
             kmAfterBusFixing = 0;
+            status = Status.ready;
         }
         public DateTime randDate()
         {
-            int year = r.Next(1990,DateTime.Now.Year);
+            int year = r.Next(1990, DateTime.Now.Year);
             int month = r.Next(1, 12);
             DateTime d = new DateTime(year, month, 5);
             return d;

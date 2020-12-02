@@ -28,9 +28,9 @@ namespace dotNet5781_03B_0170_5563
         public void Buses()
         {
 
-            myBuses.Add(new Bus("1234567", new DateTime(2017, 2, 20), new DateTime(2019, 10, 20), 100000));
-            myBuses.Add(new Bus("12345678", new DateTime(2018, 2, 20), new DateTime(2020, 10, 20), 100000, _kmAfterBusFixing: 19980));
-            myBuses.Add(new Bus("87654321", new DateTime(2019, 2, 20), new DateTime(2019, 10, 20), 100000, 10));
+            myBuses.Add(new Bus("1234567", new DateTime(2017, 2, 20), new DateTime(2019, 10, 20), 100000, _kmAfterBusFixing: 0));
+            myBuses.Add(new Bus("12345678", new DateTime(2018, 2, 20), new DateTime(2020, 10, 20), 100000, _kmAfterBusFixing:19980));
+            myBuses.Add(new Bus("87654321", new DateTime(2019, 2, 20), new DateTime(2019, 10, 20), 100000, 10 ,_kmAfterBusFixing:0 ));
 
             for (int i = 0; i < 7; ++i)
             {
@@ -83,10 +83,15 @@ namespace dotNet5781_03B_0170_5563
 
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var temp = sender as FrameworkElement;
-            Bus bus = temp.DataContext as Bus;
+            var temp = lbBuses.SelectedItem;
+            Bus bus = (Bus)temp;
             busDetails chosenBus = new busDetails(bus);
             chosenBus.Show();
+        }
+
+        private void lbBuses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
     }
 }

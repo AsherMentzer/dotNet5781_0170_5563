@@ -31,7 +31,8 @@ namespace dotNet5781_03B_0170_5563
         {
             InitializeComponent();
             bu = b;
-            dpActivityDate.SelectedDateChanged += DpActivityDate_SelectedDateChanged;
+            tbId.MaxLength = 8;
+            // dpActivityDate.SelectedDateChanged += DpActivityDate_SelectedDateChanged;
             dpFixDate.SelectedDateChanged += DpFixDate_SelectedDateChanged;
         }
 
@@ -41,7 +42,25 @@ namespace dotNet5781_03B_0170_5563
             DateTime? d = picker.SelectedDate;
 
             if (d != null)
-                date = (DateTime)d;
+            {
+                if (d.Value.Year < 1990 || d.Value > DateTime.Now)
+                {
+
+                    MessageBox.Show("the date must be between 1990 - today", "invalid date");
+                    //  dpActivityDate.SelectedDate = null;
+                    // e.Handled = true;
+                }
+                else
+                {
+                    date = (DateTime)d;
+                    int length = 7;
+                    if (date.Year >= 2018)
+                        length = 8;
+                    if (tbId.Text.Length < length)
+                        va.Text = "not valid";
+                }
+
+            }
         }
 
         private void tbId_TextChanged(object sender, TextChangedEventArgs e)
@@ -51,19 +70,30 @@ namespace dotNet5781_03B_0170_5563
             if (v != null)
             {
                 string id = v.Text;
-                if (date.Year < 2018)
+                int length = 7;
+                if (date.Year >= 2018)
+                    length = 8;
+
+                //MessageBox.Show("the id must be 7 digits", "invalid id");
+                //    else
+
+                //}
+                //else
+                //{
+                if (id.Length != length)
                 {
-                    //if (id.Length != 7)
-                    //    MessageBox.Show("the id must be 7 digits", "invalid id");
-                    //else
-                    licenseId = id;
+                    va.Text = "not valid";
+                    //MessageBox.Show("the id must be 8 digits", "invalid id");
+                    licenseId = null;
                 }
                 else
                 {
-                    //if (id.Length != 8)
-                    //    MessageBox.Show("the id must be 8 digits", "invalid id");
-                    //else
-                    licenseId = id;
+                    double a;
+                    if (double.TryParse(id, out a))
+                    {
+                        va.Text = "valid";
+                        licenseId = id;
+                    }
                 }
             }
         }
@@ -84,7 +114,8 @@ namespace dotNet5781_03B_0170_5563
             if (v != null)
             {
 
-                double.TryParse(v.Text, out kmAfterBusFixing);
+                double.TryParse(v.Text, out (kmAfterBusFixing));
+                kmAfterBusFixing = 20000 - kmAfterBusFixing;
             }
         }
 
@@ -105,11 +136,16 @@ namespace dotNet5781_03B_0170_5563
             var v = sender as TextBox;
             if (v != null)
             {
-                double.TryParse(v.Text, out fuel);
+                double test;
+                double.TryParse(v.Text, out test);
+               if(test>=0 && test <1201)
+                { 
+                    fuel=test;
+                }
             }
         }
 
-         
+
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             int length;
@@ -122,7 +158,17 @@ namespace dotNet5781_03B_0170_5563
             this.Close();
         }
 
-
+        //private void tbId_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    int length = 7;
+        //    if (date.Year >= 2018)
+        //        length = 8;
+        //    if (tbId.Text.Length < length)
+        //    {
+        //        tbId.Focus();
+        //        tbId.Background = "(Color)Red";
+        //    }
+        //}
     }
 
 }

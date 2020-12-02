@@ -39,9 +39,9 @@ namespace dotNet5781_03B_0170_5563
             {
                 // ------------------------ need to do checks before updating------------------------
                 // update the detailes of the bus
-                currentBus.Kilometrage = km + currentBus.Kilometrage;
-                currentBus.KmForTravel = currentBus.KmForTravel - km;
-                currentBus.Fuel = currentBus.Fuel - km;
+                currentBus.Kilometrage += km;
+                currentBus.KmForTravel +=  km;
+                currentBus.Fuel -= km;
 
                 e.Handled = true;
                 this.Close();

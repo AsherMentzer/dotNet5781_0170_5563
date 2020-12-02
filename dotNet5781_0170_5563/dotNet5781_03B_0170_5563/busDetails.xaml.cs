@@ -25,7 +25,12 @@ namespace dotNet5781_03B_0170_5563
             InitializeComponent();
             currentBus = bus;
             ID.Text = currentBus.GetId.ToString();
-
+            active.Text = currentBus.Active.ToShortDateString();
+            KM.Text = currentBus.Kilometrage.ToString();
+            fuel.Text = currentBus.Fuel.ToString();
+            fixDate.Text = currentBus.LastFix.ToShortDateString();
+            kmFromFix.Text = currentBus.KmForTravel.ToString();
+            status.Text = currentBus.Status.ToString();
         }
 
     }

@@ -18,13 +18,13 @@
 
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
-            <ListView Name="lbBuses" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"
-                      MouseDoubleClick="lbBuses_MouseDoubleClick">                
+            <ListView Name="lbBuses" HorizontalAlignment="Stretch" 
+              MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" >                
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="200"/>
-
-                        <GridViewColumn>
+                        <GridViewColumn Width="200">
+                        </GridViewColumn>
+                            <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button x:Name="bTravel" Content="Travrl" Click="bTravel_Click"/>
