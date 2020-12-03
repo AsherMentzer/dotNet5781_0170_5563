@@ -170,6 +170,14 @@ namespace dotNet5781_03B_0170_5563
             int length;
             if (date.Year < 2018) length = 7;
             else length = 8;
+            foreach(var id in bu)
+            {
+                if (licenseId == id.GetId)
+                {
+                    MessageBox.Show("the bus already exist", "not valid license id");
+                    return;
+                }
+            }
             if ((licenseId == null || licenseId.Length != length) || date == default || lastFix == default || kilometrage == default
                 || fuel == default || kmAfterBusFixing == default) { MessageBox.Show("fill all the fields"); return; }
             Bus bus = new Bus(licenseId, date, lastFix, kilometrage, fuel, kmAfterBusFixing);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,16 +54,23 @@ namespace dotNet5781_03B_0170_5563
                             MessageBox.Show($"the bus can travel {20000 - currentBus.KmForTravel} kilometers only");
                         else
                         {
-                            // update the detailes of the bus
-                            currentBus.Kilometrage += km;
-                            currentBus.KmForTravel += km;
-                            currentBus.Fuel -= km;
-                            // --------------------------------maby no need because the threads----------------------------------
-                            if (currentBus.KmForTravel == 20000)
-                                currentBus.Status = Status.needFix;
-                            else
-                                currentBus.Status = Status.traveling;
-                        }
+                            new Thread(() =>
+                                {
+                                   
+                                    // --------------------------------maby no need because the threads----------------------------------
+                                    //if (currentBus.KmForTravel == 20000)
+                                    //    currentBus.Status = Status.needFix;
+                                    //else
+                                        currentBus.Status = Status.traveling;
+                                    double sum = (km / 40) * 6000;
+                                    Thread.Sleep((int)sum);
+                                    // update the detailes of the bus
+                                    currentBus.Kilometrage += km;
+                                    currentBus.KmForTravel += km;
+                                    currentBus.Fuel -= km;
+                                    currentBus.Status = Status.ready;
+                                }).Start();
+                    }
                         e.Handled = true;
                         this.Close();
                         return;
@@ -81,13 +89,13 @@ namespace dotNet5781_03B_0170_5563
             {
                 if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) || Keyboard.IsKeyDown(Key.LeftCtrl)
                     || Keyboard.IsKeyDown(Key.RightCtrl) || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt)))
-                  return;
+                    return;
             }
 
             e.Handled = true;
             MessageBox.Show("Only  numbers  are  allowed", "Account", MessageBoxButton.OK, MessageBoxImage.Error);
-           
-         }
+
+        }
     }
 }
 

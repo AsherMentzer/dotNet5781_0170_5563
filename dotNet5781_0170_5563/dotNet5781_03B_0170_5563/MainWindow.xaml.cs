@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,6 +58,7 @@ namespace dotNet5781_03B_0170_5563
             InitializeComponent();
             Buses();
             lbBuses.ItemsSource = myBuses;
+            
         }
        
         public void Button_Click(object sender, RoutedEventArgs e)
@@ -81,8 +83,13 @@ namespace dotNet5781_03B_0170_5563
             Bus bus = temp.DataContext as Bus;
             if (bus.Fuel < 1200)
             {
-                bus.Fuel = 1200;
-                bus.Status = Status.fuelling;
+                new Thread(() =>
+                {
+                    bus.Fuel = 1200;
+                    bus.Status = Status.fuelling;
+                    Thread.Sleep(12000);
+                    bus.Status = Status.ready;
+                }).Start();  
             }
             else
                 MessageBox.Show("the tank is full already");

@@ -17,10 +17,24 @@
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
             <ListView Name="lbBuses" HorizontalAlignment="Stretch" 
-              MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" >                
+              MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" >
+                <!--<ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Background" Value="LightGreen"/>
+                    </Style>
+                </ListView.ItemContainerStyle>-->
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>                                   
+                                        <Image x:Name="image" Source="{}" />                                
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Width="200">
+                           
+
                         </GridViewColumn>
                             <GridViewColumn>
                             <GridViewColumn.CellTemplate>
@@ -36,6 +50,13 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <!--<GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock x:Name="timer" Visibility="Hidden"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>-->
                     </GridView>
                 </ListView.View>
             </ListView>

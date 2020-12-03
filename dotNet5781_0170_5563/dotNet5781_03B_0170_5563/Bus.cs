@@ -30,7 +30,7 @@ namespace dotNet5781_03B_0170_5563
         public double Fuel { get => fuel; set => fuel = value; }
         public double KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
         public DateTime LastFix { get => lastFix; set => lastFix = value; }
-        public Status Status { get; set; }
+        public Status Status { get=>status; set=>status=value; }
         //public Status myStatus { get=>status; set=>status=value; }
         /// <summary>
         /// constructor how get at least the id and the active date for new bus
