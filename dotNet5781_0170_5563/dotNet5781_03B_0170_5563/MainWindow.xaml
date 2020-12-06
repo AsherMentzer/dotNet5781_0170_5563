@@ -13,55 +13,57 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="upGrid" Grid.Row="0" >
-            <Button x:Name="add" Content="Add Bus" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="75" Click="Button_Click"/>
+            <Button x:Name="add" Content="Add Bus" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="75" Click="Button_Click" />
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="36*"/>
+                <ColumnDefinition Width="25*"/>
+                <ColumnDefinition Width="732*"/>
+            </Grid.ColumnDefinitions>
             <ListView Name="lbBuses" HorizontalAlignment="Stretch" 
-              MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" >
-                <!--<ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="Background" Value="LightGreen"/>
-                    </Style>
-                </ListView.ItemContainerStyle>-->
+              MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,0,0.333,-0.333" >
                 <ListView.View>
                     <GridView>
+                        
+                        <GridViewColumn Header="STATUS">
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Image Source="{Binding Path=ImageStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  
+                                           Height="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Width="200"/>
+
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>                                   
-                                        <Image x:Name="image" Source="{}" />                                
+                                <DataTemplate>
+                                    <Button x:Name="bTravel" Content="TRAVEL" Click="bTravel_Click" IsEnabled="{Binding Path=EnableTravel}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Width="200">
-                           
-
-                        </GridViewColumn>
-                            <GridViewColumn>
+                        <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="bTravel" Content="TRAVEL" Click="bTravel_Click"/>
+                                    <Button x:Name="bFueling" Content="FUEL" Click="bFueling_Click" IsEnabled="{Binding Path=EnableFuel}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="text">
+                        <GridViewColumn Header="TIME TO BE READY">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="bFueling" Content="FUEL" Click="bFueling_Click"/>
+                                    <TextBlock x:Name="tbTimer" Text="{Binding Path= Timer, Mode=OneWay, StringFormat=#;;;}" Width="Auto"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <!--<GridViewColumn>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock x:Name="timer" Visibility="Hidden"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>-->
+                        
                     </GridView>
                 </ListView.View>
             </ListView>
-                     
-            
+
+
         </Grid>
     </Grid>
 </Window>

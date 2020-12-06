@@ -23,15 +23,15 @@ namespace dotNet5781_03B_0170_5563
     public partial class MainWindow : Window
     {
 
-       ObservableCollection<Bus>  myBuses = new ObservableCollection<Bus>();
+        ObservableCollection<Bus> myBuses = new ObservableCollection<Bus>();
 
 
         public void Buses()
         {
 
             myBuses.Add(new Bus("1234567", new DateTime(2017, 2, 20), new DateTime(2019, 10, 20), 100000, _kmAfterBusFixing: 0));
-            myBuses.Add(new Bus("12345678", new DateTime(2018, 2, 20), new DateTime(2020, 10, 20), 100000, _kmAfterBusFixing:19980));
-            myBuses.Add(new Bus("87654321", new DateTime(2019, 2, 20), new DateTime(2019, 10, 20), 100000, 10 ,_kmAfterBusFixing:0 ));
+            myBuses.Add(new Bus("12345678", new DateTime(2018, 2, 20), new DateTime(2020, 10, 20), 100000, _kmAfterBusFixing: 19980));
+            myBuses.Add(new Bus("87654321", new DateTime(2019, 2, 20), new DateTime(2020, 10, 20), 100000, 10, _kmAfterBusFixing: 0));
 
             for (int i = 0; i < 7; ++i)
             {
@@ -58,9 +58,9 @@ namespace dotNet5781_03B_0170_5563
             InitializeComponent();
             Buses();
             lbBuses.ItemsSource = myBuses;
-            
+
         }
-       
+
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             Window1 w1 = new Window1(myBuses);
@@ -68,7 +68,7 @@ namespace dotNet5781_03B_0170_5563
             //lbBuses.Items.Refresh();
             //myBuses.Add(w1.bus);
         }
-          
+
         private void bTravel_Click(object sender, RoutedEventArgs e)
         {
             var temp = sender as FrameworkElement;
@@ -85,11 +85,25 @@ namespace dotNet5781_03B_0170_5563
             {
                 new Thread(() =>
                 {
+                    
                     bus.Fuel = 1200;
                     bus.Status = Status.fuelling;
+                    new Thread(() =>
+                    {
+                        bus.EnableFuel = false;
+                        bus.EnableTravel = false;
+                        for (bus.Timer = 12; bus.Timer > 0; --bus.Timer)
+                            Thread.Sleep(1000);
+                    }).Start();
                     Thread.Sleep(12000);
                     bus.Status = Status.ready;
-                }).Start();  
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        bus.EnableFuel = true;
+                        bus.EnableTravel = true;
+                    });
+
+                }).Start();
             }
             else
                 MessageBox.Show("the tank is full already");
@@ -100,7 +114,7 @@ namespace dotNet5781_03B_0170_5563
             var temp = lbBuses.SelectedItem;
             Bus bus = (Bus)temp;
             busDetails chosenBus = new busDetails(bus);
-            chosenBus.Show();
-        }       
+            chosenBus.ShowDialog();
+        }        
     }
 }

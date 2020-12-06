@@ -56,21 +56,30 @@ namespace dotNet5781_03B_0170_5563
                         {
                             new Thread(() =>
                                 {
-                                   
+
                                     // --------------------------------maby no need because the threads----------------------------------
                                     //if (currentBus.KmForTravel == 20000)
                                     //    currentBus.Status = Status.needFix;
                                     //else
-                                        currentBus.Status = Status.traveling;
+                                    currentBus.Status = Status.traveling;
                                     double sum = (km / 40) * 6000;
+                                    currentBus.EnableTravel = false;
+                                    currentBus.EnableFuel = false;
+                                    new Thread(() =>
+                                    {
+                                        for (currentBus.Timer = (int)sum/1000; currentBus.Timer > 0; --currentBus.Timer)
+                                            Thread.Sleep(1000);
+                                    }).Start();
                                     Thread.Sleep((int)sum);
                                     // update the detailes of the bus
                                     currentBus.Kilometrage += km;
                                     currentBus.KmForTravel += km;
                                     currentBus.Fuel -= km;
                                     currentBus.Status = Status.ready;
+                                    currentBus.EnableTravel = true;
+                                    currentBus.EnableFuel = true;
                                 }).Start();
-                    }
+                        }
                         e.Handled = true;
                         this.Close();
                         return;

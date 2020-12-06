@@ -36,7 +36,7 @@ namespace dotNet5781_03B_0170_5563
             //dpFixDate.SelectedDateChanged += DpFixDate_SelectedDateChanged;
         }
 
-        private void dpActivityDate_CalendarClosed(object sender, RoutedEventArgs e){ }
+        private void dpActivityDate_CalendarClosed(object sender, RoutedEventArgs e) { }
 
         private void DpActivityDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -58,9 +58,12 @@ namespace dotNet5781_03B_0170_5563
                     int length = 7;
                     if (date.Year >= 2018)
                         length = 8;
+
+                    lbIDbackground.Content = $"enter {length} digits";
+
                     if (tbId.Text.Length < length)
-                        va.Text = "not valid";
-                    dpFixDate.IsEnabled = true;
+                        //va.Text = "not valid";
+                        dpFixDate.IsEnabled = true;
                 }
                 tbId.IsEnabled = true;
             }
@@ -68,6 +71,8 @@ namespace dotNet5781_03B_0170_5563
 
         private void tbId_TextChanged(object sender, TextChangedEventArgs e)
         {
+            
+
             var v = sender as TextBox;
             //string v = d.Text;
             if (v != null)
@@ -76,29 +81,39 @@ namespace dotNet5781_03B_0170_5563
                 int length = 7;
                 if (date.Year >= 2018)
                     length = 8;
-
                 //MessageBox.Show("the id must be 7 digits", "invalid id");
                 //    else
 
                 //}
                 //else
                 //{
+                //if (tbId.Text.Length != 0)
+                //brdId.Background = Brushes.Transparent;
                 if (id.Length != length)
                 {
-                    tbId.BorderBrush = bordColor.BorderBrush;
-                    tbId.Background = bordColor.Background;
-                    va.Text = "not valid";
+                    if (tbId.Text.Length == 0)
+                    {
+                        brdId.Background = Brushes.Transparent;
+                    }
+                    else
+                    {
+                        brdId.BorderBrush = Brushes.Red;
+                        brdId.Background = Brushes.LightPink;
+                    }
+                    
+
+                    //va.Text = "not valid";
                     //MessageBox.Show("the id must be 8 digits", "invalid id");
                     licenseId = null;
                 }
                 else
                 {
-                    tbId.BorderBrush = default;
-                    tbId.Background = default;
+                    brdId.BorderBrush = Brushes.Green;
+                    brdId.Background = Brushes.LightGreen;
                     double a;
                     if (double.TryParse(id, out a))
                     {
-                        va.Text = "valid";
+                        //va.Text = "valid";
                         licenseId = id;
                     }
                 }
@@ -113,9 +128,19 @@ namespace dotNet5781_03B_0170_5563
             {
                 double.TryParse(v.Text, out check);
                 if (check >= 0)
+                {
                     kilometrage = check;
+                    v.Background = default;
+                    v.BorderBrush = default;
+                }
                 else
+                {
+                    v.Background = Brushes.LightPink;
+                    v.BorderBrush = Brushes.Red;
                     MessageBox.Show("the kilometrage can not to be negative");
+
+                }
+
             }
         }
 
@@ -170,7 +195,7 @@ namespace dotNet5781_03B_0170_5563
             int length;
             if (date.Year < 2018) length = 7;
             else length = 8;
-            foreach(var id in bu)
+            foreach (var id in bu)
             {
                 if (licenseId == id.GetId)
                 {

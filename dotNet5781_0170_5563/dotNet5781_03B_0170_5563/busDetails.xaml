@@ -20,7 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>      
+        </Grid.ColumnDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="Licence ID number"/>
         <Label Grid.Column="0" Grid.Row="1" Content="Active Date"/>
         <Label Grid.Column="0" Grid.Row="2" Content="Kilometrhage"/>
@@ -36,9 +36,9 @@
         <TextBlock Name="kmFromFix" Grid.Column="1" Grid.Row="5"/>
         <TextBlock Name="status" Grid.Column="1" Grid.Row="6"/>
         <Button x:Name="bFuel" Content="FUEL" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right" Margin="0, 10,10 10"
-                Click="bFuel_Click"/>
-        <Button x:Name="bFix" Content="FIX" Grid.Column="1" Grid.Row="7"  HorizontalAlignment="Right" Margin="0, 10, 50 10"
-                Click="bFix_Click"/>
-       
+               Click="bFuel_Click" IsEnabled="{Binding Path=EnableFuel}"/>
+        <Button x:Name="bFix" Content="FIX" Grid.Column="1" Grid.Row="7"  HorizontalAlignment="Left" Margin="76.333,10.333,0,9.667" 
+                IsEnabled="{Binding Path=EnableFix}" Click="bFix_Click"/>
+
     </Grid>
 </Window>
