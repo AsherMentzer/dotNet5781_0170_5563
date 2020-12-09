@@ -36,6 +36,8 @@ namespace dotNet5781_03B_0170_5563
             status.Text = currentBus.Status.ToString();
             if (currentBus.Status == Status.needFix || currentBus.Status == Status.ready)
                 bFix.IsEnabled = true;
+            else
+                bFix.IsEnabled = false;
             if (currentBus.Status == Status.fixing || currentBus.Status == Status.fuelling ||
                 currentBus.Status == Status.traveling || currentBus.Status == Status.needFix)
                 bFuel.IsEnabled = false;
@@ -43,11 +45,11 @@ namespace dotNet5781_03B_0170_5563
 
         private void bFuel_Click(object sender, RoutedEventArgs e)
         {
-            if (currentBus.Status == Status.traveling)
-            {
-                MessageBox.Show("You Can not fueling, the Bus is in the travel"); return;
-            }
-            else if (currentBus.Fuel == 1200)
+            //if (currentBus.Status == Status.traveling)
+            //{
+            //    MessageBox.Show("You Can not fueling, the Bus is in the travel"); return;
+            //}
+             if (currentBus.Fuel == 1200)
             {
                 MessageBox.Show("the tank is full already"); return;
             }            
@@ -60,26 +62,50 @@ namespace dotNet5781_03B_0170_5563
                      thread = Thread.CurrentThread;
                      currentBus.Fuel = 1200;
                      currentBus.Status = Status.fuelling;
+                     
                      this.Dispatcher.Invoke(() =>
                      {
-                         bFuel.IsEnabled = false;
+                          bFuel.IsEnabled = false;
+                         bFix.IsEnabled = false;
+                         currentBus.EnableFix = false;
+                         currentBus.EnableFuel = false;
+                         currentBus.EnableTravel = false;
                          status.Text = currentBus.Status.ToString();
                          fuel.Text = "...";
                      });
+                     currentBus.Max =12;
+                     currentBus.ReverseTimer = 0;
                      new Thread(() =>
                      {
-                         for (currentBus.Timer = 12; currentBus.Timer > 0; --currentBus.Timer)
+                         for (currentBus.Timer = 12; currentBus.Timer > 0;++currentBus.ReverseTimer, --currentBus.Timer)
+                         {
+                             this.Dispatcher.Invoke(() =>
+                             {
+                                 timer.Text = currentBus.Timer.ToString();
+
+                             });
                              Thread.Sleep(1000);
+                            
+                         }
+                         this.Dispatcher.Invoke(() =>
+                         {
+                             timer.Text = currentBus.Timer.ToString();
+                             
+                         });
                      }).Start();
                      Thread.Sleep(12000);
-                     
-                     if (lastStatus != Status.needFix && lastStatus != Status.needFix)
-                         currentBus.Status = Status.ready;
-                     else
-                         currentBus.Status = lastStatus;
+                     currentBus.Status = Status.ready;
+                     //if (lastStatus != Status.needFix && lastStatus != Status.needFix)
+                     //    currentBus.Status = Status.ready;
+                     //else
+                     //    currentBus.Status = lastStatus;
                      this.Dispatcher.Invoke(() =>
                      {
                          bFuel.IsEnabled = true;
+                         bFix.IsEnabled = true;
+                         currentBus.EnableFix = true;
+                         currentBus.EnableFuel = true;
+                         currentBus.EnableTravel = true;
                          status.Text = currentBus.Status.ToString();
                          fuel.Text = currentBus.Fuel.ToString();
                      });
@@ -105,14 +131,19 @@ namespace dotNet5781_03B_0170_5563
                 {
                     bFix.IsEnabled = false;
                     bFuel.IsEnabled = false;
+                    currentBus.EnableFix = false;
+                    currentBus.EnableFuel = false;
+                    currentBus.EnableTravel = false;
                     status.Text = currentBus.Status.ToString();
                     fuel.Text = "...";
 
-                });                
+                });
+                currentBus.Max = 144;
+                currentBus.ReverseTimer = 0;
                 new Thread(() => { MessageBox.Show("start fixing"); }).Start();
                 new Thread(() =>
                 {
-                    for (currentBus.Timer = 144; currentBus.Timer > 0; --currentBus.Timer)
+                    for (currentBus.Timer = 144; currentBus.Timer > 0;++currentBus.ReverseTimer, --currentBus.Timer)
                         Thread.Sleep(1000);
                 }).Start();
                 Thread.Sleep(144000);
@@ -122,6 +153,9 @@ namespace dotNet5781_03B_0170_5563
                 {
                     bFix.IsEnabled = true;
                     bFuel.IsEnabled = true;
+                    currentBus.EnableFix = true;
+                    currentBus.EnableFuel = true;
+                    currentBus.EnableTravel = true;
                     status.Text = currentBus.Status.ToString();
                     fuel.Text = currentBus.Fuel.ToString();
                 });

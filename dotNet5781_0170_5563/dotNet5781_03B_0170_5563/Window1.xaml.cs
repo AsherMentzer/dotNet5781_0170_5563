@@ -71,7 +71,7 @@ namespace dotNet5781_03B_0170_5563
 
         private void tbId_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
 
             var v = sender as TextBox;
             //string v = d.Text;
@@ -100,7 +100,7 @@ namespace dotNet5781_03B_0170_5563
                         brdId.BorderBrush = Brushes.Red;
                         brdId.Background = Brushes.LightPink;
                     }
-                    
+
 
                     //va.Text = "not valid";
                     //MessageBox.Show("the id must be 8 digits", "invalid id");
@@ -108,11 +108,12 @@ namespace dotNet5781_03B_0170_5563
                 }
                 else
                 {
-                    brdId.BorderBrush = Brushes.Green;
-                    brdId.Background = Brushes.LightGreen;
                     double a;
                     if (double.TryParse(id, out a))
                     {
+                        brdId.BorderBrush = Brushes.Green;
+                        brdId.Background = Brushes.LightGreen;
+
                         //va.Text = "valid";
                         licenseId = id;
                     }
@@ -130,6 +131,7 @@ namespace dotNet5781_03B_0170_5563
                 if (check >= 0)
                 {
                     kilometrage = check;
+                    tbKmAfterFix.IsEnabled = true;
                     v.Background = default;
                     v.BorderBrush = default;
                 }
@@ -137,7 +139,7 @@ namespace dotNet5781_03B_0170_5563
                 {
                     v.Background = Brushes.LightPink;
                     v.BorderBrush = Brushes.Red;
-                    MessageBox.Show("the kilometrage can not to be negative");
+                    MessageBox.Show("the kilometrage can not to be negative","invalid",MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
 
@@ -153,7 +155,11 @@ namespace dotNet5781_03B_0170_5563
 
                 double.TryParse(v.Text, out check);
                 if (check >= 0)
+                {
+                    if(check>kilometrage)
+                        MessageBox.Show("the kilometrage after the fix can not to be bigger that kilomtrage");
                     kmAfterBusFixing = check;
+                }
                 else
                     MessageBox.Show("the kilometrage can not to be negative");
             }

@@ -58,6 +58,7 @@ namespace dotNet5781_03B_0170_5563
             InitializeComponent();
             Buses();
             lbBuses.ItemsSource = myBuses;
+            
 
         }
 
@@ -65,8 +66,6 @@ namespace dotNet5781_03B_0170_5563
         {
             Window1 w1 = new Window1(myBuses);
             w1.Show();
-            //lbBuses.Items.Refresh();
-            //myBuses.Add(w1.bus);
         }
 
         private void bTravel_Click(object sender, RoutedEventArgs e)
@@ -92,7 +91,10 @@ namespace dotNet5781_03B_0170_5563
                     {
                         bus.EnableFuel = false;
                         bus.EnableTravel = false;
-                        for (bus.Timer = 12; bus.Timer > 0; --bus.Timer)
+                        bus.EnableFix = false;
+                        bus.Max = 12;
+                        bus.ReverseTimer = 0;
+                        for (bus.Timer = 12; bus.Timer > 0;++bus.ReverseTimer ,--bus.Timer)
                             Thread.Sleep(1000);
                     }).Start();
                     Thread.Sleep(12000);
@@ -101,6 +103,7 @@ namespace dotNet5781_03B_0170_5563
                     {
                         bus.EnableFuel = true;
                         bus.EnableTravel = true;
+                        bus.EnableFix = true;
                     });
 
                 }).Start();
@@ -114,7 +117,7 @@ namespace dotNet5781_03B_0170_5563
             var temp = lbBuses.SelectedItem;
             Bus bus = (Bus)temp;
             busDetails chosenBus = new busDetails(bus);
-            chosenBus.ShowDialog();
+            chosenBus.Show();
         }        
     }
 }

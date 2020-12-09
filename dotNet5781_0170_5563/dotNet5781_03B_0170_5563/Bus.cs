@@ -28,7 +28,9 @@ namespace dotNet5781_03B_0170_5563
         private Status status;
         private string imageStatus;
         int timer = 0;
-
+        int max= 1;
+        int reverse=0;
+        string str="Hidden";
         public event PropertyChangedEventHandler PropertyChanged;
 
         ///properties
@@ -40,6 +42,13 @@ namespace dotNet5781_03B_0170_5563
         public DateTime LastFix { get => lastFix; set => lastFix = value; }
         public Status Status { get => status; set { status = value; OnPropertyChanged(); ImageStatus = ""; } }
         public int Timer { get => timer; set { timer = value; OnPropertyChanged(); } }
+        public int Max { get =>max; set { max = value; OnPropertyChanged(); } }
+        public int ReverseTimer { get => reverse;set { reverse = value;OnPropertyChanged(); } }
+        public string PbVisiblity { get=>str; set {
+
+                if (status==Status.ready || status==Status.needFix) str= "Hidden";
+                else str= "Visible";OnPropertyChanged();
+            } }
         public bool EnableFuel
         { 
             get => enableFuel; 
@@ -53,8 +62,8 @@ namespace dotNet5781_03B_0170_5563
         public bool EnableFix
         {
             get => enableFix;
-            set { if (status == Status.ready || status == Status.needFix) enableTravel = true; 
-                else enableTravel = false; OnPropertyChanged(); }
+            set { if (status == Status.ready || status == Status.needFix) enableFix = true; 
+                else enableFix = false; OnPropertyChanged(); }
         }
         public string ImageStatus
         {
@@ -105,6 +114,7 @@ namespace dotNet5781_03B_0170_5563
             ImageStatus = "";
             EnableFuel = false;
             EnableTravel = false;
+            EnableFix = false;
 
         }
 
@@ -122,6 +132,7 @@ namespace dotNet5781_03B_0170_5563
             ImageStatus = "";
             EnableFuel = false;
             EnableTravel = false;
+            EnableFix = false;
         }
         public DateTime randDate()
         {

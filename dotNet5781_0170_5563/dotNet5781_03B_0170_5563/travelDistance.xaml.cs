@@ -65,9 +65,11 @@ namespace dotNet5781_03B_0170_5563
                                     double sum = (km / 40) * 6000;
                                     currentBus.EnableTravel = false;
                                     currentBus.EnableFuel = false;
+                                    currentBus.Max = (int)sum / 1000;
+                                   currentBus.ReverseTimer = 0;
                                     new Thread(() =>
                                     {
-                                        for (currentBus.Timer = (int)sum/1000; currentBus.Timer > 0; --currentBus.Timer)
+                                        for (currentBus.Timer = (int)sum/1000; currentBus.Timer > 0; ++currentBus.ReverseTimer,--currentBus.Timer)
                                             Thread.Sleep(1000);
                                     }).Start();
                                     Thread.Sleep((int)sum);

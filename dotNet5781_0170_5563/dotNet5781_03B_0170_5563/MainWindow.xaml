@@ -58,6 +58,14 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ProgressBar x:Name="pbTimer" Width="100" Height="20"
+                                                 Minimum="0" Maximum="{Binding Path=Max}" Value="{Binding Path=ReverseTimer}" Visibility="{Binding Path=PbVisibility}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         
                     </GridView>
                 </ListView.View>
