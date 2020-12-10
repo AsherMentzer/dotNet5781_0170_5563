@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0170_5563"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="600">
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -14,6 +14,8 @@
 
         <Grid x:Name="upGrid" Grid.Row="0" >
             <Button x:Name="add" Content="Add Bus" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="75" Click="Button_Click" />
+            <Button x:Name="addDriver" Content="Add Driver"  Click="addDriver_Click" Width="80"/>
+            <ComboBox x:Name="drivers" Width="100" HorizontalAlignment="Right"/>
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -25,7 +27,7 @@
               MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,0,0.333,-0.333" >
                 <ListView.View>
                     <GridView>
-                        
+
                         <GridViewColumn Header="STATUS">
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
@@ -35,38 +37,43 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Width="200"/>
+                        <GridViewColumn Width="100" />
 
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="bTravel" Content="TRAVEL" Click="bTravel_Click" IsEnabled="{Binding Path=EnableTravel}"/>
+                                    <Button x:Name="bTravel" Content="TRAVEL" Click="bTravel_Click" IsEnabled="{Binding Path=EnableTravel}"
+                                            Width="80" HorizontalAlignment="Center" Background="AliceBlue" Margin="0.5,1"  BorderBrush="#FF35007F" Foreground="#FFFF007B" FontFamily="Calibri Light" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="bFueling" Content="FUEL" Click="bFueling_Click" IsEnabled="{Binding Path=EnableFuel}"/>
+                                    <Button x:Name="bFueling" Content="FUEL" Click="bFueling_Click" Width="80" HorizontalAlignment="Center"
+                                            Background="AliceBlue" IsEnabled="{Binding Path=EnableFuel}" BorderBrush="#FF35007F" Foreground="#FFFF007B" FontFamily="Calibri Light">
+
+                                    </Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock x:Name="tbTimer" Text="{Binding Path= Timer, Mode=OneWay, StringFormat=#;;;}"
+                                               HorizontalAlignment="Center" Width="30" Foreground="#FF0036FF" FontSize="18"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn >
                         <GridViewColumn Header="TIME TO BE READY">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock x:Name="tbTimer" Text="{Binding Path= Timer, Mode=OneWay, StringFormat=#;;;}" Width="Auto"/>
+                                    <ProgressBar x:Name="pbTimer" Width="150" Height="20"
+                                                 Minimum="0" Maximum="{Binding Path=Max}" Value="{Binding Path=ReverseTimer}" Visibility="{Binding Path=PbVisiblity}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ProgressBar x:Name="pbTimer" Width="100" Height="20"
-                                                 Minimum="0" Maximum="{Binding Path=Max}" Value="{Binding Path=ReverseTimer}" Visibility="{Binding Path=PbVisibility}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        
+
                     </GridView>
                 </ListView.View>
             </ListView>

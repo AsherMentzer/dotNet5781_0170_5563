@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace dotNet5781_03B_0170_5563
     {
         static Random r = new Random(DateTime.Now.Millisecond);
         ///fields
+       // private ObservableCollection<string> drivers;
         private string licenseId;
         private DateTime activeDate;
         private double kilometrage;
@@ -28,31 +30,36 @@ namespace dotNet5781_03B_0170_5563
         private Status status;
         private string imageStatus;
         int timer = 0;
-        int max= 1;
-        int reverse=0;
-        string str="Hidden";
+        int max = 1;
+        int reverse = 0;
+        string str = "Hidden";
         public event PropertyChangedEventHandler PropertyChanged;
 
         ///properties
-        public string GetId { get => licenseId; }
+       // public ObservableCollection<string> Drivers { get => drivers; set => drivers = value; }
+        public string GetId { get =>ToString(); }
         public DateTime Active { get => activeDate; }
         public double Kilometrage { get => kilometrage; set => kilometrage = value; }
         public double Fuel { get => fuel; set => fuel = value; }
         public double KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
         public DateTime LastFix { get => lastFix; set => lastFix = value; }
-        public Status Status { get => status; set { status = value; OnPropertyChanged(); ImageStatus = ""; } }
+        public Status Status { get => status; set { status = value; OnPropertyChanged(); ImageStatus = ""; PbVisiblity = ""; } }
         public int Timer { get => timer; set { timer = value; OnPropertyChanged(); } }
-        public int Max { get =>max; set { max = value; OnPropertyChanged(); } }
-        public int ReverseTimer { get => reverse;set { reverse = value;OnPropertyChanged(); } }
-        public string PbVisiblity { get=>str; set {
-
-                if (status==Status.ready || status==Status.needFix) str= "Hidden";
-                else str= "Visible";OnPropertyChanged();
-            } }
+        public int Max { get => max; set { max = value; OnPropertyChanged(); } }
+        public int ReverseTimer { get => reverse; set { reverse = value; OnPropertyChanged(); } }
+        public string PbVisiblity
+        {
+            get => str;
+            set
+            {
+                if (status == Status.ready || status == Status.needFix) str = "Hidden";
+                else str = "Visible"; OnPropertyChanged();
+            }
+        }
         public bool EnableFuel
-        { 
-            get => enableFuel; 
-            set { if (status == Status.ready) enableFuel = true; else enableFuel = false; OnPropertyChanged(); } 
+        {
+            get => enableFuel;
+            set { if (status == Status.ready) enableFuel = true; else enableFuel = false; OnPropertyChanged(); }
         }
         public bool EnableTravel
         {
@@ -62,8 +69,11 @@ namespace dotNet5781_03B_0170_5563
         public bool EnableFix
         {
             get => enableFix;
-            set { if (status == Status.ready || status == Status.needFix) enableFix = true; 
-                else enableFix = false; OnPropertyChanged(); }
+            set
+            {
+                if (status == Status.ready || status == Status.needFix) enableFix = true;
+                else enableFix = false; OnPropertyChanged();
+            }
         }
         public string ImageStatus
         {
@@ -133,6 +143,7 @@ namespace dotNet5781_03B_0170_5563
             EnableFuel = false;
             EnableTravel = false;
             EnableFix = false;
+
         }
         public DateTime randDate()
         {

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0170_5563"
         mc:Ignorable="d"
-        Title="busDetails" Height="370" Width="300">
+        Title="busDetails" Height="450" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>            
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -28,21 +28,21 @@
         <Label Grid.Column="0" Grid.Row="3" Content="Fuel in the Tank"/>
         <Label Grid.Column="0" Grid.Row="4" Content="Last Fix Date"/>
         <Label Grid.Column="0" Grid.Row="5" Content="KM from the Last fix"/>
-        <Label Grid.Column="0" Grid.Row="6" Content="Status"/>
+        <Label Grid.Column="0" Grid.Row="6" Content="Status"/>       
         <Label Grid.Column="0" Grid.Row="7" Content="time to be ready"/>
-        <TextBlock Name="ID"  Grid.Column="1" Grid.Row="0"/>
-        <TextBlock Name="active" Grid.Column="1" Grid.Row="1"/>
-        <TextBlock Name="KM" Grid.Column="1" Grid.Row="2"/>
-        <TextBlock Name="fuel" Grid.Column="1" Grid.Row="3"/>
-        <TextBlock Name="fixDate" Grid.Column="1" Grid.Row="4"/>
-        <TextBlock Name="kmFromFix" Grid.Column="1" Grid.Row="5"/>
-        <TextBlock Name="status" Grid.Column="1" Grid.Row="6"/>
-        <TextBlock Name="timer" Grid.Column="1" Grid.Row="7" Text="{Binding Path= Timer, Mode=OneWay, StringFormat=#;;;}" Width="Auto"/>
-        
-        <Button x:Name="bFuel" Content="FUEL" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" Margin="0, 10,10 10"
+        <TextBlock Name="ID"  Grid.Column="1" Grid.Row="0"  Text="{Binding Path=GetId,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Name="active" Grid.Column="1" Grid.Row="1"  Text="{Binding Path=Active,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat=MM/dd/yyyy}"/>
+        <TextBlock Name="KM" Grid.Column="1" Grid.Row="2"  Text="{Binding Path=Kilometrage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Name="fuel" Grid.Column="1" Grid.Row="3"  Text="{Binding Path=Fuel,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Name="fixDate" Grid.Column="1" Grid.Row="4" Text="{Binding Path=LastFix,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat=MM/dd/yyyy}"/>
+        <TextBlock Name="kmFromFix" Grid.Column="1" Grid.Row="5" Text="{Binding Path=KmForTravel,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Name="status" Text="{Binding Path=Status,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>        
+        <TextBlock Name="timer" Grid.Column="1" Grid.Row="7" Text="{Binding Path=Timer, Mode=OneWay, StringFormat=#;;;,UpdateSourceTrigger=PropertyChanged}" Width="50"/>        
+       
+        <Button x:Name="bFuel" Content="FUEL" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" Margin="0,6.6,4.6,6"
                Click="bFuel_Click" IsEnabled="{Binding Path=EnableFuel}"/>
-        <Button x:Name="bFix" Content="FIX" Grid.Column="1" Grid.Row="8"  HorizontalAlignment="Left" Margin="76.333,10.333,0,9.667" 
-                IsEnabled="{Binding Path=EnableFix}" Click="bFix_Click"/>
+        <Button x:Name="bFix" Content="FIX" Grid.Column="1" Grid.Row="8"  HorizontalAlignment="Left" Margin="75.8,6.6,0,6" 
+                IsEnabled="{Binding Path=EnableFix}" Click="bFix_Click" Width="29"/>
 
     </Grid>
 </Window>

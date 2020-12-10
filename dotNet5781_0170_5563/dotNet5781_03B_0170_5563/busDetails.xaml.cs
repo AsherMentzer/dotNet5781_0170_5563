@@ -27,13 +27,15 @@ namespace dotNet5781_03B_0170_5563
         {
             InitializeComponent();
             currentBus = bus;
-            ID.Text = currentBus.GetId.ToString();
-            active.Text = currentBus.Active.ToShortDateString();
-            KM.Text = currentBus.Kilometrage.ToString();
-            fuel.Text = currentBus.Fuel.ToString();
-            fixDate.Text = currentBus.LastFix.ToShortDateString();
-            kmFromFix.Text = currentBus.KmForTravel.ToString();
-            status.Text = currentBus.Status.ToString();
+            this.DataContext = currentBus;
+            //ID.Text = currentBus.GetId.ToString();
+            //active.Text = currentBus.Active.ToShortDateString();
+            //KM.Text = currentBus.Kilometrage.ToString();
+            //fuel.Text = currentBus.Fuel.ToString();
+            //fixDate.Text = currentBus.LastFix.ToShortDateString();
+            //kmFromFix.Text = currentBus.KmForTravel.ToString();
+            //status.Text = currentBus.Status.ToString();
+            //timer.Text = currentBus.Timer.ToString();
             if (currentBus.Status == Status.needFix || currentBus.Status == Status.ready)
                 bFix.IsEnabled = true;
             else
@@ -41,6 +43,8 @@ namespace dotNet5781_03B_0170_5563
             if (currentBus.Status == Status.fixing || currentBus.Status == Status.fuelling ||
                 currentBus.Status == Status.traveling || currentBus.Status == Status.needFix)
                 bFuel.IsEnabled = false;
+            //drivers.ItemsSource = currentBus.Drivers;
+           // if (currentBus.Timer != 0) status.Text = "david";
         }
 
         private void bFuel_Click(object sender, RoutedEventArgs e)
@@ -122,7 +126,7 @@ namespace dotNet5781_03B_0170_5563
             new Thread(() =>
             {
                 thread = Thread.CurrentThread;
-
+                currentBus.PbVisiblity = "Visible";
                 currentBus.KmForTravel = 0;
                 currentBus.LastFix = DateTime.Now;
                 currentBus.Fuel = 1200;
@@ -143,8 +147,11 @@ namespace dotNet5781_03B_0170_5563
                 new Thread(() => { MessageBox.Show("start fixing"); }).Start();
                 new Thread(() =>
                 {
-                    for (currentBus.Timer = 144; currentBus.Timer > 0;++currentBus.ReverseTimer, --currentBus.Timer)
+                    for (currentBus.Timer = 144; currentBus.Timer > 0; ++currentBus.ReverseTimer, --currentBus.Timer)
+                    {
+                        this.Dispatcher.Invoke(() => { timer.Text = currentBus.Timer.ToString(); });
                         Thread.Sleep(1000);
+                    }
                 }).Start();
                 Thread.Sleep(144000);
                 currentBus.Status = Status.ready;
@@ -165,5 +172,9 @@ namespace dotNet5781_03B_0170_5563
             //this.Close();
         }
 
+        private void bDriver_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

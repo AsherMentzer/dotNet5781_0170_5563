@@ -7,8 +7,10 @@
         mc:Ignorable="d"
         Title="chooseBusForTravel" Height="250" Width="400">
     <Grid>
-        <TextBox Name="KM" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="150" PreviewKeyDown="KM_PreviewKeyDown"/>
+        <TextBox Name="KM" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="150" PreviewKeyDown="KM_PreviewKeyDown" IsEnabled="False" />
         <Label Content="enter the distance:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Content="choose driver:"  HorizontalAlignment="Left" Margin="18,33,0,0" VerticalAlignment="Top" Width="89"/>
+        <ComboBox x:Name="cbDriver"  HorizontalAlignment="Left" Margin="139,36,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.505,0.506" SelectionChanged="cbDriver_SelectionChanged"/>
 
     </Grid>
 </Window>

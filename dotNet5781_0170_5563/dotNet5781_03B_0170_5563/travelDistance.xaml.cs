@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,11 +22,30 @@ namespace dotNet5781_03B_0170_5563
     public partial class travelDistance : Window
     {
         Bus currentBus;
-        public travelDistance(Bus bus)
+        ObservableCollection<Driver> myDrivers;
+        Driver driver1;
+        public travelDistance(Bus bus, ObservableCollection<Driver> Drivers)
         {
             InitializeComponent();
+            myDrivers = Drivers;
             currentBus = bus;
             KM.PreviewKeyDown += KM_PreviewKeyDown;
+            cbDriver.ItemsSource = myDrivers;
+            if(myDrivers.Count==0)
+            {
+                MessageBox.Show("you don't have any drivers");
+                this.Close();
+            }
+            else
+            {
+                
+                foreach(var d in myDrivers)
+                {
+                    if (d.Ready) return;
+                }
+                MessageBox.Show("all the drivers busy");
+                this.Close();
+            }
         }
 
         private void KM_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -56,20 +76,15 @@ namespace dotNet5781_03B_0170_5563
                         {
                             new Thread(() =>
                                 {
-
-                                    // --------------------------------maby no need because the threads----------------------------------
-                                    //if (currentBus.KmForTravel == 20000)
-                                    //    currentBus.Status = Status.needFix;
-                                    //else
                                     currentBus.Status = Status.traveling;
                                     double sum = (km / 40) * 6000;
                                     currentBus.EnableTravel = false;
                                     currentBus.EnableFuel = false;
                                     currentBus.Max = (int)sum / 1000;
-                                   currentBus.ReverseTimer = 0;
+                                    currentBus.ReverseTimer = 0;
                                     new Thread(() =>
                                     {
-                                        for (currentBus.Timer = (int)sum/1000; currentBus.Timer > 0; ++currentBus.ReverseTimer,--currentBus.Timer)
+                                        for (currentBus.Timer = (int)sum / 1000; currentBus.Timer > 0; ++currentBus.ReverseTimer, --currentBus.Timer)
                                             Thread.Sleep(1000);
                                     }).Start();
                                     Thread.Sleep((int)sum);
@@ -80,6 +95,7 @@ namespace dotNet5781_03B_0170_5563
                                     currentBus.Status = Status.ready;
                                     currentBus.EnableTravel = true;
                                     currentBus.EnableFuel = true;
+                                    driver1.Ready = true;
                                 }).Start();
                         }
                         e.Handled = true;
@@ -106,6 +122,21 @@ namespace dotNet5781_03B_0170_5563
             e.Handled = true;
             MessageBox.Show("Only  numbers  are  allowed", "Account", MessageBoxButton.OK, MessageBoxImage.Error);
 
+        }
+
+        private void cbDriver_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+             var d = cbDriver.SelectedItem as Driver;
+           
+            if (!d.Ready)
+            {
+                MessageBox.Show("this driver is in travel");
+            }
+            else
+            {     
+                d.Ready = false;
+                KM.IsEnabled = true;
+            }
         }
     }
 }

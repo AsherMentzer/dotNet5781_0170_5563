@@ -24,7 +24,7 @@ namespace dotNet5781_03B_0170_5563
     {
 
         ObservableCollection<Bus> myBuses = new ObservableCollection<Bus>();
-
+        public  ObservableCollection<Driver> myDrivers = new ObservableCollection<Driver>();
 
         public void Buses()
         {
@@ -58,9 +58,11 @@ namespace dotNet5781_03B_0170_5563
             InitializeComponent();
             Buses();
             lbBuses.ItemsSource = myBuses;
-            
+            drivers.ItemsSource = myDrivers;
+            myDrivers.Add(new Driver("dani zilber"));
+            myDrivers.Add(new Driver("avi test"));
 
-        }
+    }
 
         public void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -72,7 +74,7 @@ namespace dotNet5781_03B_0170_5563
         {
             var temp = sender as FrameworkElement;
             Bus bus = temp.DataContext as Bus;
-            travelDistance newTravel = new travelDistance(bus);
+            travelDistance newTravel = new travelDistance(bus,myDrivers);
             newTravel.Show();
         }
 
@@ -84,7 +86,7 @@ namespace dotNet5781_03B_0170_5563
             {
                 new Thread(() =>
                 {
-                    
+
                     bus.Fuel = 1200;
                     bus.Status = Status.fuelling;
                     new Thread(() =>
@@ -94,7 +96,7 @@ namespace dotNet5781_03B_0170_5563
                         bus.EnableFix = false;
                         bus.Max = 12;
                         bus.ReverseTimer = 0;
-                        for (bus.Timer = 12; bus.Timer > 0;++bus.ReverseTimer ,--bus.Timer)
+                        for (bus.Timer = 12; bus.Timer > 0; ++bus.ReverseTimer, --bus.Timer)
                             Thread.Sleep(1000);
                     }).Start();
                     Thread.Sleep(12000);
@@ -117,7 +119,13 @@ namespace dotNet5781_03B_0170_5563
             var temp = lbBuses.SelectedItem;
             Bus bus = (Bus)temp;
             busDetails chosenBus = new busDetails(bus);
-            chosenBus.Show();
-        }        
+            chosenBus.ShowDialog();
+        }
+
+        private void addDriver_Click(object sender, RoutedEventArgs e)
+        {
+            AddDriver add = new AddDriver(myDrivers);
+            add.Show();
+        }
     }
 }
