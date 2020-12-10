@@ -22,41 +22,38 @@ namespace dotNet5781_03B_0170_5563
     {
         Bus currentBus;
 
-    
+        /// <summary>
+        /// initial our window 
+        /// </summary>
+        /// <param name="bus"></param>
         public busDetails(Bus bus)
         {
             InitializeComponent();
             currentBus = bus;
             this.DataContext = currentBus;
-            //ID.Text = currentBus.GetId.ToString();
-            //active.Text = currentBus.Active.ToShortDateString();
-            //KM.Text = currentBus.Kilometrage.ToString();
-            //fuel.Text = currentBus.Fuel.ToString();
-            //fixDate.Text = currentBus.LastFix.ToShortDateString();
-            //kmFromFix.Text = currentBus.KmForTravel.ToString();
-            //status.Text = currentBus.Status.ToString();
-            //timer.Text = currentBus.Timer.ToString();
+            //if the bus in travle or fuel or fix you can't send him to fix
             if (currentBus.Status == Status.needFix || currentBus.Status == Status.ready)
                 bFix.IsEnabled = true;
             else
                 bFix.IsEnabled = false;
+            //if the bus in travle or fuel or fix you can't send him to fuel
             if (currentBus.Status == Status.fixing || currentBus.Status == Status.fuelling ||
                 currentBus.Status == Status.traveling || currentBus.Status == Status.needFix)
                 bFuel.IsEnabled = false;
-            //drivers.ItemsSource = currentBus.Drivers;
-           // if (currentBus.Timer != 0) status.Text = "david";
         }
 
+        /// <summary>
+        /// when you send him to fuel shut the bus down to 12 seconds and show timer
+        /// and update all the deatails
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bFuel_Click(object sender, RoutedEventArgs e)
         {
-            //if (currentBus.Status == Status.traveling)
-            //{
-            //    MessageBox.Show("You Can not fueling, the Bus is in the travel"); return;
-            //}
-             if (currentBus.Fuel == 1200)
+            if (currentBus.Fuel == 1200)
             {
                 MessageBox.Show("the tank is full already"); return;
-            }            
+            }
             else
             {
                 Status lastStatus = currentBus.Status;
@@ -66,10 +63,10 @@ namespace dotNet5781_03B_0170_5563
                      thread = Thread.CurrentThread;
                      currentBus.Fuel = 1200;
                      currentBus.Status = Status.fuelling;
-                     
+
                      this.Dispatcher.Invoke(() =>
                      {
-                          bFuel.IsEnabled = false;
+                         bFuel.IsEnabled = false;
                          bFix.IsEnabled = false;
                          currentBus.EnableFix = false;
                          currentBus.EnableFuel = false;
@@ -77,11 +74,11 @@ namespace dotNet5781_03B_0170_5563
                          status.Text = currentBus.Status.ToString();
                          fuel.Text = "...";
                      });
-                     currentBus.Max =12;
+                     currentBus.Max = 12;
                      currentBus.ReverseTimer = 0;
                      new Thread(() =>
                      {
-                         for (currentBus.Timer = 12; currentBus.Timer > 0;++currentBus.ReverseTimer, --currentBus.Timer)
+                         for (currentBus.Timer = 12; currentBus.Timer > 0; ++currentBus.ReverseTimer, --currentBus.Timer)
                          {
                              this.Dispatcher.Invoke(() =>
                              {
@@ -89,12 +86,12 @@ namespace dotNet5781_03B_0170_5563
 
                              });
                              Thread.Sleep(1000);
-                            
+
                          }
                          this.Dispatcher.Invoke(() =>
                          {
                              timer.Text = currentBus.Timer.ToString();
-                             
+
                          });
                      }).Start();
                      Thread.Sleep(12000);
@@ -115,11 +112,14 @@ namespace dotNet5781_03B_0170_5563
                      });
                  }).Start();
 
-
-                //this.Close();
             }
         }
 
+        /// <summary>
+        /// send the bus to fix and shut him down to 144 seconds 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bFix_Click(object sender, RoutedEventArgs e)
         {
             Thread thread;
@@ -144,7 +144,6 @@ namespace dotNet5781_03B_0170_5563
                 });
                 currentBus.Max = 144;
                 currentBus.ReverseTimer = 0;
-                new Thread(() => { MessageBox.Show("start fixing"); }).Start();
                 new Thread(() =>
                 {
                     for (currentBus.Timer = 144; currentBus.Timer > 0; ++currentBus.ReverseTimer, --currentBus.Timer)
@@ -165,16 +164,10 @@ namespace dotNet5781_03B_0170_5563
                     currentBus.EnableTravel = true;
                     status.Text = currentBus.Status.ToString();
                     fuel.Text = currentBus.Fuel.ToString();
-                });
-                MessageBox.Show("finish fixing");
+                });              
 
             }).Start();
-            //this.Close();
-        }
-
-        private void bDriver_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+            
+        }      
     }
 }

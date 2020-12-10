@@ -11,13 +11,20 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_03B_0170_5563
 {
-
+    /// <summary>
+    /// enum for the staus of the bus
+    /// </summary>
     public enum Status { ready, traveling, fuelling, fixing, needFix };
+
+    /// <summary>
+    /// class for bus with all the bus details the class is heir from INotifyPropertyChanged
+    /// interface to alow to be dependemcy property that can  update the window on every change 
+    /// on real time
+    /// </summary>
     public class Bus : INotifyPropertyChanged
     {
         static Random r = new Random(DateTime.Now.Millisecond);
         ///fields
-       // private ObservableCollection<string> drivers;
         private string licenseId;
         private DateTime activeDate;
         private double kilometrage;
@@ -39,14 +46,16 @@ namespace dotNet5781_03B_0170_5563
        // public ObservableCollection<string> Drivers { get => drivers; set => drivers = value; }
         public string GetId { get =>ToString(); }
         public DateTime Active { get => activeDate; }
-        public double Kilometrage { get => kilometrage; set => kilometrage = value; }
-        public double Fuel { get => fuel; set => fuel = value; }
-        public double KmForTravel { get => kmAfterBusFixing; set => kmAfterBusFixing = value; }
-        public DateTime LastFix { get => lastFix; set => lastFix = value; }
+        public double Kilometrage { get => kilometrage; set { kilometrage = value; OnPropertyChanged(); } }
+        public double Fuel { get => fuel; set { fuel = value; OnPropertyChanged(); } }
+        public double KmForTravel { get => kmAfterBusFixing; set { kmAfterBusFixing = value; OnPropertyChanged(); } }
+        public DateTime LastFix { get => lastFix; set { lastFix = value; OnPropertyChanged(); } }
         public Status Status { get => status; set { status = value; OnPropertyChanged(); ImageStatus = ""; PbVisiblity = ""; } }
         public int Timer { get => timer; set { timer = value; OnPropertyChanged(); } }
         public int Max { get => max; set { max = value; OnPropertyChanged(); } }
         public int ReverseTimer { get => reverse; set { reverse = value; OnPropertyChanged(); } }
+
+        //propertys to enable buttos by  contitions 
         public string PbVisiblity
         {
             get => str;
@@ -75,6 +84,10 @@ namespace dotNet5781_03B_0170_5563
                 else enableFix = false; OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// property to set image for the status of the bus
+        /// </summary>
         public string ImageStatus
         {
             get => imageStatus; set
@@ -128,6 +141,9 @@ namespace dotNet5781_03B_0170_5563
 
         }
 
+        /// <summary>
+        /// constructor that dont get any parameter and build rbus withe random details
+        /// </summary>
         public Bus()
         {
             activeDate = randDate();

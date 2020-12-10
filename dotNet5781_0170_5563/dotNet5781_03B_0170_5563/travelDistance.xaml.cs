@@ -30,10 +30,17 @@ namespace dotNet5781_03B_0170_5563
             myDrivers = Drivers;
             currentBus = bus;
             KM.PreviewKeyDown += KM_PreviewKeyDown;
-            cbDriver.ItemsSource = myDrivers;
+            cbDriver.ItemsSource = myDrivers;//set the combo box to contain all the drivers
             
         }
 
+        /// <summary>
+        /// enter the distance to travle with enter only and allow inly numbers
+        /// than take the bus to travle and update all the details according to this travle
+        /// like the km the bus did and shut the bus and the driver for the time of the travle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void KM_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (currentBus.Status != Status.ready)
@@ -111,6 +118,12 @@ namespace dotNet5781_03B_0170_5563
 
         }
 
+
+        /// <summary>
+        /// choose 1 driver to take this travle and check if he is avilable or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbDriver_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
              var d = cbDriver.SelectedItem as Driver;

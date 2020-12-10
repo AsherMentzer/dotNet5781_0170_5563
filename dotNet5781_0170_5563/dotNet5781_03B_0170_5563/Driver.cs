@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_03B_0170_5563
 {
+    /// <summary>
+    /// class for our driver with his name and if he is avilable to drive
+    /// </summary>
     public class Driver
     {
         private string driverName;
