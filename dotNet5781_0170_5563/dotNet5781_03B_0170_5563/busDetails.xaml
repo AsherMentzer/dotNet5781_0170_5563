@@ -36,7 +36,10 @@
         <TextBlock Name="fuel" Grid.Column="1" Grid.Row="3"  Text="{Binding Path=Fuel,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Name="fixDate" Grid.Column="1" Grid.Row="4" Text="{Binding Path=LastFix,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat=MM/dd/yyyy}"/>
         <TextBlock Name="kmFromFix" Grid.Column="1" Grid.Row="5" Text="{Binding Path=KmForTravel,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Name="status" Text="{Binding Path=Status,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>        
+        <TextBlock Name="status" Text="{Binding Path=Status,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
+                   Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image x:Name="statusImage" Source="{Binding Path=ImageStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"
+                Grid.Column="1" Grid.Row="6" Height="20" Margin="0,0,65,0" VerticalAlignment="Center"/>
         <TextBlock Name="timer" Grid.Column="1" Grid.Row="7" Text="{Binding Path=Timer, Mode=OneWay, StringFormat=#;;;,UpdateSourceTrigger=PropertyChanged}" Width="50"/>        
        
         <Button x:Name="bFuel" Content="FUEL" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" Margin="0,6.6,4.6,6"

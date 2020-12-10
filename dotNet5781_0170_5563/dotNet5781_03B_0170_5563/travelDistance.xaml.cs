@@ -21,9 +21,9 @@ namespace dotNet5781_03B_0170_5563
     /// </summary>
     public partial class travelDistance : Window
     {
+        Driver driver;
         Bus currentBus;
         ObservableCollection<Driver> myDrivers;
-        Driver driver1;
         public travelDistance(Bus bus, ObservableCollection<Driver> Drivers)
         {
             InitializeComponent();
@@ -31,21 +31,7 @@ namespace dotNet5781_03B_0170_5563
             currentBus = bus;
             KM.PreviewKeyDown += KM_PreviewKeyDown;
             cbDriver.ItemsSource = myDrivers;
-            if(myDrivers.Count==0)
-            {
-                MessageBox.Show("you don't have any drivers");
-                this.Close();
-            }
-            else
-            {
-                
-                foreach(var d in myDrivers)
-                {
-                    if (d.Ready) return;
-                }
-                MessageBox.Show("all the drivers busy");
-                this.Close();
-            }
+            
         }
 
         private void KM_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -76,6 +62,7 @@ namespace dotNet5781_03B_0170_5563
                         {
                             new Thread(() =>
                                 {
+                                    driver.Ready = false;
                                     currentBus.Status = Status.traveling;
                                     double sum = (km / 40) * 6000;
                                     currentBus.EnableTravel = false;
@@ -95,7 +82,7 @@ namespace dotNet5781_03B_0170_5563
                                     currentBus.Status = Status.ready;
                                     currentBus.EnableTravel = true;
                                     currentBus.EnableFuel = true;
-                                    driver1.Ready = true;
+                                    driver.Ready = true;
                                 }).Start();
                         }
                         e.Handled = true;
@@ -127,14 +114,14 @@ namespace dotNet5781_03B_0170_5563
         private void cbDriver_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
              var d = cbDriver.SelectedItem as Driver;
-           
+            driver = d;
             if (!d.Ready)
             {
                 MessageBox.Show("this driver is in travel");
             }
             else
             {     
-                d.Ready = false;
+                //d.Ready = false;
                 KM.IsEnabled = true;
             }
         }

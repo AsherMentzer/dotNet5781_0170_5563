@@ -61,6 +61,7 @@ namespace dotNet5781_03B_0170_5563
             drivers.ItemsSource = myDrivers;
             myDrivers.Add(new Driver("dani zilber"));
             myDrivers.Add(new Driver("avi test"));
+            drivers.Tag = "text";
 
     }
 
@@ -74,8 +75,30 @@ namespace dotNet5781_03B_0170_5563
         {
             var temp = sender as FrameworkElement;
             Bus bus = temp.DataContext as Bus;
-            travelDistance newTravel = new travelDistance(bus,myDrivers);
-            newTravel.Show();
+            if (myDrivers.Count == 0)
+            {
+                MessageBox.Show("you don't have any drivers");
+            }
+            else
+            {
+                bool flag = false;
+                foreach (var d in myDrivers)
+                {
+                    if (d.Ready)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if(!flag)
+                MessageBox.Show("all the drivers busy");
+                else
+                {
+                    travelDistance newTravel = new travelDistance(bus, myDrivers);
+                    newTravel.Show();
+                }         
+                
+            }
         }
 
         private void bFueling_Click(object sender, RoutedEventArgs e)

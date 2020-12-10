@@ -18,13 +18,17 @@
             <ComboBox x:Name="drivers" Width="100" HorizontalAlignment="Right"/>
         </Grid>
         <Grid x:Name="lowGrid" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="41*"/>
+                <RowDefinition Height="35*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="36*"/>
                 <ColumnDefinition Width="25*"/>
                 <ColumnDefinition Width="732*"/>
             </Grid.ColumnDefinitions>
             <ListView Name="lbBuses" HorizontalAlignment="Stretch" 
-              MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,0,0.333,-0.333" >
+              MouseDoubleClick="lbBuses_MouseDoubleClick" SelectedItem="buses"  VerticalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,0,0.333,-0.334" Grid.RowSpan="2" >
                 <ListView.View>
                     <GridView>
 
