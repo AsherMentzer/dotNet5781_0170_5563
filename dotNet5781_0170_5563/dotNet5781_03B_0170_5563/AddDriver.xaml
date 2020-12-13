@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0170_5563"
         mc:Ignorable="d"
-        Title="AddDriver" Height="271.632" Width="414.119">
+        Title="AddDriver" Height="200" Width="400" Background="#FFF5E8D8">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Name="lAddD" Content="enter new driver name" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBox x:Name="tbDriver" Grid.Column="1" VerticalAlignment="Center" />
-        <Button x:Name="addD" Content="Add" Grid.Column="1" VerticalAlignment="Bottom" Click="addD_Click"/>
+        <Label Name="lAddD" Content="Enter The New Driver Name:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"/>
+        <TextBox x:Name="tbDriver" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="100" 
+                 MaxWidth="300" Margin="20" Height="30" VerticalContentAlignment="Center"/>
+        <Button x:Name="addD" Content="Add" Grid.Column="1" VerticalAlignment="Bottom" Click="addD_Click" Width="55" Margin="10" 
+                HorizontalAlignment="Right" Background="AliceBlue"/>
     </Grid>
 </Window>

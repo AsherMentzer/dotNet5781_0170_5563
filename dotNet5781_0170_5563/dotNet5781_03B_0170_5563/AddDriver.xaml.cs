@@ -31,9 +31,13 @@ namespace dotNet5781_03B_0170_5563
 
         private void addD_Click(object sender, RoutedEventArgs e)
         {
-           
-            addDriver.Add(new Driver(tbDriver.Text));
-            this.Close();
+            if (tbDriver.Text.Length > 0)
+            {
+                addDriver.Add(new Driver(tbDriver.Text));
+                this.Close();
+            }
+            else MessageBox.Show("entar a name");
         }
+
     }
 }

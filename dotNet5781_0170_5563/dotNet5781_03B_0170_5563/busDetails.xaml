@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0170_5563"
         mc:Ignorable="d"
-        Title="busDetails" Height="450" Width="300">
+        Title="Bus Details" Height="450" Width="300" Background="LightYellow" Icon="images\info.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -22,30 +22,36 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Content="Licence ID number"/>
-        <Label Grid.Column="0" Grid.Row="1" Content="Active Date"/>
-        <Label Grid.Column="0" Grid.Row="2" Content="Kilometrhage"/>
-        <Label Grid.Column="0" Grid.Row="3" Content="Fuel in the Tank"/>
-        <Label Grid.Column="0" Grid.Row="4" Content="Last Fix Date"/>
-        <Label Grid.Column="0" Grid.Row="5" Content="KM from the Last fix"/>
-        <Label Grid.Column="0" Grid.Row="6" Content="Status"/>       
-        <Label Grid.Column="0" Grid.Row="7" Content="time to be ready"/>
-        <TextBlock Name="ID"  Grid.Column="1" Grid.Row="0"  Text="{Binding Path=GetId,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Name="active" Grid.Column="1" Grid.Row="1"  Text="{Binding Path=Active,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat=MM/dd/yyyy}"/>
-        <TextBlock Name="KM" Grid.Column="1" Grid.Row="2"  Text="{Binding Path=Kilometrage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="0" Content="Licence ID number" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="1" Content="Active Date" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="Kilometrhage" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="3" Content="Fuel in the Tank" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="Last Fix Date" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="KM from the Last fix" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="6" Content="Status" VerticalAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="7" Content="time to be ready" VerticalAlignment="Center"/>
+        <TextBlock Name="ID"  Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"
+                   Text="{Binding Path=GetId,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Name="active" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+                   Text="{Binding Path=Active,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat=MM/dd/yyyy}"/>
+        <TextBlock Name="KM" Grid.Column="1" Grid.Row="2"  Text="{Binding Path=Kilometrage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                   VerticalAlignment="Center"/>
         <TextBlock Name="fuel" Grid.Column="1" Grid.Row="3"  Text="{Binding Path=Fuel,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Name="fixDate" Grid.Column="1" Grid.Row="4" Text="{Binding Path=LastFix,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat=MM/dd/yyyy}"/>
-        <TextBlock Name="kmFromFix" Grid.Column="1" Grid.Row="5" Text="{Binding Path=KmForTravel,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Name="fixDate" Grid.Column="1" Grid.Row="4" Text="{Binding Path=LastFix,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat=MM/dd/yyyy}"
+                   VerticalAlignment="Center"/>
+        <TextBlock Name="kmFromFix" Grid.Column="1" Grid.Row="5" Text="{Binding Path=KmForTravel,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                   VerticalAlignment="Center" />
         <TextBlock Name="status" Text="{Binding Path=Status,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
                    Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Image x:Name="statusImage" Source="{Binding Path=ImageStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"
                 Grid.Column="1" Grid.Row="6" Height="20" Margin="0,0,65,0" VerticalAlignment="Center"/>
-        <TextBlock Name="timer" Grid.Column="1" Grid.Row="7" Text="{Binding Path=Timer, Mode=OneWay, StringFormat=#;;;,UpdateSourceTrigger=PropertyChanged}" Width="50"/>        
+        <TextBlock Name="timer" Grid.Column="1" Grid.Row="7" Width="50" VerticalAlignment="Center"
+                   Text="{Binding Path=Timer, Mode=OneWay, StringFormat=#;;;,UpdateSourceTrigger=PropertyChanged}" />        
        
-        <Button x:Name="bFuel" Content="FUEL" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" Margin="0,6.6,4.6,6"
-               Click="bFuel_Click" IsEnabled="{Binding Path=EnableFuel}"/>
-        <Button x:Name="bFix" Content="FIX" Grid.Column="1" Grid.Row="8"  HorizontalAlignment="Left" Margin="75.8,6.6,0,6" 
-                IsEnabled="{Binding Path=EnableFix}" Click="bFix_Click" Width="29"/>
+        <Button x:Name="bFuel" Content="FUEL" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" Margin="0,0,10,0"
+               Click="bFuel_Click" IsEnabled="{Binding Path=EnableFuel}" Width="45" Height="25"/>
+        <Button x:Name="bFix" Content="FIX" Grid.Column="1" Grid.Row="8"  HorizontalAlignment="Right" 
+                IsEnabled="{Binding Path=EnableFix}" Click="bFix_Click" Width="45" Height="25"  Margin="0,0,65,0" />
 
     </Grid>
 </Window>

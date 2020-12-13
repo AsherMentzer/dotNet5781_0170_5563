@@ -132,13 +132,13 @@ namespace dotNet5781_03B_0170_5563
                 {
                     kilometrage = check;
                     tbKmAfterFix.IsEnabled = true;
-                    v.Background = default;
-                    v.BorderBrush = default;
+                    brdKM.Background = Brushes.White;
+                    brdKM.BorderBrush = Brushes.Gray;
                 }
                 else
                 {
-                    v.Background = Brushes.LightPink;
-                    v.BorderBrush = Brushes.Red;
+                    brdKM.Background = Brushes.LightPink;
+                    brdKM.BorderBrush = Brushes.Red;
                     MessageBox.Show("the kilometrage can not to be negative","invalid",MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
@@ -156,12 +156,25 @@ namespace dotNet5781_03B_0170_5563
                 double.TryParse(v.Text, out check);
                 if (check >= 0)
                 {
-                    if(check>kilometrage)
+                    if (check > kilometrage)
+                    {
+                        brdMmFromFix.Background = Brushes.LightPink;
+                        brdMmFromFix.BorderBrush = Brushes.Red;
                         MessageBox.Show("the kilometrage after the fix can not to be bigger that kilomtrage");
-                    kmAfterBusFixing = check;
+                    }
+                    else
+                    {
+                        brdMmFromFix.Background = Brushes.White;
+                        brdMmFromFix.BorderBrush = Brushes.Gray;
+                        kmAfterBusFixing = check;
+                    }
                 }
                 else
+                {
+                    brdMmFromFix.Background = Brushes.LightPink;
+                    brdMmFromFix.BorderBrush = Brushes.Red;
                     MessageBox.Show("the kilometrage can not to be negative");
+                }
             }
         }
 
@@ -190,9 +203,15 @@ namespace dotNet5781_03B_0170_5563
                 if (test >= 0 && test < 1201)
                 {
                     fuel = test;
+                    brdFuel.Background = Brushes.White;
+                    brdFuel.BorderBrush = Brushes.Gray;
                 }
                 else
+                {
+                    brdFuel.Background = Brushes.LightPink;
+                    brdFuel.BorderBrush = Brushes.Red;
                     MessageBox.Show("The tank contain between 0 to 1200 litter");
+                }
             }
         }
 

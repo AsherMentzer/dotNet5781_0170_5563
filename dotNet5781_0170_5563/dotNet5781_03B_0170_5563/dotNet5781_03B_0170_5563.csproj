@@ -121,6 +121,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="תרגיל 3 ב.docx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -138,6 +139,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\travel1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\bus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
