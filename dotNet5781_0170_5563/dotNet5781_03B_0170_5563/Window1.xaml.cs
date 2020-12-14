@@ -38,6 +38,11 @@ namespace dotNet5781_03B_0170_5563
 
         private void dpActivityDate_CalendarClosed(object sender, RoutedEventArgs e) { }
 
+        /// <summary>
+        /// the active date and is only between 1990 to today
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DpActivityDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as DatePicker;
@@ -48,12 +53,12 @@ namespace dotNet5781_03B_0170_5563
                 if (d.Value.Year < 1990 || d.Value > DateTime.Now)
                 {
 
-                    MessageBox.Show("the date must be between 1990 - today", "invalid date");
-                    //  dpActivityDate.SelectedDate = null;
-                    // e.Handled = true;
+                    MessageBox.Show("the date must be between 1990 - today", "invalid date");                 
                 }
                 else
                 {
+                    //check that the id length is correcrt and show
+                    //red background unless is correct that is turn to regular
                     date = (DateTime)d;
                     int length = 7;
                     if (date.Year >= 2018)
@@ -69,6 +74,11 @@ namespace dotNet5781_03B_0170_5563
             }
         }
 
+        /// <summary>
+        /// geting the id and check validity
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbId_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -81,14 +91,7 @@ namespace dotNet5781_03B_0170_5563
                 int length = 7;
                 if (date.Year >= 2018)
                     length = 8;
-                //MessageBox.Show("the id must be 7 digits", "invalid id");
-                //    else
-
-                //}
-                //else
-                //{
-                //if (tbId.Text.Length != 0)
-                //brdId.Background = Brushes.Transparent;
+               
                 if (id.Length != length)
                 {
                     if (tbId.Text.Length == 0)
@@ -100,10 +103,7 @@ namespace dotNet5781_03B_0170_5563
                         brdId.BorderBrush = Brushes.Red;
                         brdId.Background = Brushes.LightPink;
                     }
-
-
-                    //va.Text = "not valid";
-                    //MessageBox.Show("the id must be 8 digits", "invalid id");
+                                   
                     licenseId = null;
                 }
                 else
@@ -120,6 +120,12 @@ namespace dotNet5781_03B_0170_5563
                 }
             }
         }
+
+        /// <summary>
+        /// get the km the bus travle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbKm_TextChanged(object sender, TextChangedEventArgs e)
         {
             double check;
@@ -146,6 +152,11 @@ namespace dotNet5781_03B_0170_5563
             }
         }
 
+        /// <summary>
+        /// get the km he travle after the last fix
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbKmAfterFix_TextChanged(object sender, TextChangedEventArgs e)
         {
             double check;
@@ -178,6 +189,11 @@ namespace dotNet5781_03B_0170_5563
             }
         }
 
+        /// <summary>
+        /// get the last fix date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DpFixDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as DatePicker;
@@ -193,6 +209,11 @@ namespace dotNet5781_03B_0170_5563
             }
         }
 
+        /// <summary>
+        /// get he fuel the bus have
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbFuel_TextChanged(object sender, TextChangedEventArgs e)
         {
             var v = sender as TextBox;
@@ -215,6 +236,11 @@ namespace dotNet5781_03B_0170_5563
             }
         }
 
+        /// <summary>
+        /// check if all the fileds are filled and all is good than add the bus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
             int length;

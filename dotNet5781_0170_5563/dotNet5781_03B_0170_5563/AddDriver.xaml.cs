@@ -28,7 +28,11 @@ namespace dotNet5781_03B_0170_5563
         }
 
       
-
+        /// <summary>
+        /// get the name of the driver and add hom to our company
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addD_Click(object sender, RoutedEventArgs e)
         {
             if (tbDriver.Text.Length > 0)
