@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0170_5563"
         mc:Ignorable="d"
-        Title="Travel" Height="250" Width="400" Icon="images\travel1.png" Background="LightSlateGray">
+        Title="Travel" Height="250" Width="400" Icon="images\travel1.png" Background="#FFC8D6FB">
     <Grid>
         <TextBox Name="KM" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="150" 
                  PreviewKeyDown="KM_PreviewKeyDown" IsEnabled="False" VerticalContentAlignment="Center"/>
