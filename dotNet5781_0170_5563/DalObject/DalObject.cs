@@ -24,8 +24,8 @@ namespace Dal
 
         public IEnumerable<Bus> GetAllBuses()
         {
-            return from bus in DataSource.buses
-                   select bus.Clone();
+            return (IEnumerable<Bus>)(from bus in DataSource.buses
+                   select bus.Clone());
         }
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
@@ -33,14 +33,14 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public Bus GetBus(int licenseId)
+        public Bus GetBus(string licenseId)
         {
-            Bus bus = DataSource.buses.Find(p => p.ID == licenseId);
+            Bus bus = DataSource.buses.Find(p => p.LicenseId == licenseId);
 
             if (bus != null)
-                return bus.Clone();
+                return (Bus)bus.Clone();
             else
-                throw new BadPersonIdException(id, $"bad person id: {id}");
+                throw new BadPersonIdException(licenseId, $"bad person id: {licenseId}");
         }
 
         public void AddBus(Bus bus)
@@ -269,6 +269,11 @@ namespace Dal
         }
 
         public void DeleteTravelBus(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Bus GetBus(int licenseId)
         {
             throw new NotImplementedException();
         }

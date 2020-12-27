@@ -44,5 +44,11 @@
     <Compile Include="DataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DalApi\DalApi.csproj">
+      <Project>{89b9cff6-e3b7-46e1-b74b-4ea90898ca70}</Project>
+      <Name>DalApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

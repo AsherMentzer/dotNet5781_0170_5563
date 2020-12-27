@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7125F495-D853-42BA-B38E-55177FF47486}</ProjectGuid>
+    <ProjectGuid>{B45B00EB-F42B-4B2B-A6A6-ECA663D4493A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DalObject</RootNamespace>
-    <AssemblyName>DalObject</AssemblyName>
+    <RootNamespace>BL</RootNamespace>
+    <AssemblyName>BL</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,20 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BadPersonIdException.cs" />
-    <Compile Include="Cloning.cs" />
-    <Compile Include="DalObject.cs" />
+    <Compile Include="BLFactory.cs" />
+    <Compile Include="BLImp.cs" />
+    <Compile Include="Bus.cs" />
+    <Compile Include="BusLine.cs" />
+    <Compile Include="IBL.cs" />
+    <Compile Include="LineExist.cs" />
+    <Compile Include="PairOfConsecutiveStation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DalApi\DalApi.csproj">
-      <Project>{89b9cff6-e3b7-46e1-b74b-4ea90898ca70}</Project>
-      <Name>DalApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{c6d11688-985d-40a1-aa92-0e6a5adf4517}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
+    <Compile Include="Station.cs" />
+    <Compile Include="StationLine.cs" />
+    <Compile Include="TravelBus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
