@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace DalApi
+namespace DLAPI
 {
     /// <summary>
     /// Class for processing config.xml file and getting from there

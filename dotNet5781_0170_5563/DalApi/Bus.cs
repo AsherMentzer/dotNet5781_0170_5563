@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DO
 {
     public enum Status { ready, traveling, fuelling, fixing, needFix };
-    public class Bus: IClonable
+    public class Bus
     {
         public string LicenseId { get; set; }
         public DateTime ActiveDate { get; set; }

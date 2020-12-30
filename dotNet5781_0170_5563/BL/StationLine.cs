@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BO
 {
-    class StationLine
+    public class StationLine
     {
+        public int LineId { get; set; }
+        public int StationId { get; set; }
+        public int NumInLine { get; set; }
+   
     }
 }

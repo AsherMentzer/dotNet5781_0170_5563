@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-   public class PairOfConsecutiveStation:IClonable
+   public class PairOfConsecutiveStation
     {
         public int StationId1 { get; set; }
         public int StationId2 { get; set; }
-        public int Distance { get; set; }
+        public double Distance { get; set; }
         public TimeSpan AverageTravleTime { get; set; }
     }
 }

@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BO
 {
-    class Station
+    public class Station
     {
+        public int StationId { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public string StationName { get; set; }
     }
 }

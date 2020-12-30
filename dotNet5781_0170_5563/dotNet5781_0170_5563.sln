@@ -15,13 +15,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNet5781_03B_0170_5563", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{C6D11688-985D-40A1-AA92-0E6A5ADF4517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalObject", "DalObject\DalObject.csproj", "{7125F495-D853-42BA-B38E-55177FF47486}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLObject", "DalObject\DLObject.csproj", "{7125F495-D853-42BA-B38E-55177FF47486}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalApi", "DalApi\DalApi.csproj", "{89B9CFF6-E3B7-46E1-B74B-4EA90898CA70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLApi", "DalApi\DLApi.csproj", "{89B9CFF6-E3B7-46E1-B74B-4EA90898CA70}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{B45B00EB-F42B-4B2B-A6A6-ECA663D4493A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mainWindow", "mainWindow\mainWindow.csproj", "{AC5DA595-115E-421B-800D-4CC97C54001A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7750EC9-F42B-4BE8-BADC-48F255F8D99A}"
+	ProjectSection(SolutionItems) = preProject
+		config.xml = config.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLGUI", "PLGUI\PLGUI.csproj", "{7350C025-5A79-4AF6-83C1-15C3DD56C101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +70,10 @@ Global
 		{B45B00EB-F42B-4B2B-A6A6-ECA663D4493A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B45B00EB-F42B-4B2B-A6A6-ECA663D4493A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B45B00EB-F42B-4B2B-A6A6-ECA663D4493A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC5DA595-115E-421B-800D-4CC97C54001A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC5DA595-115E-421B-800D-4CC97C54001A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC5DA595-115E-421B-800D-4CC97C54001A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC5DA595-115E-421B-800D-4CC97C54001A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7350C025-5A79-4AF6-83C1-15C3DD56C101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7350C025-5A79-4AF6-83C1-15C3DD56C101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7350C025-5A79-4AF6-83C1-15C3DD56C101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7350C025-5A79-4AF6-83C1-15C3DD56C101}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

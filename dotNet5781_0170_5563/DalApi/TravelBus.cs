@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public class TravelBus:IClonable
+    public class TravelBus
     {
         public int TravleId { get; set; }
         public string LicenseId { get; set; }

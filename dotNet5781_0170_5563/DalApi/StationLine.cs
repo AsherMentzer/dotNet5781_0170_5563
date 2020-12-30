@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public class StationLine : IClonable
+    public class StationLine 
     {
         public int LineId { get; set; }
         public int StationId { get; set; }

@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BO
 {
-    class LineExist
+   public class LineExist:BusLine
     {
+        //public int LineId { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan Frequency { get; set; }
+        public TimeSpan EndTime { get; set; }
     }
 }

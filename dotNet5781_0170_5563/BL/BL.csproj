@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,6 +45,7 @@
     <Compile Include="BLImp.cs" />
     <Compile Include="Bus.cs" />
     <Compile Include="BusLine.cs" />
+    <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="LineExist.cs" />
     <Compile Include="PairOfConsecutiveStation.cs" />
@@ -52,6 +53,20 @@
     <Compile Include="Station.cs" />
     <Compile Include="StationLine.cs" />
     <Compile Include="TravelBus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DalApi\DLApi.csproj">
+      <Project>{89b9cff6-e3b7-46e1-b74b-4ea90898ca70}</Project>
+      <Name>DLApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DalObject\DLObject.csproj">
+      <Project>{7125f495-d853-42ba-b38e-55177ff47486}</Project>
+      <Name>DLObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{c6d11688-985d-40a1-aa92-0e6a5adf4517}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Reflection;
 
-namespace DalApi
+namespace DLAPI
 {
     /// <summary>
     /// Static Factory class for creating Dal tier implementation object according to
     /// configuration in file config.xml
     /// </summary>
-    public static class DalFactory
+    public static class DLFactory
     {
         /// <summary>
         /// The function creates Dal tier implementation object according to Dal type
@@ -20,7 +20,7 @@ namespace DalApi
         /// which must contain the single instance of the class.
         /// </summary>
         /// <returns>Dal tier implementation object</returns>
-        public static IDal GetDal()
+        public static IDL GetDal()
         {
             // get dal implementation name from config.xml according to <data> element
             string dalType = DalConfig.DalName;
@@ -60,7 +60,7 @@ namespace DalApi
             // Since the property is static - the object parameter is irrelevant for the GetValue() function and we can use null
             try
             {
-                IDal dal = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null) as IDal;
+                IDL dal = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null) as IDL;
                 // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
                 if (dal == null)
                     throw new DalConfigException($"Class {dalPackage} instance is not initialized");

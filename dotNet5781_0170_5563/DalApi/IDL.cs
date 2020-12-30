@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 using DO;
 
-namespace DalApi
+namespace DLAPI
 {
     //CRUD Logic:
     // Create - add new instance
     // Request - ask for an instance or for a collection
     // Update - update properties of an instance
     // Delete - delete an instance
-    public interface IDal
+    public interface IDL
     {
         #region Bus
         IEnumerable<Bus> GetAllBuses();
         IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate);
-        Bus GetBus(int licenseId);
+        Bus GetBus(string licenseId);
         void AddBus(Bus bus);
         void UpdateBus(Bus bus);
-        void UpdateBus(int licenceId, Action<Bus> update); //method that knows to updt specific fields in bus
-        void DeleteBus(int licenceId);
+        void UpdateBus(string licenceId, Action<Bus> update); //method that knows to updt specific fields in bus
+        void DeleteBus(string licenceId);
         #endregion
 
         #region BusLine
@@ -38,7 +38,7 @@ namespace DalApi
         #region LineExist
         IEnumerable<LineExist> GetAllExistsLines();
         IEnumerable<LineExist> GetAllExistsLinesBy(Predicate<LineExist> predicate);
-        BusLine GetLineExist(int lineId);
+        LineExist GetLineExist(int lineId);
         void AddLineExist(LineExist lineExist);
         void UpdateLineExist(LineExist lineExist);
         void UpdateLineExist(int lineId, Action<BusLine> update); //method that knows to updt specific fields in bus line
@@ -48,11 +48,11 @@ namespace DalApi
         #region PairOfConsecutiveStation
         IEnumerable<PairOfConsecutiveStation> GetAllPairs();
         IEnumerable<PairOfConsecutiveStation> GetAllPairsBy(Predicate<Station> predicate);
-        Station GetPair(int id);
-        void AddPair(PairOfConsecutiveStation pair);
+        PairOfConsecutiveStation GetPair(int id1,int id2);
+        void AddPair(int id1, int id2, double distance, TimeSpan time);
         void UpdatePair(PairOfConsecutiveStation pair);
         void UpdatePair(int id, Action<PairOfConsecutiveStation> update); //method that knows to updt specific fields in Person
-        void DeletePair(int id);
+        void DeletePair(int id1,int id2);
         #endregion
 
         #region Station

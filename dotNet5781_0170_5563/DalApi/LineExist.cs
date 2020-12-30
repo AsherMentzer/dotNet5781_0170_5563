@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public class LineExist : IClonable
+    public class LineExist 
     {
         public int LineId{ get; set; }
         public TimeSpan StartTime { get; set; }

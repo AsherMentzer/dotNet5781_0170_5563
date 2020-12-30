@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public class Station : IClonable
+    public class Station 
     {
         public int StationId { get; set; }
-        public float Latitude { get; set; }
-        public float Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public string StationName { get; set; }
     }
 }
