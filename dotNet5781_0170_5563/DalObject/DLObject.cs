@@ -25,8 +25,8 @@ namespace DL
 
         public IEnumerable<Bus> GetAllBuses()
         {
-            return (IEnumerable<Bus>)(from bus in DataSource.buses
-                                      select bus.Clone());
+            return from bus in DataSource.buses
+                   select bus.Clone();
         }
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
@@ -100,7 +100,7 @@ namespace DL
 
         public BusLine GetBusLine(int id)
         {
-            BusLine busLine = DataSource.lines.Find(l => l.LineNumber == id);
+            BusLine busLine = DataSource.lines.Find(l => l.LineId == id);
 
             if (busLine != null)
                 return busLine.Clone();
@@ -324,7 +324,9 @@ namespace DL
 
         public IEnumerable<StationLine> GetAllStationsLineBy(Predicate<StationLine> predicate)
         {
-            throw new NotImplementedException();
+            return (IEnumerable<StationLine>)(from station in DataSource.stationsLine
+                                          where predicate(station)
+                                          select station.Clone());
         }
 
         public Station GetStationLine(int id)

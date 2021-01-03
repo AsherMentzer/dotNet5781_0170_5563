@@ -13,7 +13,7 @@ namespace BL
 {
     class BLImp:IBL
     {
-        IDL dl = DLFactory.GetDal();
+        IDL dl = DLFactory.GetDL();
 
         #region Bus
         BO.Bus BusDoBoADapter(DO.Bus busDO)
@@ -65,7 +65,8 @@ namespace BL
 
         IEnumerable<BO.Bus> IBL.GetAllBuses()
         {
-            throw new NotImplementedException();
+            return from item in dl.GetAllBuses()
+                   select BusDoBoADapter(item);
         }
 
         IEnumerable<BO.Bus> IBL.GetAllBusesBy(Predicate<BO.Bus> predicate)
@@ -97,7 +98,14 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-
+        #endregion
+        #region Bus Line
+        BO.BusLine BusLineDoBoADapter(DO.BusLine line)
+        {
+            BO.BusLine bl = new BO.BusLine();
+            line.CopyPropertiesTo(bl);
+            return bl;
+        }
         public IEnumerable<BO.BusLine> GetAllBusLines()
         {
             throw new NotImplementedException();
@@ -132,7 +140,8 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-
+        #endregion
+        #region Line Exist
         public IEnumerable<BO.LineExist> GetAllExistsLines()
         {
             throw new NotImplementedException();
@@ -167,7 +176,8 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-
+        #endregion
+        #region Pairs
         public IEnumerable<BO.PairOfConsecutiveStation> GetAllPairs()
         {
             throw new NotImplementedException();
@@ -202,10 +212,25 @@ namespace BL
         {
             throw new NotImplementedException();
         }
+        #endregion
+        #region station
+        BO.Station StationDoBoADapter(DO.Station stationDO)
+        {
+            BO.Station stationBO = new BO.Station();
+            stationDO.CopyPropertiesTo(stationBO);
+            stationBO.lines = (from sl in dl.GetAllStationsLineBy(sl => sl.StationId == stationBO.StationId)
+                              let line = dl.GetBusLine(sl.LineId)
+                              select BusLineDoBoADapter(line));
+            
+            return stationBO;
+        }
+
+       
 
         public IEnumerable<BO.Station> GetAllStations()
         {
-            throw new NotImplementedException();
+            return from item in dl.GetAllStations()
+                   select StationDoBoADapter(item);
         }
 
         public IEnumerable<BO.Station> GetAllStationsBy(Predicate<BO.Station> predicate)
@@ -215,7 +240,16 @@ namespace BL
 
         public BO.Station GetStation(int id)
         {
-            throw new NotImplementedException();
+            DO.Station station;
+            try
+            {
+               station = dl.GetStation(id);
+            }
+            catch (BadBusLicenceIdException ex)
+            {
+                return null;///////need to throw exception
+            }
+            return StationDoBoADapter(station);
         }
 
         public void AddStation(BO.Station station)
@@ -237,7 +271,8 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-
+        #endregion
+        #region station Line
         public IEnumerable<BO.StationLine> GetAllStationsLine()
         {
             throw new NotImplementedException();
@@ -272,7 +307,8 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-
+        #endregion
+        #region travle Line
         public IEnumerable<BO.TravelBus> GetAllTravelBuses()
         {
             throw new NotImplementedException();

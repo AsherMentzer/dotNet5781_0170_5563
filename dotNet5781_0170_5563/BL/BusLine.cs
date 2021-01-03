@@ -14,7 +14,7 @@ namespace BO
         public int FirstStation { get; set; }
         public int LastStation { get; set; }
         public Areas area { get; set; }
-        public IEnumerable<StationLine> BusLines { get; set; }
+       // public IEnumerable<StationLine> BusLines { get; set; }
 
     }
 }

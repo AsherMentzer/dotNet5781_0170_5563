@@ -10,7 +10,7 @@ namespace Data
     public static class DataSource
     {
         public static List<Bus> buses;
-        public static List<Station> stations;
+        public static List<Station> stations = new List<Station>();
         public static List<BusLine> lines;
         public static int linesId = 1;
         public static List<PairOfConsecutiveStation> pairs;
@@ -19,13 +19,13 @@ namespace Data
         public static List<LineExist> linesExists;
         static DataSource()
         {
-            InialAllList();
+            InitialAllList();
         }
-        static void InialAllList()
+        static void InitialAllList()
         {
             #region buses
             buses = new List<Bus>();
-            for (int i = 90; i > 60; ++i)
+            for (int i = 90; i > 60; --i)
             {
                 Bus bus = new Bus { LicenseId = "123456" + i, status = Status.ready, Fuel = 1200, Killometrage = 0, ActiveDate = new DateTime(2020, 1, i % 30 + 1) };
                 buses.Add(bus);
@@ -82,11 +82,12 @@ namespace Data
                 "ת. מרכזית ירושלים/הורדה", "שמואל הנביא/הרב בלוי", "ירמיהו/אהליאב", "אברבנאל/המכבים", "אזור התעשייה",
                 "כביש 4/מחלף אלוף שדה", "דרך ז'בוטינסקי/אבן עזרא", "האדמור מנדבורנא/חזון אי''ש", "דרך ז'בוטינסקי/הרב שך",
                 "מגדל קונקורד/דרך בן גוריון", "מחלף גבעת שמואל/כביש 4", "דרך ז'בוטינסקי/רבי עקיבא", "חזון אי''ש/רבי עקיבא",
-                "מחלף גהה/כביש 4", "דרך ז'בוטינסקי/דב גרונר", "דרך ז'בוטינסקי/סוקולוב", "קניון איילון, רוטשילד / פרנקפורטר",
+                "מחלף גהה/כביש 4", "דרך ז'בוטינסקי/דב גרונר", "דרך ז'בוטינסקי/סוקולוב", "קניון איילון","רוטשילד / פרנקפורטר",
                 "דוד פרנקפורטר/רוטשילד", "דרך זאב ז'בוטינסקי/הסיבים", "בי''ח בלינסון/ז'בוטינסקי", "ז'בוטינסקי/אלברט איינשטיין",
                 "דרך זאב ז'בוטינסקי/היצירה", "מחלף גהה/ז'בוטינסקי", "ארלוזורוב/צה''ל", "מיכל פינס / רוטשילד", "קניון אם מושבות",
                 "טרומפלדור/פיק''א", "ת. מרכזית פ''ת/רציפים עירוני", "בית חולים שניידר", "חנן לויתן/ברוריה בת תרדיון" };
-            for (int i = idArr.Length; i > 0; --i)
+
+            for (int i = 0; i < idArr.Length; ++i)
             {
                 stations.Add(new Station { StationId = idArr[i], Longitude = lonArr[i], Latitude = lanArr[i], StationName = addArr[i] });
             }
@@ -178,7 +179,125 @@ namespace Data
             };
             #endregion
             #region station line
+            stationsLine = new List<StationLine>
+            {
+                #region center
+                new StationLine{LineId=1,StationId=22980,NumInLine=1},
+                new StationLine{LineId=1,StationId=26416,NumInLine=2},
+                new StationLine{LineId=1,StationId=26544,NumInLine=3},
+                new StationLine{LineId=1,StationId=32276,NumInLine=4},
+                new StationLine{LineId=1,StationId=32270,NumInLine=5},
+                new StationLine{LineId=1,StationId=32267,NumInLine=6},
+                new StationLine{LineId=1,StationId=32269,NumInLine=7},
+                new StationLine{LineId=1,StationId=36709,NumInLine=8},
+                new StationLine{LineId=1,StationId=32247,NumInLine=9},
+                new StationLine{LineId=1,StationId=36780,NumInLine=10},
 
+                new StationLine{LineId=2,StationId=22980,NumInLine=1},
+                new StationLine{LineId=2,StationId=26416,NumInLine=2},
+                new StationLine{LineId=2,StationId=26544,NumInLine=3},
+                new StationLine{LineId=2,StationId=32276,NumInLine=4},
+                new StationLine{LineId=2,StationId=32274,NumInLine=5},
+                new StationLine{LineId=2,StationId=32267,NumInLine=6},
+                new StationLine{LineId=2,StationId=38315,NumInLine=7},
+                new StationLine{LineId=2,StationId=32376,NumInLine=8},
+                new StationLine{LineId=2,StationId=31582,NumInLine=9},
+                new StationLine{LineId=2,StationId=32411,NumInLine=10},
+
+                new StationLine{LineId=3,StationId=22980,NumInLine=1},
+                new StationLine{LineId=3,StationId=26416,NumInLine=2},
+                new StationLine{LineId=3,StationId=21370,NumInLine=3},
+                new StationLine{LineId=3,StationId=26544,NumInLine=4},
+                new StationLine{LineId=3,StationId=32276,NumInLine=5},
+                new StationLine{LineId=3,StationId=32270,NumInLine=6},
+                new StationLine{LineId=3,StationId=32267,NumInLine=7},
+                new StationLine{LineId=3,StationId=32269,NumInLine=8},
+                new StationLine{LineId=3,StationId=38317,NumInLine=9},
+                new StationLine{LineId=3,StationId=32799,NumInLine=10},
+                #endregion
+
+                #region general
+                new StationLine{LineId=4,StationId=20163,NumInLine=1},
+                new StationLine{LineId=4,StationId=2273,NumInLine=2},
+                new StationLine{LineId=4,StationId=22980,NumInLine=3},
+                new StationLine{LineId=4,StationId=21370,NumInLine=4},
+                new StationLine{LineId=4,StationId=21616,NumInLine=5},
+                new StationLine{LineId=4,StationId=25114,NumInLine=6},
+                new StationLine{LineId=4,StationId=22942,NumInLine=7},
+                new StationLine{LineId=4,StationId=21109,NumInLine=8},
+                new StationLine{LineId=4,StationId=5602,NumInLine=9},
+                new StationLine{LineId=4,StationId=6109,NumInLine=10},
+
+                new StationLine{LineId=5,StationId=26946,NumInLine=1},
+                new StationLine{LineId=5,StationId=20090,NumInLine=2},
+                new StationLine{LineId=5,StationId=23064,NumInLine=3},
+                new StationLine{LineId=5,StationId=21558,NumInLine=4},
+                new StationLine{LineId=5,StationId=22942,NumInLine=5},
+                new StationLine{LineId=5,StationId=645,NumInLine=6},
+                new StationLine{LineId=5,StationId=4218,NumInLine=7},
+                new StationLine{LineId=5,StationId=4116,NumInLine=8},
+                new StationLine{LineId=5,StationId=6248,NumInLine=9},
+                new StationLine{LineId=5,StationId=5666,NumInLine=10},
+                #endregion
+                #region jerusalem
+                new StationLine{LineId=6,StationId=3374,NumInLine=1},
+                new StationLine{LineId=6,StationId=4216,NumInLine=2},
+                new StationLine{LineId=6,StationId=4075,NumInLine=3},
+                new StationLine{LineId=6,StationId=84,NumInLine=4},
+                new StationLine{LineId=6,StationId=3633,NumInLine=5},
+                new StationLine{LineId=6,StationId=5060,NumInLine=6},
+                new StationLine{LineId=6,StationId=1625,NumInLine=7},
+                new StationLine{LineId=6,StationId=1352,NumInLine=8},
+                new StationLine{LineId=6,StationId=1927,NumInLine=9},
+                new StationLine{LineId=6,StationId=2583,NumInLine=10},
+
+                new StationLine{LineId=7,StationId=2524,NumInLine=1},
+                new StationLine{LineId=7,StationId=277,NumInLine=2},
+                new StationLine{LineId=7,StationId=173,NumInLine=3},
+                new StationLine{LineId=7,StationId=9937,NumInLine=4},
+                new StationLine{LineId=7,StationId=5060,NumInLine=5},
+                new StationLine{LineId=7,StationId=666,NumInLine=6},
+                new StationLine{LineId=7,StationId=103,NumInLine=7},
+                new StationLine{LineId=7,StationId=5062,NumInLine=8},
+                new StationLine{LineId=7,StationId=334,NumInLine=9},
+                new StationLine{LineId=7,StationId=317,NumInLine=10},
+
+                new StationLine{LineId=8,StationId=2524,NumInLine=1},
+                new StationLine{LineId=8,StationId=277,NumInLine=2},
+                new StationLine{LineId=8,StationId=176,NumInLine=3},
+                new StationLine{LineId=8,StationId=173,NumInLine=4},
+                new StationLine{LineId=8,StationId=9937,NumInLine=5},
+                new StationLine{LineId=8,StationId=1727,NumInLine=6},
+                new StationLine{LineId=8,StationId=5060,NumInLine=7},
+                new StationLine{LineId=8,StationId=1625,NumInLine=8},
+                new StationLine{LineId=8,StationId=1927,NumInLine=9},
+                new StationLine{LineId=8,StationId=2583,NumInLine=10},
+
+                new StationLine{LineId=9,StationId=2524,NumInLine=1},
+                new StationLine{LineId=9,StationId=277,NumInLine=2},
+                new StationLine{LineId=9,StationId=2539,NumInLine=3},
+                new StationLine{LineId=9,StationId=4216,NumInLine=4},
+                new StationLine{LineId=9,StationId=4156,NumInLine=5},
+                new StationLine{LineId=9,StationId=1601,NumInLine=6},
+                new StationLine{LineId=9,StationId=3855,NumInLine=7},
+                new StationLine{LineId=9,StationId=2946,NumInLine=8},
+                new StationLine{LineId=9,StationId=525,NumInLine=9},
+                new StationLine{LineId=9,StationId=3315,NumInLine=10},
+
+                new StationLine{LineId=10,StationId=1002,NumInLine=1},
+                new StationLine{LineId=10,StationId=3287,NumInLine=2},
+                new StationLine{LineId=10,StationId=3374,NumInLine=3},
+                new StationLine{LineId=10,StationId=4216,NumInLine=4},
+                new StationLine{LineId=10,StationId=4218,NumInLine=5},
+                new StationLine{LineId=10,StationId=84,NumInLine=6},
+                new StationLine{LineId=10,StationId=3633,NumInLine=7},
+                new StationLine{LineId=10,StationId=1171,NumInLine=8},
+                new StationLine{LineId=10,StationId=664,NumInLine=9},
+                new StationLine{LineId=10,StationId=3821,NumInLine=10}
+              
+
+                #endregion
+            };
             #endregion
         }
     }

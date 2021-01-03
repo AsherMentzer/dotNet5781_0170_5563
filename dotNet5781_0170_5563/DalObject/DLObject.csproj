@@ -7,8 +7,8 @@
     <ProjectGuid>{7125F495-D853-42BA-B38E-55177FF47486}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DalObject</RootNamespace>
-    <AssemblyName>DalObject</AssemblyName>
+    <RootNamespace>DLObject</RootNamespace>
+    <AssemblyName>DLObject</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cloning.cs" />
-    <Compile Include="DalObject.cs" />
+    <Compile Include="DLObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

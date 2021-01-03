@@ -16,8 +16,8 @@ namespace ViewModel
         static readonly DependencyProperty BusProperty = DependencyProperty.Register("Bus", typeof(PO.Bus), typeof(MainWindow));
         public PO.Bus Bus { get => (PO.Bus)GetValue(BusProperty); set => SetValue(BusProperty, value); }
 
-      //  static readonly DependencyProperty BusIDsProperty = DependencyProperty.Register("BusIDs", typeof(ObservableCollection<PO.ListedPerson>), typeof(MainWindow));
-        //public ObservableCollection<PO.ListedPerson> StudentIDs { get => (ObservableCollection<PO.ListedPerson>)GetValue(StudentIDsProperty); set => SetValue(StudentIDsProperty, value); }
+        static readonly DependencyProperty BusesProperty = DependencyProperty.Register("BusIDs", typeof(ObservableCollection<PO.Bus>), typeof(MainWindow));
+        public ObservableCollection<PO.Bus> Buses { get => (ObservableCollection<PO.Bus>)GetValue(BusesProperty); set => SetValue(BusesProperty, value); }
 
         public BO.Bus BusBO
         {

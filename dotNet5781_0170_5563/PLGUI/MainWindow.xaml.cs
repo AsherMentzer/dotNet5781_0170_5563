@@ -12,7 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using PO;
+using BLAPI;
+using ViewModel;
+using BO;
 namespace PLGUI
 {
     /// <summary>
@@ -20,9 +23,24 @@ namespace PLGUI
     /// </summary>
     public partial class MainWindow : Window
     {
+       IBL bl = BLFactory.GetBL("1");
+        List<BO.Station>stations=new List<BO.Station>();
+        void createBuses()
+        {
+         foreach(var b in  bl.GetAllStations())
+            {
+                stations.Add(b);
+            }
+        }
+        //public ViewModel.MainWindow viewModel;
         public MainWindow()
         {
             InitializeComponent();
+            createBuses();
+            lbBuses.ItemsSource = stations;
+            //viewModel = new ViewModel.MainWindow();
+            //viewModel.Reset();
+            //DataContext = viewModel;
         }
 
         private void signInButton_Click(object sender, RoutedEventArgs e)

@@ -14,5 +14,9 @@ namespace BO
         public double Killometrage { get; set; }
         public double Fuel { get; set; }
         public Status status { get; set; }
+        public override string ToString()
+        {
+            return LicenseId;
+        }
     }
 }
