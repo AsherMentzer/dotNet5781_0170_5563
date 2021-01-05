@@ -8,12 +8,12 @@ using DO;
 namespace Data
 {
     public static class DataSource
-    {     
+    {
         public static List<Bus> buses;
         public static List<Station> stations = new List<Station>();
         public static List<BusLine> lines;
         public static int linesId = 1;
-        public static List<PairOfConsecutiveStation> pairs=new List<PairOfConsecutiveStation>();
+        public static List<PairOfConsecutiveStation> pairs;
         public static List<StationLine> stationsLine;
         public static List<TravelBus> travelBuses;
         public static List<LineExist> linesExists;
@@ -299,6 +299,120 @@ namespace Data
                 #endregion
             };
             #endregion
+
+            #region pairs
+            pairs = new List<PairOfConsecutiveStation>
+            {
+                //39
+            new PairOfConsecutiveStation{ StationId1 = 1002, StationId2 = 3287, Distance = 1.1, AverageTravleTime = new TimeSpan(0,5,0) },
+            new PairOfConsecutiveStation{ StationId1 = 3287, StationId2 = 3374, Distance = 2.7, AverageTravleTime = new TimeSpan(0,16,0) },
+            new PairOfConsecutiveStation{ StationId1 = 3374, StationId2 = 4216, Distance = 0.3, AverageTravleTime = new TimeSpan(0,2,0) },
+            new PairOfConsecutiveStation{ StationId1 = 4216, StationId2 = 4218, Distance = 0.4, AverageTravleTime = new TimeSpan(0,2,0) },
+            new PairOfConsecutiveStation{ StationId1 = 4218, StationId2 = 84, Distance = 0.8, AverageTravleTime = new TimeSpan(0,3,0) },
+            new PairOfConsecutiveStation{ StationId1 = 83, StationId2 = 3633, Distance = 0.8, AverageTravleTime = new TimeSpan(0,4,0) },
+            new PairOfConsecutiveStation{ StationId1 = 3633, StationId2 = 1171, Distance = 0.6, AverageTravleTime = new TimeSpan(0,2,0) },
+            new PairOfConsecutiveStation{ StationId1 = 1171, StationId2 = 664, Distance = 2.8, AverageTravleTime = new TimeSpan(0,13,0) },
+            new PairOfConsecutiveStation{ StationId1 = 664, StationId2 = 3821, Distance = 0.8, AverageTravleTime = new TimeSpan(0,3,0) },
+            
+            // 59
+            new PairOfConsecutiveStation{ StationId1 = 3374, StationId2 = 4216, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 4216, StationId2 = 4075, Distance = 3.7, AverageTravleTime = new TimeSpan(0,14,0) },
+            new PairOfConsecutiveStation{ StationId1 = 4075, StationId2 = 84, Distance = 0.5, AverageTravleTime = new TimeSpan(0,2,0) },
+            new PairOfConsecutiveStation{ StationId1 = 84, StationId2 = 3633, Distance = 0.8, AverageTravleTime = new TimeSpan(0,3,0) },
+            new PairOfConsecutiveStation{ StationId1 = 3633, StationId2 = 5060, Distance = 1.1, AverageTravleTime = new TimeSpan(0,4,0) },
+            new PairOfConsecutiveStation{ StationId1 = 5060, StationId2 = 1625, Distance = 0.4, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 1625, StationId2 = 1352, Distance = 2.4, AverageTravleTime = new TimeSpan(0,2,0) },
+            new PairOfConsecutiveStation{ StationId1 = 1352, StationId2 = 1927, Distance = 0.6, AverageTravleTime = new TimeSpan(0,3,0) },
+            new PairOfConsecutiveStation{ StationId1 = 1927, StationId2 = 2583, Distance = 5.3, AverageTravleTime = new TimeSpan(0,20,0) },
+            
+            // 64
+                new PairOfConsecutiveStation{ StationId1 = 2524, StationId2 = 277, Distance = 0.6, AverageTravleTime = new TimeSpan(0,2,0) },
+                new PairOfConsecutiveStation{ StationId1 = 277, StationId2 = 173, Distance = 1.2, AverageTravleTime = new TimeSpan(0,5,0) },
+                new PairOfConsecutiveStation{ StationId1 = 173, StationId2 = 9937, Distance = 2.2, AverageTravleTime = new TimeSpan(0,5,0) },
+                new PairOfConsecutiveStation{ StationId1 = 9937, StationId2 = 5060, Distance = 1.1, AverageTravleTime = new TimeSpan(0,5,0) },
+                new PairOfConsecutiveStation{ StationId1 = 5060, StationId2 = 666, Distance = 0.5, AverageTravleTime = new TimeSpan(0,1,0) },
+                new PairOfConsecutiveStation{ StationId1 = 666, StationId2 = 103, Distance = 0.6, AverageTravleTime = new TimeSpan(0,3,0) },
+                new PairOfConsecutiveStation{ StationId1 = 103, StationId2 = 5062, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+                new PairOfConsecutiveStation{ StationId1 = 5062, StationId2 = 334, Distance = 6.4, AverageTravleTime = new TimeSpan(0,13,0) },
+                new PairOfConsecutiveStation{ StationId1 = 334, StationId2 = 317, Distance = 3.7, AverageTravleTime = new TimeSpan(0,9,0) },
+                //69
+                new PairOfConsecutiveStation{ StationId1 = 2524, StationId2 = 277, Distance = 0.6, AverageTravleTime = new TimeSpan(0,2,0) },
+                new PairOfConsecutiveStation{ StationId1 = 277, StationId2 = 175, Distance = 0.9, AverageTravleTime = new TimeSpan(0,4,0) },
+                new PairOfConsecutiveStation{ StationId1 = 176, StationId2 = 173, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+                new PairOfConsecutiveStation{ StationId1 = 173, StationId2 = 9937, Distance = 1.2, AverageTravleTime = new TimeSpan(0,5,0) },
+                new PairOfConsecutiveStation{ StationId1 = 9937, StationId2 = 1727, Distance = 0.2, AverageTravleTime = new TimeSpan(0,1,0) },
+                new PairOfConsecutiveStation{ StationId1 = 1727, StationId2 = 5060, Distance = 0.9, AverageTravleTime = new TimeSpan(0,3,0) },
+                new PairOfConsecutiveStation{ StationId1 = 5060, StationId2 = 1625, Distance = 0.4, AverageTravleTime = new TimeSpan(0,2,0) },
+                new PairOfConsecutiveStation{ StationId1 = 1625, StationId2 = 1927, Distance = 1.2, AverageTravleTime = new TimeSpan(0,5,0) },
+                new PairOfConsecutiveStation{ StationId1 = 1927, StationId2 = 2583, Distance = 5.4, AverageTravleTime = new TimeSpan(0,19,0) },
+
+                //74
+                //new PairOfConsecutiveStation{ StationId1 = 2524, StationId2 = 277, Distance = 0.6, AverageTravleTime = new TimeSpan(0,2,0) },
+                new PairOfConsecutiveStation{ StationId1 = 277, StationId2 = 2539, Distance = 0.8, AverageTravleTime = new TimeSpan(0,4,0) },
+                new PairOfConsecutiveStation{ StationId1 = 2539, StationId2 = 4215, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+                new PairOfConsecutiveStation{ StationId1 = 4215, StationId2 = 4156, Distance = 0.5, AverageTravleTime = new TimeSpan(0,2,0) },
+                new PairOfConsecutiveStation{ StationId1 = 4156, StationId2 = 1601, Distance = 1.8, AverageTravleTime = new TimeSpan(0,7,0) },
+                new PairOfConsecutiveStation{ StationId1 = 1601, StationId2 = 3855, Distance = 0.7, AverageTravleTime = new TimeSpan(0,3,0) },
+                new PairOfConsecutiveStation{ StationId1 = 3855, StationId2 = 2946, Distance = 0.9, AverageTravleTime = new TimeSpan(0,4,0) },
+                new PairOfConsecutiveStation{ StationId1 = 2946, StationId2 = 525, Distance = 2.1, AverageTravleTime = new TimeSpan(0,8,0) },
+                new PairOfConsecutiveStation{ StationId1 = 525, StationId2 = 3315, Distance = 1.6, AverageTravleTime = new TimeSpan(0,7,0) },
+
+                // 51
+            new PairOfConsecutiveStation{ StationId1 = 22980, StationId2 = 26416, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 26416, StationId2 = 21370, Distance = 0.2, AverageTravleTime = new TimeSpan(0,0,32) },
+            new PairOfConsecutiveStation{ StationId1 = 21370, StationId2 = 26544, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 26544, StationId2 = 32276, Distance = 1.3, AverageTravleTime = new TimeSpan(0,5,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32276, StationId2 = 32270, Distance = 0.6, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32270, StationId2 = 32267, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32267, StationId2 = 32269, Distance = 1, AverageTravleTime = new TimeSpan(0,3,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32269, StationId2 = 38317, Distance = 1.4, AverageTravleTime = new TimeSpan(0,4,0) },
+            new PairOfConsecutiveStation{ StationId1 = 38317, StationId2 = 32779, Distance = 0.2, AverageTravleTime = new TimeSpan(0,0,45) },
+                // 66
+            //new PairOfConsecutiveStation{ StationId1 = 22980, StationId2 = 26416, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 26416, StationId2 = 26544, Distance = 0.5, AverageTravleTime = new TimeSpan(0,2,0) },
+            new PairOfConsecutiveStation{ StationId1 = 26544, StationId2 = 32276, Distance = 1.3, AverageTravleTime = new TimeSpan(0,3,0) },
+            //new PairOfConsecutiveStation{ StationId1 = 26544, StationId2 = 32276, Distance = 1.3, AverageTravleTime = new TimeSpan(0,5,0) },
+            //new PairOfConsecutiveStation{ StationId1 = 32276, StationId2 = 32270, Distance = 0.6, AverageTravleTime = new TimeSpan(0,1,0) },
+            //new PairOfConsecutiveStation{ StationId1 = 32270, StationId2 = 32267, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            //new PairOfConsecutiveStation{ StationId1 = 32267, StationId2 = 32269, Distance = 1, AverageTravleTime = new TimeSpan(0,3,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32269, StationId2 = 36709, Distance = 1.3, AverageTravleTime = new TimeSpan(0,4,0) },
+            new PairOfConsecutiveStation{ StationId1 = 36709, StationId2 = 32247, Distance = 0.5, AverageTravleTime = new TimeSpan(0,1,45) },
+
+            // 82
+            //new PairOfConsecutiveStation{ StationId1 = 22980, StationId2 = 26416, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            //new PairOfConsecutiveStation{ StationId1 = 26416, StationId2 = 21370, Distance = 0.2, AverageTravleTime = new TimeSpan(0,0,32) },
+            //new PairOfConsecutiveStation{ StationId1 = 21370, StationId2 = 26544, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32276, StationId2 = 32274, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32274, StationId2 = 32267, Distance = 0.6, AverageTravleTime = new TimeSpan(0,2,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32267, StationId2 = 38315, Distance = 1.4, AverageTravleTime = new TimeSpan(0,3,0) },
+            new PairOfConsecutiveStation{ StationId1 = 38315, StationId2 = 32376, Distance = 0.4, AverageTravleTime = new TimeSpan(0,1,0) },
+            new PairOfConsecutiveStation{ StationId1 = 32376, StationId2 = 31582, Distance = 1.3, AverageTravleTime = new TimeSpan(0,4,0) },
+            new PairOfConsecutiveStation{ StationId1 = 31582, StationId2 = 32411, Distance = 1.2, AverageTravleTime = new TimeSpan(0,3,37) },
+            
+            // 400
+            new PairOfConsecutiveStation { StationId1 = 20163, StationId2 = 22273, Distance = 1.6, AverageTravleTime = new TimeSpan(0, 6, 0) },
+            new PairOfConsecutiveStation { StationId1 = 22273, StationId2 = 22980, Distance = 0.6, AverageTravleTime = new TimeSpan(0, 2, 32) },
+            new PairOfConsecutiveStation { StationId1 = 22980, StationId2 = 21370, Distance = 0.5, AverageTravleTime = new TimeSpan(0, 2, 0) },
+            new PairOfConsecutiveStation { StationId1 = 21370, StationId2 = 21616, Distance = 0.5, AverageTravleTime = new TimeSpan(0, 1, 0) },
+            new PairOfConsecutiveStation { StationId1 = 21616, StationId2 = 25114, Distance = 0.9, AverageTravleTime = new TimeSpan(0, 2, 0) },
+            new PairOfConsecutiveStation { StationId1 = 25114, StationId2 = 22942, Distance = 1.9, AverageTravleTime = new TimeSpan(0, 1, 30) },
+            new PairOfConsecutiveStation { StationId1 = 22942, StationId2 = 21109, Distance = 2.6, AverageTravleTime = new TimeSpan(0, 5, 0) },
+            new PairOfConsecutiveStation { StationId1 = 21109, StationId2 = 5602, Distance = 51.5, AverageTravleTime = new TimeSpan(0, 36, 0) },
+            new PairOfConsecutiveStation { StationId1 = 5602, StationId2 = 6109, Distance = 6.7, AverageTravleTime = new TimeSpan(0, 12, 45) },
+               
+            // 402
+            new PairOfConsecutiveStation { StationId1 = 26946, StationId2 = 20092, Distance = 1.3, AverageTravleTime = new TimeSpan(0, 7, 0) },
+            new PairOfConsecutiveStation { StationId1 = 20092, StationId2 = 23064, Distance = 0.9, AverageTravleTime = new TimeSpan(0, 6, 32) },
+            new PairOfConsecutiveStation { StationId1 = 23064, StationId2 = 21558, Distance = 1.1, AverageTravleTime = new TimeSpan(0, 7, 0) },
+            new PairOfConsecutiveStation { StationId1 = 21558, StationId2 = 22942, Distance = 1.8, AverageTravleTime = new TimeSpan(0, 2, 0) },
+            new PairOfConsecutiveStation { StationId1 = 22942, StationId2 = 645, Distance = 59.6, AverageTravleTime = new TimeSpan(0, 19, 0) },
+            new PairOfConsecutiveStation { StationId1 = 645, StationId2 = 4218, Distance = 0.6, AverageTravleTime = new TimeSpan(0, 1, 30) },
+            new PairOfConsecutiveStation { StationId1 = 2418, StationId2 = 4116, Distance = 1.3, AverageTravleTime = new TimeSpan(0, 1, 0) },
+            new PairOfConsecutiveStation { StationId1 = 4116, StationId2 = 6248, Distance = 2, AverageTravleTime = new TimeSpan(0, 3, 0) },
+            new PairOfConsecutiveStation { StationId1 = 6248, StationId2 = 5666, Distance = 1.1, AverageTravleTime = new TimeSpan(0, 2, 45) },
+
+            #endregion
+            };
         }
     }
 }
