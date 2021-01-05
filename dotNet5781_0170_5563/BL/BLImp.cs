@@ -107,26 +107,40 @@ namespace BL
             bl.Stations = (from sl in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
                                let station = dl.GetStationLine(bl.LineId,sl.StationId)
                                select StationLineDoBoADapter(station));
-            for (int i = 1; i < bl.Stations.Count(); ++i)
+          
+             BO.StationLine s1 = new BO.StationLine();
+             BO.StationLine s2 = new BO.StationLine();
+            int size = bl.Stations.Count();
+            for (int i = 1; i < size; ++i)
             {
-                BO.StationLine s1 = new BO.StationLine();
-                BO.StationLine s2 = new BO.StationLine();
+                //DO.PairOfConsecutiveStation p = dl.GetPair(bl.Stations.ElementAt(i).StationId, bl.Stations.ElementAt(i+1).StationId);
+                //bl.Stations.ElementAt(i).DistanceToNext = p.Distance;
+                //bl.Stations.ElementAt(i).TimeToNext = p.AverageTravleTime;
+
+               
                 foreach (var s in bl.Stations)
                 {
                     if (s.NumInLine == i)
                         s1 = s;
                     if (s.NumInLine == i + 1)
+                    {
                         s2 = s;
+                        break;
+                    }
                 }
                 DO.PairOfConsecutiveStation p = dl.GetPair(s1.StationId, s2.StationId);
                 if (p != null)
                 {
-                    s1.DistanceToNext = p.Distance;
-                    s1.TimeToNext = p.AverageTravleTime;
+                     
+                    BO.StationLine b = bl.Stations.FirstOrDefault(s => s.StationId == s1.StationId);
+                    p.CopyPropertiesTo(b);
+                    //s1.DistanceToNext = p.Distance;
+                    //s1.TimeToNext = p.AverageTravleTime;
                 }
             }
             return bl;
         }
+        
         public IEnumerable<BO.BusLine> GetAllBusLines()
         {
             return from l in dl.GetAllBusLines()
@@ -189,8 +203,8 @@ namespace BL
                     {
                         StationId1 = s1.StationId,
                         StationId2 = s2.StationId,
-                        AverageTravleTime = s1.TimeToNext,
-                        Distance = s1.DistanceToNext
+                        AverageTravleTime = s1.AverageTravleTime,
+                        Distance = s1.Distance
                     };
                     dl.AddPair(p);
                 }

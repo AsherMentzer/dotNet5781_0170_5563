@@ -26,13 +26,14 @@ namespace PLGUI
     public partial class MainWindow : Window
     {
         IBL bl = BLFactory.GetBL("1");
-        List<BO.BusLine> stations = new List<BO.BusLine>();
+        List<BO.BusLine> lines = new List<BO.BusLine>();
         void createBuses()
         {
             foreach (var b in bl.GetAllBusLines())
             {
-                stations.Add(b);
+                lines.Add(b);
             }
+
         }
        
         //public ViewModel.MainWindow viewModel;
@@ -40,7 +41,7 @@ namespace PLGUI
         {
             InitializeComponent();
             createBuses();
-            lvStations.ItemsSource = stations;
+            lvStations.ItemsSource = lines;
            
             //viewModel = new ViewModel.MainWindow();
             //viewModel.Reset();
