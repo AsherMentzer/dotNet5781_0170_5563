@@ -16,6 +16,8 @@ using PO;
 using BLAPI;
 using ViewModel;
 using BO;
+using System.Windows.Controls.Primitives;
+
 namespace PLGUI
 {
     /// <summary>
@@ -23,21 +25,23 @@ namespace PLGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-       IBL bl = BLFactory.GetBL("1");
-        List<BO.Station>stations=new List<BO.Station>();
+        IBL bl = BLFactory.GetBL("1");
+        List<BO.BusLine> stations = new List<BO.BusLine>();
         void createBuses()
         {
-         foreach(var b in  bl.GetAllStations())
+            foreach (var b in bl.GetAllBusLines())
             {
                 stations.Add(b);
             }
         }
+       
         //public ViewModel.MainWindow viewModel;
         public MainWindow()
         {
             InitializeComponent();
             createBuses();
-            lbBuses.ItemsSource = stations;
+            lvStations.ItemsSource = stations;
+           
             //viewModel = new ViewModel.MainWindow();
             //viewModel.Reset();
             //DataContext = viewModel;
@@ -51,6 +55,16 @@ namespace PLGUI
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void lbBuses_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void bs_Click(object sender, RoutedEventArgs e)
+        {
+            BO.Station sbo = sender as BO.Station;
         }
     }
 }

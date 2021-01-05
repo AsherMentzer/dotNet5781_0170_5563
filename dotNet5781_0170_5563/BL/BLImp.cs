@@ -104,11 +104,33 @@ namespace BL
         {
             BO.BusLine bl = new BO.BusLine();
             line.CopyPropertiesTo(bl);
+            bl.Stations = (from sl in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
+                               let station = dl.GetStationLine(bl.LineId,sl.StationId)
+                               select StationLineDoBoADapter(station));
+            for (int i = 1; i < bl.Stations.Count(); ++i)
+            {
+                BO.StationLine s1 = new BO.StationLine();
+                BO.StationLine s2 = new BO.StationLine();
+                foreach (var s in bl.Stations)
+                {
+                    if (s.NumInLine == i)
+                        s1 = s;
+                    if (s.NumInLine == i + 1)
+                        s2 = s;
+                }
+                DO.PairOfConsecutiveStation p = dl.GetPair(s1.StationId, s2.StationId);
+                if (p != null)
+                {
+                    s1.DistanceToNext = p.Distance;
+                    s1.TimeToNext = p.AverageTravleTime;
+                }
+            }
             return bl;
         }
         public IEnumerable<BO.BusLine> GetAllBusLines()
         {
-            throw new NotImplementedException();
+            return from l in dl.GetAllBusLines()
+                   select BusLineDoBoADapter(l);
         }
 
         public IEnumerable<BO.BusLine> GetAllBusLinesBy(Predicate<BO.BusLine> predicate)
@@ -118,12 +140,61 @@ namespace BL
 
         public BO.BusLine GetBusLine(int lineId)
         {
-            throw new NotImplementedException();
+            DO.BusLine line;
+            try
+            {
+                line = dl.GetBusLine(lineId);
+            }
+            catch (BadBusLicenceIdException ex)
+            {
+                return null;///////need to throw exception
+            }
+            return BusLineDoBoADapter(line);
         }
 
         public void AddBusLine(BO.BusLine busLine)
         {
-            throw new NotImplementedException();
+            DO.BusLine line=new DO.BusLine();
+            busLine.CopyPropertiesTo(line);
+            try 
+            {
+                dl.AddBusLine(line);
+            }
+            catch (BadBusLicenceIdException e) { }//-----------------------need to add exception
+            DO.StationLine s = new DO.StationLine();
+            foreach (var sl in busLine.Stations)
+            {
+                sl.CopyPropertiesTo(s);
+                try 
+                {
+                    dl.AddStationLine(s);
+                }
+                catch (BadBusLicenceIdException e) { }//-----------------------need to add exception
+            }
+            for (int i = 1; i < busLine.Stations.Count(); ++i)
+            {
+                BO.StationLine s1 = new BO.StationLine();
+                BO.StationLine s2 = new BO.StationLine();
+                foreach (var sl in busLine.Stations)
+                {
+                    if (s.NumInLine == i)
+                        s1 = sl;
+                    if (s.NumInLine == i + 1)
+                        s2 = sl;
+                }
+                DO.PairOfConsecutiveStation p = dl.GetPair(s1.StationId, s2.StationId);
+                if (p == null)
+                {
+                    p = new DO.PairOfConsecutiveStation
+                    {
+                        StationId1 = s1.StationId,
+                        StationId2 = s2.StationId,
+                        AverageTravleTime = s1.TimeToNext,
+                        Distance = s1.DistanceToNext
+                    };
+                    dl.AddPair(p);
+                }
+            }
         }
 
         public void UpdateBusLine(BO.BusLine busLine)
@@ -221,6 +292,7 @@ namespace BL
             stationBO.lines = (from sl in dl.GetAllStationsLineBy(sl => sl.StationId == stationBO.StationId)
                               let line = dl.GetBusLine(sl.LineId)
                               select BusLineDoBoADapter(line));
+
             
             return stationBO;
         }
@@ -273,6 +345,12 @@ namespace BL
         }
         #endregion
         #region station Line
+        BO.StationLine StationLineDoBoADapter(DO.StationLine stDO)
+        {
+            BO.StationLine stBO = new BO.StationLine();
+            stDO.CopyPropertiesTo(stBO);
+            return stBO;
+        }
         public IEnumerable<BO.StationLine> GetAllStationsLine()
         {
             throw new NotImplementedException();

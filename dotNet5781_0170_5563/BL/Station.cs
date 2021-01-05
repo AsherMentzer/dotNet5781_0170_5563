@@ -19,7 +19,7 @@ namespace BO
             string str = "ststion id: " + StationId + ", " + "latitude: " + Latitude + ", " + "longitude: " + Longitude +
                 ", " + "station name: " + StationName + ":\n     ";
             foreach (var b in lines)
-                str += b.LineId + ", ";
+                str += b.LineNumber + ", ";
             return str;
         }
     }

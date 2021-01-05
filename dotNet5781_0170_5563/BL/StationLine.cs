@@ -11,6 +11,8 @@ namespace BO
         public int LineId { get; set; }
         public int StationId { get; set; }
         public int NumInLine { get; set; }
-   
+        public double DistanceToNext { get; set; }
+        public TimeSpan TimeToNext { get; set; }
+        
     }
 }

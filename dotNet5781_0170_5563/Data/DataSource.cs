@@ -8,12 +8,12 @@ using DO;
 namespace Data
 {
     public static class DataSource
-    {
+    {     
         public static List<Bus> buses;
         public static List<Station> stations = new List<Station>();
         public static List<BusLine> lines;
         public static int linesId = 1;
-        public static List<PairOfConsecutiveStation> pairs;
+        public static List<PairOfConsecutiveStation> pairs=new List<PairOfConsecutiveStation>();
         public static List<StationLine> stationsLine;
         public static List<TravelBus> travelBuses;
         public static List<LineExist> linesExists;

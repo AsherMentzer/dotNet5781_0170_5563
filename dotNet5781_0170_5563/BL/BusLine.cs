@@ -14,7 +14,14 @@ namespace BO
         public int FirstStation { get; set; }
         public int LastStation { get; set; }
         public Areas area { get; set; }
-       // public IEnumerable<StationLine> BusLines { get; set; }
-
+        public IEnumerable<StationLine> Stations { get; set; }
+        public override string ToString()
+        {
+            string str = "Line ID:" + LineId + ",  LineNumber:" + LineNumber + ", first station:" + FirstStation +
+                ", last station:" + LastStation + ", Area:" + area+"\n";
+            foreach (var s in Stations)
+                str += "station id:" + s.StationId + ", num in line:" + s.NumInLine;
+            return str;
+        }
     }
 }

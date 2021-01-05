@@ -9,23 +9,37 @@
     <Grid>
         <TabControl SelectionChanged="TabControl_SelectionChanged">
             <TabControl.Items>
-                <TabItem Header="worker" >
+                <TabItem Header="stations" >
                     <TabItem.Content>
-                        <StackPanel>
-                            <Button x:Name="check" Content="check"  Width="70" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 65" Click="signInButton_Click"/>
-                            <Button x:Name="manager" Content="menager"  Width="55"  Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left"  
-                                    Click="signInButton_Click" BorderBrush="Transparent" Background="Transparent"/>
+                        <ListView x:Name="lvStations">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="bs" Content="add Line" Click="bs_Click"/>
+                                                
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+                                       
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
 
-                        </StackPanel>
+                           
+                       
                     </TabItem.Content>
                 </TabItem>
 
-                <TabItem Header="user" >
+                <TabItem Header="lines" >
                     <TabItem.Content>
                         <StackPanel>
                             <Button x:Name="signInButton" Content="Sign in"  Width="70" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 65" Click="signInButton_Click"/>
                             <Button x:Name="signUpbutton" Content="Log in"  Width="70" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <ListBox x:Name="lbBuses" />
+
                         </StackPanel>
                     </TabItem.Content>
                 </TabItem>

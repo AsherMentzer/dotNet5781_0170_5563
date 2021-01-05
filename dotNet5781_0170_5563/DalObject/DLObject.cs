@@ -31,9 +31,9 @@ namespace DL
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
-            return (IEnumerable<Bus>)(from bus in DataSource.buses
-                                      where predicate(bus)
-                                      select bus.Clone());
+            return from bus in DataSource.buses
+                   where predicate(bus)
+                   select bus.Clone();
         }
 
         public Bus GetBus(string id)
@@ -93,9 +93,9 @@ namespace DL
 
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
         {
-            return (IEnumerable<BusLine>)(from busLine in DataSource.lines
-                                          where predicate(busLine)
-                                          select busLine.Clone());
+            return from busLine in DataSource.lines
+                   where predicate(busLine)
+                   select busLine.Clone();
         }
 
         public BusLine GetBusLine(int id)
@@ -225,12 +225,14 @@ namespace DL
             //throw new BadBusLineIdException(id, $"bad Bus LicenceId: {id}");
         }
 
-        public void AddPair(int id1, int id2, double distance, TimeSpan time)
+        public void AddPair(PairOfConsecutiveStation pair)
         {
-            // if (DataSource.pairs.Find(p => p.StationId1 == id1 && p.StationId2 == id2) != null) ;
+            //if (DataSource.pairs.Find(p => p.StationId1 == id1 && p.StationId2 == id2) != null) ;
             //Station s1 = DataSource.stations.FirstOrDefault(s => s.StationId == id1);
             //Station s2 = DataSource.stations.FirstOrDefault(s => s.StationId == id2);
-            PairOfConsecutiveStation pair = new PairOfConsecutiveStation { StationId1 = id1, StationId2 = id2, Distance = distance, AverageTravleTime = time };
+            //PairOfConsecutiveStation pair = new PairOfConsecutiveStation { StationId1 = id1, StationId2 = id2, Distance = distance, AverageTravleTime = time };
+            if (DataSource.pairs.Find(p => p.StationId1 == pair.StationId1 && p.StationId2 == pair.StationId2) == null)       
+            //throw new BadLinePairException(lineExist.LineId, "Duplicate  pair");
             DataSource.pairs.Add(pair);
         }
 
@@ -250,7 +252,7 @@ namespace DL
 
             if (pair != null)
                 DataSource.pairs.Remove(pair);
-         
+
 
         }
         #endregion
@@ -325,13 +327,19 @@ namespace DL
         public IEnumerable<StationLine> GetAllStationsLineBy(Predicate<StationLine> predicate)
         {
             return (IEnumerable<StationLine>)(from station in DataSource.stationsLine
-                                          where predicate(station)
-                                          select station.Clone());
+                                              where predicate(station)
+                                              select station.Clone());
         }
 
-        public Station GetStationLine(int id)
+        public StationLine GetStationLine(int lineId, int stationId)
         {
-            throw new NotImplementedException();
+            StationLine s = DataSource.stationsLine.Find(b => b.LineId == lineId && b.StationId == stationId);
+
+            if (s != null)
+                return s.Clone();
+            else
+                return null;
+            //throw new BadBusLicenceIdException(id, $"bad Bus LicenceId: {id}");
         }
 
         public void AddStationLine(StationLine stationLine)

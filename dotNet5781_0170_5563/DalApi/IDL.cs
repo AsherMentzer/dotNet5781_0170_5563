@@ -49,7 +49,7 @@ namespace DLAPI
         IEnumerable<PairOfConsecutiveStation> GetAllPairs();
         IEnumerable<PairOfConsecutiveStation> GetAllPairsBy(Predicate<Station> predicate);
         PairOfConsecutiveStation GetPair(int id1,int id2);
-        void AddPair(int id1, int id2, double distance, TimeSpan time);
+        void AddPair(PairOfConsecutiveStation pair);
         void UpdatePair(PairOfConsecutiveStation pair);
         void UpdatePair(int id, Action<PairOfConsecutiveStation> update); //method that knows to updt specific fields in Person
         void DeletePair(int id1,int id2);
@@ -68,7 +68,7 @@ namespace DLAPI
         #region StationLine
         IEnumerable<StationLine> GetAllStationsLine();
         IEnumerable<StationLine> GetAllStationsLineBy(Predicate<StationLine> predicate);
-        Station GetStationLine(int id);
+        StationLine GetStationLine(int lineId,int stationId);
         void AddStationLine(StationLine stationLine);
         void UpdateStationLine(StationLine stationLine);
         void UpdateStationLine(int id, Action<StationLine> update); //method that knows to updt specific fields in Person
