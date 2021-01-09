@@ -11,6 +11,7 @@ namespace BO
         public int LineId { get; set; }
         public int StationId { get; set; }
         public int NumInLine { get; set; }
+        public string StationName { get; set; }
         public double Distance { get; set; }
         public TimeSpan AverageTravleTime { get; set; }
         

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
+namespace BO
 {
     [Serializable]
     public class BadBusLicenceIdException : Exception
@@ -75,26 +75,6 @@ namespace DO
         public override string ToString() => base.ToString() + $", bad bus Line id: {ID}";
 
     }
-
-    [Serializable]
-    public class BadStatioLinenIdException : Exception
-    {
-        public int LID, SID;
-
-        public BadStatioLinenIdException(int lid, int sid) : base() { LID = lid; SID = sid; }
-        public BadStatioLinenIdException(int lid, int sid, string message) :
-            base(message)
-        { LID = lid; SID = sid; }
-
-
-        public BadStatioLinenIdException(int lid, int sid, string message, Exception innerException) :
-            base(message, innerException)
-        { LID = lid; SID = sid; }
-
-        public override string ToString() => base.ToString() + $", bad line id: {LID}, or bad station id: {SID}";
-
-    }
-
     [Serializable]
     public class BadPairIdException : Exception
     {
@@ -114,3 +94,5 @@ namespace DO
 
     }
 }
+
+

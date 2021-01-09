@@ -38,7 +38,7 @@ namespace BL
             try {
                busDO= dl.GetBus(licenseId);
             }
-            catch(BadBusLicenceIdException ex)
+            catch(DO.BadBusLicenceIdException ex)
             {
                 return null;///////need to throw exception
             }
@@ -100,47 +100,94 @@ namespace BL
         }
         #endregion
         #region Bus Line
+        TimeSpan getTime(DO.StationLine d)
+        {
+            DO.StationLine s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
+            if (s != null)
+            {
+                DO.PairOfConsecutiveStation p=new DO.PairOfConsecutiveStation();
+                try
+                {
+                    p = dl.GetPair(d.StationId, s.StationId);
+                }
+                catch(DO.BadPairIdException ex) { }
+
+                if(p !=null)
+                return p.AverageTravleTime;
+                else return new TimeSpan();
+            }
+            else return new TimeSpan();
+        }
+        double getDistance(DO.StationLine d)
+        {
+            DO.StationLine s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
+            if (s != null)
+            {
+                DO.PairOfConsecutiveStation p = new DO.PairOfConsecutiveStation();
+                try
+                {
+                    p = dl.GetPair(d.StationId, s.StationId);
+                }
+                catch (DO.BadPairIdException ex) { }
+                if (p != null)
+                    return p.Distance;
+                else return 0;
+            }
+            else return 0;
+        }
+        string getName(int id)
+        {
+            DO.Station s = dl.GetStation(id);
+            if (s != null)
+                return s.StationName;
+            return null;
+        }
         BO.BusLine BusLineDoBoADapter(DO.BusLine line)
         {
             BO.BusLine bl = new BO.BusLine();
             line.CopyPropertiesTo(bl);
-            bl.Stations = (from sl in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
-                               let station = dl.GetStationLine(bl.LineId,sl.StationId)
-                               select StationLineDoBoADapter(station));
-          
-             BO.StationLine s1 = new BO.StationLine();
-             BO.StationLine s2 = new BO.StationLine();
-            int size = bl.Stations.Count();
-            for (int i = 1; i < size; ++i)
-            {
-                //DO.PairOfConsecutiveStation p = dl.GetPair(bl.Stations.ElementAt(i).StationId, bl.Stations.ElementAt(i+1).StationId);
-                //bl.Stations.ElementAt(i).DistanceToNext = p.Distance;
-                //bl.Stations.ElementAt(i).TimeToNext = p.AverageTravleTime;
-
-               
-                foreach (var s in bl.Stations)
-                {
-                    if (s.NumInLine == i)
-                        s1 = s;
-                    if (s.NumInLine == i + 1)
-                    {
-                        s2 = s;
-                        break;
-                    }
-                }
-                DO.PairOfConsecutiveStation p = dl.GetPair(s1.StationId, s2.StationId);
-                if (p != null)
-                {
-                     
-                    BO.StationLine b = bl.Stations.FirstOrDefault(s => s.StationId == s1.StationId);
-                    p.CopyPropertiesTo(b);
-                    //s1.DistanceToNext = p.Distance;
-                    //s1.TimeToNext = p.AverageTravleTime;
-                }
-            }
+            bl.Stations = from sl in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
+                               let station =new BO.StationLine()
+                               {
+                                   StationId = sl.StationId,
+                                   LineId = sl.LineId,
+                                   NumInLine = sl.NumInLine,
+                                   StationName=getName(sl.StationId),
+                                   AverageTravleTime = getTime(sl),
+                                   Distance = getDistance(sl),
+                               }
+           
+                                       orderby station.NumInLine
+                               select station;
+                                 
             return bl;
         }
-        
+
+        BO.BusLine IBL.CreateBusLine(int LineNum, int fId, int lId, BO.Areas myArea)
+        {
+             try
+            {
+                DO.Station s = dl.GetStation(fId);
+            }
+            catch (DO.BadStationIdException ex)
+            {
+               throw new BO.BadStationIdException(fId,"Station ID is illegal",ex);
+            }
+            try
+            {
+                DO.Station s = dl.GetStation(lId);
+            }
+            catch (DO.BadStationIdException ex)
+            {
+                throw new BO.BadStationIdException(lId, "Station ID is illegal", ex);
+            }
+            AddStationLine(Data.DataSource.linesId , fId, 1);
+            AddStationLine(Data.DataSource.linesId, lId, 2);
+            DO.BusLine line = new DO.BusLine { FirstStation = fId, LastStation = lId, LineNumber = LineNum,LineId=Data.DataSource.linesId++ ,area=(DO.Areas)myArea};
+            BO.BusLine newLine = BusLineDoBoADapter(line);
+            dl.AddBusLine(line);
+            return newLine;
+        }
         public IEnumerable<BO.BusLine> GetAllBusLines()
         {
             return from l in dl.GetAllBusLines()
@@ -159,7 +206,7 @@ namespace BL
             {
                 line = dl.GetBusLine(lineId);
             }
-            catch (BadBusLicenceIdException ex)
+            catch (DO.BadBusLicenceIdException ex)
             {
                 return null;///////need to throw exception
             }
@@ -174,7 +221,7 @@ namespace BL
             {
                 dl.AddBusLine(line);
             }
-            catch (BadBusLicenceIdException e) { }//-----------------------need to add exception
+            catch (DO.BadBusLicenceIdException e) { }//-----------------------need to add exception
             DO.StationLine s = new DO.StationLine();
             foreach (var sl in busLine.Stations)
             {
@@ -183,7 +230,7 @@ namespace BL
                 {
                     dl.AddStationLine(s);
                 }
-                catch (BadBusLicenceIdException e) { }//-----------------------need to add exception
+                catch (DO.BadBusLicenceIdException e) { }//-----------------------need to add exception
             }
             for (int i = 1; i < busLine.Stations.Count(); ++i)
             {
@@ -221,9 +268,19 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void DeleteBusLine(int lineId)
+        public void DeleteBusLine(BO.BusLine line)
         {
-            throw new NotImplementedException();
+            int id = line.LineId;
+            try
+            {
+                dl.DeleteBusLine(id);
+            }
+            catch(DO.BadBusLineIdException ex)
+            {
+                throw new BO.BadBusLineIdException( id,"Station ID is illegal", ex);
+            }
+
+            
         }
         #endregion
         #region Line Exist
@@ -275,7 +332,19 @@ namespace BL
 
         public BO.PairOfConsecutiveStation GetPair(int id1, int id2)
         {
-            throw new NotImplementedException();
+            DO.PairOfConsecutiveStation p;
+            try
+            {
+                p = dl.GetPair(id1,id2);
+            }
+            catch (DO.BadPairIdException ex)
+            {
+                throw new BO.BadPairIdException(id1,id2);
+            }
+            BO.PairOfConsecutiveStation pair=new BO.PairOfConsecutiveStation();
+            if (p != null)
+            p.CopyPropertiesTo(pair);
+            return pair;
         }
 
         public void AddPair(int id1, int id2, double distance, TimeSpan time)
@@ -331,7 +400,7 @@ namespace BL
             {
                station = dl.GetStation(id);
             }
-            catch (BadBusLicenceIdException ex)
+            catch (DO.BadBusLicenceIdException ex)
             {
                 return null;///////need to throw exception
             }
@@ -363,11 +432,13 @@ namespace BL
         {
             BO.StationLine stBO = new BO.StationLine();
             stDO.CopyPropertiesTo(stBO);
+            DO.StationLine s2 = dl.GetStationLine(stDO.LineId, stDO.NumInLine + 1);
             return stBO;
         }
         public IEnumerable<BO.StationLine> GetAllStationsLine()
         {
-            throw new NotImplementedException();
+            return from s in dl.GetAllStationsLine()
+                   select StationLineDoBoADapter(s);
         }
 
         public IEnumerable<BO.StationLine> GetAllStationsLineBy(Predicate<BO.StationLine> predicate)
@@ -380,14 +451,18 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void AddStationLine(BO.StationLine stationLine)
+        public void AddStationLine(int lineid,int stationId,int numInLined)
         {
-            throw new NotImplementedException();
+            DO.StationLine station = new DO.StationLine {LineId=lineid,StationId=stationId,NumInLine=numInLined };
+            
+            dl.AddStationLine(station);
         }
 
         public void UpdateStationLine(BO.StationLine stationLine)
         {
-            throw new NotImplementedException();
+            DO.StationLine s = new DO.StationLine();
+            stationLine.CopyPropertiesTo(s);
+            dl.UpdateStationLine(s);
         }
 
         public void UpdateStationLine(int id, Action<BO.StationLine> update)
@@ -395,9 +470,16 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void DeleteStationLine(int id)
+        public void DeleteStationLine(int lId,int stId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dl.DeleteStationLine(lId,stId);
+            }
+            catch (DO.BadBusLineIdException ex)
+            {
+                
+            }
         }
         #endregion
         #region travle Line
@@ -435,6 +517,8 @@ namespace BL
         {
             throw new NotImplementedException();
         }
+
+       
         #endregion
     }
 }

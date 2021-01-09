@@ -55,15 +55,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddStationToLine.xaml.cs">
+      <DependentUpon>AddStationToLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StationLine.cs" />
+    <Page Include="AddLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddStationToLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddLine.xaml.cs">
+      <DependentUpon>AddLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bus.cs" />
+    <Compile Include="BusLine.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="MainWindow.cs" />
     <Compile Include="MainWindow.xaml.cs">

@@ -110,7 +110,7 @@ namespace DL
 
         public void AddBusLine(BusLine busLine)
         {
-            if (DataSource.lines.FirstOrDefault(l => l.LineNumber == busLine.LineNumber) != null)
+            if (DataSource.lines.FirstOrDefault(l => l.LineId == busLine.LineId) != null)
                 throw new BadBusLineIdException(busLine.LineNumber, "Duplicate bus Line number");
             DataSource.lines.Add(busLine.Clone());
         }
@@ -134,7 +134,7 @@ namespace DL
 
         public void DeleteBusLine(int lineId)
         {
-            BusLine line = DataSource.lines.FirstOrDefault(l => l.LineNumber == lineId);
+            BusLine line = DataSource.lines.FirstOrDefault(l => l.LineId == lineId);
             if (line != null)
             {
                 DataSource.lines.Remove(line);
@@ -220,9 +220,8 @@ namespace DL
 
             if (pair != null)
                 return pair.Clone();
-            else
-                return null;
-            //throw new BadBusLineIdException(id, $"bad Bus LicenceId: {id}");
+            else               
+            throw new BadPairIdException(id1,id2);
         }
 
         public void AddPair(PairOfConsecutiveStation pair)
@@ -277,8 +276,8 @@ namespace DL
 
             if (station != null)
                 return station.Clone();
-            else
-                throw new BadStationIdException(id, $"bad Bus LicenceId: {id}");
+            else return null;
+                //throw new BadStationIdException(id, $"bad Bus LicenceId: {id}");
         }
 
         public void AddStation(Station station)
@@ -321,14 +320,15 @@ namespace DL
         #region StationLine CRUD
         public IEnumerable<StationLine> GetAllStationsLine()
         {
-            throw new NotImplementedException();
+          return from station in DataSource.stationsLine
+            select station.Clone();
         }
 
         public IEnumerable<StationLine> GetAllStationsLineBy(Predicate<StationLine> predicate)
         {
-            return (IEnumerable<StationLine>)(from station in DataSource.stationsLine
+            return from station in DataSource.stationsLine
                                               where predicate(station)
-                                              select station.Clone());
+                                              select station.Clone();
         }
 
         public StationLine GetStationLine(int lineId, int stationId)
@@ -341,15 +341,44 @@ namespace DL
                 return null;
             //throw new BadBusLicenceIdException(id, $"bad Bus LicenceId: {id}");
         }
+        StationLine IDL.GetStationLineBy(int lineId, int numInLine)
+        {
+            StationLine s = DataSource.stationsLine.Find(b => b.LineId == lineId && b.NumInLine == numInLine);
 
+            if (s != null)
+                return s.Clone();
+            else
+                return null;
+            //throw new BadBusLicenceIdException(id, $"bad Bus LicenceId: {id}");
+        }
+        //StationLine GetStationLineBy(int lineId, int numInLine)
+        //{
+        //    StationLine s = DataSource.stationsLine.Find(b => b.LineId == lineId && b.NumInLine == nu);
+
+        //    if (s != null)
+        //        return s.Clone();
+        //    else
+        //        return null;
+        //    //throw new BadBusLicenceIdException(id, $"bad Bus LicenceId: {id}");
+        //}
         public void AddStationLine(StationLine stationLine)
         {
-            throw new NotImplementedException();
+            if (DataSource.stationsLine.FirstOrDefault(s => s.StationId == stationLine.StationId && s.LineId==stationLine.LineId) == null)
+               // throw new BadStationLineIdException(station.StationId, "Duplicate station id");
+            DataSource.stationsLine.Add(stationLine.Clone());
         }
 
         public void UpdateStationLine(StationLine stationLine)
         {
-            throw new NotImplementedException();
+            StationLine station = DataSource.stationsLine.FirstOrDefault(s => s.LineId == stationLine.LineId && s.StationId==stationLine.StationId );
+            if (station != null)
+            {
+                DataSource.stationsLine.Remove(station);
+                DataSource.stationsLine.Add(stationLine.Clone());
+            }
+            else
+                throw new BadStatioLinenIdException(stationLine.LineId,stationLine.StationId,
+                    $"bad  Line Id: {stationLine.LineId},bad station id{stationLine.StationId}");
         }
 
         public void UpdateStationLine(int id, Action<StationLine> update)
@@ -357,9 +386,18 @@ namespace DL
             throw new NotImplementedException();
         }
 
-        public void DeleteStationLine(int id)
+        public void DeleteStationLine(int lineId,int stationId)
         {
-            throw new NotImplementedException();
+            DO.StationLine station;
+            station = DataSource.stationsLine.FirstOrDefault(s => s.LineId == lineId && s.StationId == stationId);
+            if (station != null)
+              
+            foreach(var s in DataSource.stationsLine)
+            {
+                if (s.LineId == lineId && s.NumInLine > station.NumInLine)
+                    s.NumInLine--;
+            }
+            DataSource.stationsLine.Remove(station);
         }
         #endregion
 
@@ -403,6 +441,8 @@ namespace DL
         {
             throw new NotImplementedException();
         }
+
+        
         #endregion
     }
 }

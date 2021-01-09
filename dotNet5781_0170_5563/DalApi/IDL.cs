@@ -69,10 +69,12 @@ namespace DLAPI
         IEnumerable<StationLine> GetAllStationsLine();
         IEnumerable<StationLine> GetAllStationsLineBy(Predicate<StationLine> predicate);
         StationLine GetStationLine(int lineId,int stationId);
+        StationLine GetStationLineBy(int lineId,int numInLine);
+
         void AddStationLine(StationLine stationLine);
         void UpdateStationLine(StationLine stationLine);
         void UpdateStationLine(int id, Action<StationLine> update); //method that knows to updt specific fields in Person
-        void DeleteStationLine(int id);
+        void DeleteStationLine(int id,int sId);
         #endregion
 
         #region TravelBus

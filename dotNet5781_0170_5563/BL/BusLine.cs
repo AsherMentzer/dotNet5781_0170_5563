@@ -20,7 +20,7 @@ namespace BO
             string str = "Line ID:" + LineId + ",  LineNumber:" + LineNumber + ", first station:" + FirstStation +
                 ", last station:" + LastStation + ", Area:" + area+"\n";
             foreach (var s in Stations)
-                str += "station id:" + s.StationId + ", num in line:" + s.NumInLine;
+                str += "station id:" + s.StationId + ", num in line:" + s.NumInLine + "time to next" + s.AverageTravleTime;
             return str;
         }
     }

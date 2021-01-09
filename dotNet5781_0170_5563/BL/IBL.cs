@@ -23,10 +23,11 @@ namespace BLAPI
         IEnumerable<BO.BusLine> GetAllBusLines();
         IEnumerable<BO.BusLine> GetAllBusLinesBy(Predicate<BO.BusLine> predicate);
         BO.BusLine GetBusLine(int lineId);
+        BO.BusLine CreateBusLine(int LineNum, int fId, int lId, BO.Areas area);
         void AddBusLine(BO.BusLine busLine);
         void UpdateBusLine(BO.BusLine busLine);
         void UpdateBusLine(int lineId, Action<BO.BusLine> update); //method that knows to updt specific fields in bus line
-        void DeleteBusLine(int lineId);
+        void DeleteBusLine(BO.BusLine line);
         #endregion
 
         #region LineExist
@@ -63,10 +64,10 @@ namespace BLAPI
         IEnumerable<BO.StationLine> GetAllStationsLine();
         IEnumerable<BO.StationLine> GetAllStationsLineBy(Predicate<BO.StationLine> predicate);
         BO.Station GetStationLine(int id);
-        void AddStationLine(BO.StationLine stationLine);
+        void AddStationLine(int lineId,int stationId,int numInLine);
         void UpdateStationLine(BO.StationLine stationLine);
         void UpdateStationLine(int id, Action<BO.StationLine> update); //method that knows to updt specific fields in Person
-        void DeleteStationLine(int id);
+        void DeleteStationLine(int id,int sId);
         #endregion
 
         #region TravelBus

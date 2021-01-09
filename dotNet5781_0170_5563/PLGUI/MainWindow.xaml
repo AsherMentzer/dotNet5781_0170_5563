@@ -5,42 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="540" Width="800">
     <Grid>
-        <TabControl SelectionChanged="TabControl_SelectionChanged">
+        <TabControl>
             <TabControl.Items>
                 <TabItem Header="stations" >
-                    <TabItem.Content>
-                        <ListView x:Name="lvStations">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button x:Name="bs" Content="add Line" Click="bs_Click"/>
-                                                
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn>
-                                       
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
 
-                           
-                       
-                    </TabItem.Content>
                 </TabItem>
 
                 <TabItem Header="lines" >
                     <TabItem.Content>
-                        <StackPanel>
-                            <Button x:Name="signInButton" Content="Sign in"  Width="70" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 65" Click="signInButton_Click"/>
-                            <Button x:Name="signUpbutton" Content="Log in"  Width="70" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Grid x:Name="lineInfo">
 
-                        </StackPanel>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40*"/>
+                                <RowDefinition Height="220*"/>
+                                <RowDefinition Height="200*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Select Line:" Grid.Row="0" HorizontalAlignment="Left" Margin="39,5,0,0" VerticalAlignment="Top" Height="25" Width="90" RenderTransformOrigin="0.462,-0.208"/>
+                            <ComboBox x:Name="cbLineNum"  HorizontalAlignment="Left" Text="" VerticalAlignment="Top"
+                  Grid.Row="0" Height="25" Margin="134,5,0,0" Width="123"
+                  ItemsSource="{Binding}" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
+                                      SelectionChanged="cbLineNum_SelectionChanged"/>
+
+
+
+                            <DataGrid Grid.Row="1" x:Name="lineDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding }" Margin="21,0,30,54" RowDetailsVisibilityMode="VisibleWhenSelected" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+                                <!--<DataGrid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform AngleX="-0.691"/>
+                                        <RotateTransform/>
+                                        <TranslateTransform X="-1.424"/>
+                                    </TransformGroup>
+                                </DataGrid.RenderTransform>-->
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="numInLine" Binding="{Binding NumInLine ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Number" Width="SizeToHeader"/>
+                                    <DataGridTextColumn x:Name="iDColumn" Binding="{Binding StationId ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="50"/>
+                                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding StationName ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="180"/>
+                                    <DataGridTextColumn x:Name="distanceColumn" Binding="{Binding Distance ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="DistanceToNext" Width="SizeToHeader"/>
+                                    <DataGridTextColumn x:Name="timeColumn" Binding="{Binding AverageTravleTime ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="TimeToNext" Width="SizeToHeader"/>
+
+
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="btUpdateStation" Content="Update Details" Click="btUpdateStation_Click" ToolTip="Update station for selected station, for selected line"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="btDeleteStation" Content="Delete" Click="btDeleteStation_Click"  ToolTip="delete selected station from selected line"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <Button x:Name="btDeleteLine" Content="Delete Current Line" HorizontalAlignment="Left" Margin="559,163.6,0,0" VerticalAlignment="Top" Width="219" Height="28" Background="#FFC56853" Click="btDeleteLine_Click"  Grid.Row="2"/>
+                            <Button x:Name="btAddLine" Content="Add New Line" HorizontalAlignment="Left" Margin="325,161.6,0,0" VerticalAlignment="Top" Width="141" Height="34" Background="#FF6DB469" Grid.Row="2" Click="btAddLine_Click"  RenderTransformOrigin="0.504,3.529"/>
+
+                            <Button x:Name="btAddStation" Content="Add Station To Current Line" HorizontalAlignment="Left" Margin="10,167.6,0,0" VerticalAlignment="Top" Width="234" Height="28" Background="#FFD1DA16" Click="btAddStation_Click"  Grid.Row="2"/>
+                        </Grid>
                     </TabItem.Content>
                 </TabItem>
             </TabControl.Items>
@@ -48,3 +79,26 @@
 
     </Grid>
 </Window>
+<!--<ListView x:Name="lvStations" Grid.Row="1">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="bs" Content="add Line" Click="bs_Click"/>
+
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>-->
+<!--<ComboBox x:Name="cbLineNum" Height="50" Width="120" Grid.Row="0" ItemsSource="{Binding}"/>-->
+                            
+

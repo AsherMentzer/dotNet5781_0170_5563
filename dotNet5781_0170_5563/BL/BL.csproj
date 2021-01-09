@@ -46,6 +46,7 @@
     <Compile Include="Bus.cs" />
     <Compile Include="BusLine.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="LineExist.cs" />
     <Compile Include="PairOfConsecutiveStation.cs" />

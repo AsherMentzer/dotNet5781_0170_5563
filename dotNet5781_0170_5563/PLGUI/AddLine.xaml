@@ -1,0 +1,32 @@
+﻿<Window x:Class="PLGUI.AddLine"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLGUI"
+        mc:Ignorable="d"
+        Title="AddLine" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="enter line number:" Grid.Row="0" Grid.Column="0"/>
+        <TextBox x:Name="tbLineNumber" Grid.Row="0" Grid.Column="1" TextChanged="tbLineNumber_TextChanged"/>
+        <Label Content="enter first station id:" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="tbFirstStation" Grid.Row="1" Grid.Column="1" TextChanged="tbFirstStation_TextChanged"/>
+        <Label Content="enter last station id:" Grid.Row="2" Grid.Column="0"/>
+        <TextBox x:Name="tbLastStation" Grid.Row="2" Grid.Column="1" TextChanged="tbLastStation_TextChanged"/>
+        <Label Content="enter the area:" Grid.Row="3" Grid.Column="0"/>
+        <TextBox x:Name="tbArea" Grid.Row="3" Grid.Column="1" TextChanged="tbArea_TextChanged"/>
+        <Button x:Name="bAddLine" Content="Add Line" Click="bAddLine_Click" Grid.Column="1" Grid.Row="4"/>
+    </Grid>
+   
+</Window>
