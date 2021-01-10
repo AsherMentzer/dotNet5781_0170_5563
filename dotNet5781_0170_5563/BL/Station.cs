@@ -12,7 +12,7 @@ namespace BO
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string StationName { get; set; }
-        public IEnumerable<BusLine> lines { get; set; }
+        public IEnumerable<LineStation> lines { get; set; }
 
         public override string ToString()
         {

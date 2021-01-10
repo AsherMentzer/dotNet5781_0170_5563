@@ -31,6 +31,7 @@ namespace PLGUI
         IBL bl = BLFactory.GetBL("1");
         PO.BusLine line;
         ObservableCollection<PO.BusLine> lines = new ObservableCollection<PO.BusLine>();
+        ObservableCollection<PO.Station> stations = new ObservableCollection<PO.Station>();
         List<BO.BusLine> alines = new List<BO.BusLine>();
         void getAllLines()
         {
@@ -49,6 +50,23 @@ namespace PLGUI
             //  alines.DeepCopyTo(lines);
         }
 
+        void getAllStations()
+        {
+            foreach ( var item in bl.GetAllStations())
+            {
+                PO.Station station = new PO.Station();
+                item.DeepCopyTo(station);
+                //item.lines.DeepCopyTo(station.Lines);
+                foreach (var i in item.lines)
+                {
+                    PO.LineStation ls = new PO.LineStation();
+                    i.DeepCopyTo(ls);
+                    station.Lines.Add(ls);
+                }
+                stations.Add(station);
+            }
+        }
+
         //public ViewModel.MainWindow viewModel;
         public MainWindow()
         {
@@ -60,6 +78,8 @@ namespace PLGUI
             // RefreshAllLinesComboBox();
             cbLineNum.DisplayMemberPath = "LineNumber";
             cbLineNum.SelectedValuePath = "LineId";
+            getAllStations();
+            stationsDataGrid.DataContext = stations;
             //viewModel = new ViewModel.MainWindow();
             //viewModel.Reset();
             //DataContext = viewModel;
@@ -266,7 +286,11 @@ namespace PLGUI
             RefreshAllLinesComboBox();
         }
 
-
+        private void stationsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var v = stationsDataGrid.SelectedItem;
+            PO.Station station = v as PO.Station;
+        }
     }
 }
 

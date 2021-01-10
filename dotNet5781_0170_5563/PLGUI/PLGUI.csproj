@@ -58,6 +58,8 @@
     <Compile Include="AddStationToLine.xaml.cs">
       <DependentUpon>AddStationToLine.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LineStation.cs" />
+    <Compile Include="Station.cs" />
     <Compile Include="StationLine.cs" />
     <Compile Include="updateStation.xaml.cs">
       <DependentUpon>updateStation.xaml</DependentUpon>

@@ -49,6 +49,7 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="LineExist.cs" />
+    <Compile Include="LineStation.cs" />
     <Compile Include="PairOfConsecutiveStation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Station.cs" />

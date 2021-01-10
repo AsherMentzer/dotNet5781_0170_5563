@@ -401,10 +401,14 @@ namespace BL
         {
             BO.Station stationBO = new BO.Station();
             stationDO.CopyPropertiesTo(stationBO);
-            stationBO.lines = (from sl in dl.GetAllStationsLineBy(sl => sl.StationId == stationBO.StationId)
-                              let line = dl.GetBusLine(sl.LineId)
-                              select BusLineDoBoADapter(line));
-
+            stationBO.lines = from sl in dl.GetAllStationsLineBy(sl => sl.StationId == stationBO.StationId)
+                               let line = new LineStation()
+                               { LineId = sl.LineId,
+                                   LineNumber = dl.GetBusLine(sl.LineId).LineNumber,
+                                   LastStationId = dl.GetBusLine(sl.LineId).LastStation
+                               }
+                               orderby line.LineNumber
+                               select line;
             
             return stationBO;
         }

@@ -9,8 +9,24 @@
     <Grid>
         <TabControl>
             <TabControl.Items>
+                
                 <TabItem Header="stations" >
+                    <TabItem.Content>
+                        <Grid>
+                            <DataGrid Grid.Row="1" x:Name="stationsDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                                      ItemsSource="{Binding }" Margin="21,0,30,54" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                      CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" MouseDoubleClick="stationsDataGrid_MouseDoubleClick">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="stationId" Header="Station Number" Binding="{Binding StationId, Mode=OneWay, 
+                                        UpdateSourceTrigger=PropertyChanged }" MinWidth="0" MaxWidth="300" />
+                                    <DataGridTextColumn x:Name="name" Header="Station name" Binding="{Binding StationName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" MinWidth="0" MaxWidth="300"/>
+                                    <DataGridTextColumn x:Name="lat" Header="latitude" Binding="{Binding Latitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="0" MaxWidth="300"/>
+                                    <DataGridTextColumn x:Name="log" Header="logitude" Binding="{Binding Longitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="0" MaxWidth="300"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
 
+                        </Grid>
+                    </TabItem.Content>
                 </TabItem>
 
                 <TabItem Header="lines" >
