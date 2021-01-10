@@ -36,7 +36,21 @@ namespace PLGUI
 
         private void bAddLine_Click(object sender, RoutedEventArgs e)
         {
-            BO.BusLine line=null;
+            BO.BusLine line=new BO.BusLine();
+            BO.PairOfConsecutiveStation pair=new BO.PairOfConsecutiveStation();
+            PO.BusLine busLine = new PO.BusLine();
+            try
+            {
+               pair= bl.GetPair(fId, lId);
+            }
+            catch (BO.BadPairIdException ex)
+            {
+               
+                //line.DeepCopyTo(busLine);
+                updateStation up = new updateStation(pair, 0);
+                up.ShowDialog();
+                bl.AddPair(fId, lId, pair.Distance, pair.AverageTravleTime);
+            }
             try
             {
                 line=bl.CreateBusLine(num, fId, lId, myArea);
@@ -45,7 +59,8 @@ namespace PLGUI
             {
                 MessageBox.Show(ex.Message);
             }
-            if (line != null)
+           
+            if (line.FirstStation>0)
             {
                 PO.BusLine l = new PO.BusLine();
                 line.DeepCopyTo(l);

@@ -16,6 +16,7 @@ using PO;
 using BLAPI;
 using ViewModel;
 using BO;
+using BL;
 using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
 
@@ -26,16 +27,16 @@ namespace PLGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-       
+
         IBL bl = BLFactory.GetBL("1");
         PO.BusLine line;
         ObservableCollection<PO.BusLine> lines = new ObservableCollection<PO.BusLine>();
         List<BO.BusLine> alines = new List<BO.BusLine>();
-        void createBuses()
+        void getAllLines()
         {
             foreach (BO.BusLine b in bl.GetAllBusLines())
             {
-               // b.DeepCopyTo(line);
+                // b.DeepCopyTo(line);
                 alines.Add(b);
             }
             foreach (var b in alines)
@@ -47,15 +48,16 @@ namespace PLGUI
 
             //  alines.DeepCopyTo(lines);
         }
-       
+
         //public ViewModel.MainWindow viewModel;
         public MainWindow()
         {
+            getAllLines();
             InitializeComponent();
-            createBuses();
+
             //lvStations.ItemsSource = lines;
             cbLineNum.ItemsSource = lines;
-           // RefreshAllLinesComboBox();
+            // RefreshAllLinesComboBox();
             cbLineNum.DisplayMemberPath = "LineNumber";
             cbLineNum.SelectedValuePath = "LineId";
             //viewModel = new ViewModel.MainWindow();
@@ -88,15 +90,19 @@ namespace PLGUI
 
         }
 
-        
+
 
         private void cbLineNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           // RefreshAllLinesComboBox();
-            line = (cbLineNum.SelectedItem as PO.BusLine);
-            if(line!=null)
-            lineDataGrid.DataContext = line.Stations;
-            
+            line = cbLineNum.SelectedItem as PO.BusLine;
+            if (line != null)
+            {
+                BO.BusLine b = new BusLine();
+                b = bl.GetBusLine(line.LineId);
+                b.DeepCopyTo(line);
+                lineDataGrid.DataContext = line.Stations;
+
+            }
             //if (line != null)
             //{
             //    //list of courses of selected student
@@ -110,50 +116,105 @@ namespace PLGUI
         {
             var v = sender as Button;
             PO.StationLine station = v.DataContext as PO.StationLine;
-            MessageBox.Show(station.StationName);
+            BO.PairOfConsecutiveStation pair = new BO.PairOfConsecutiveStation();
+            if (station != null)
+            {
+                pair.StationId1 = station.StationId;
+                pair.StationId2 = line.Stations[station.NumInLine].StationId;
+                updateStation up = new updateStation(pair, station.NumInLine - 2);
+                up.ShowDialog();
+
+                bl.UpdatePair(pair);
+
+                BO.BusLine b = new BusLine();
+                b = bl.GetBusLine(line.LineId);
+                b.DeepCopyTo(line);
+                //getAllLines();
+               
+                //foreach(var l in lines)
+                //{
+                //    if
+                //}
+
+                
+                DataGrid d = lineDataGrid;
+                d.DataContext = line.Stations;
+            }
+            else MessageBox.Show("no station");
         }
 
         private void btDeleteStation_Click(object sender, RoutedEventArgs e)
         {
             var v = sender as Button;
-            PO.StationLine station =v.DataContext as PO.StationLine;
+            PO.StationLine station = v.DataContext as PO.StationLine;
 
             //MessageBox.Show(station.StationName);
             MessageBoxResult res = MessageBox.Show("Delete selected Station?", "Verification", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.No)
                 return;
 
-            try
+            //try
+            //{
+            if (line != null && station != null)
             {
-                if (line != null && station !=null)
+                bl.DeleteStationLine(line.LineId, station.StationId);
+                BO.BusLine b = new BusLine();
+                BO.PairOfConsecutiveStation pair = new BO.PairOfConsecutiveStation();
+                PO.BusLine p = new PO.BusLine();
+                //line.Stations.Remove(station);
+
+                try
                 {
-                    bl.DeleteStationLine(line.LineId, station.StationId);
-                    BO.BusLine b = new BusLine();
-                   // b=bl.get
-                    line.Stations.Remove(station);
-                    //lineDataGrid.DataContext = lines;
-                    if(station.NumInLine==1)
-                    {
-                        BO.BusLine l=new BO.BusLine();
-                        line.DeepCopyTo(l);
-                        bl.UpdateBusLine(l);
+                    b = bl.GetBusLine(line.LineId);
+                    b.DeepCopyTo(p);
+                }
+                catch (BO.BadPairIdException ex)
+                {
+                    // line = p;
+                    //  int dis = 0;
+                    // TimeSpan time = new TimeSpan();
+                    updateStation up = new updateStation(pair, station.NumInLine - 2);
+                    up.ShowDialog();
 
-                    }
-                    if (station.NumInLine == line.Stations.Count)
-                    {
-                        BO.BusLine l = new BO.BusLine();
-                        line.DeepCopyTo(l);
-                        bl.UpdateBusLine(l);
+                    int index = station.NumInLine;
+                    line.Stations[index - 2].Distance = pair.Distance;
+                    line.Stations[index - 2].AverageTravleTime = pair.AverageTravleTime;
+                    int id1 = line.Stations[index - 2].StationId;
+                    int id2 = line.Stations[index].StationId;
 
-                    }
-                    //createBuses();
-                    //RefreshAllLinesComboBox();
-                  //  DataGrid d = lineDataGrid;
-                    //d.DataContext = line.Stations;
+                    bl.AddPair(id1, id2, pair.Distance, pair.AverageTravleTime);
+
+                    // line.Stations.RemoveAt(station.NumInLine - 1);
+                    b = bl.GetBusLine(line.LineId);
+                    b.DeepCopyTo(p);
+
                 }
 
+                line = p;
+                DataGrid d = lineDataGrid;
+                d.DataContext = line.Stations;
+                if (station.NumInLine == 1)
+                {
+
+                    b.FirstStation = line.Stations[1].StationId;
+                    //BO.BusLine l=new BO.BusLine();
+                    //line.DeepCopyTo(l);
+                    bl.UpdateBusLine(b);
+
+                }
+                if (station.NumInLine == line.Stations.Count)
+                {
+                    //BO.BusLine l = new BO.BusLine();
+                    //line.DeepCopyTo(l);
+                    b.LastStation = line.Stations[line.Stations.Count - 2].StationId;
+                    bl.UpdateBusLine(b);
+
+                }
             }
-            catch (Exception EX) { }
+
+
+            //}
+            //catch (Exception EX) { }
         }
 
         private void btDeleteLine_Click(object sender, RoutedEventArgs e)
@@ -162,14 +223,18 @@ namespace PLGUI
             if (res == MessageBoxResult.No)
                 return;
             BO.BusLine l = new BO.BusLine();
+            PO.BusLine p = new PO.BusLine();
+            line.DeepCopyTo(p);
+
             try
             {
                 if (line != null)
                 {
-                    line.DeepCopyTo(l);
-                    bl.DeleteBusLine(l);
+
                     lines.Remove(line);
-                    RefreshAllLinesComboBox();                                                    
+                    RefreshAllLinesComboBox();
+                    p.CopyPropertiesTo(l);
+                    bl.DeleteBusLine(l);
                 }
             }
             catch (BO.BadBusLineIdException ex)
@@ -188,18 +253,12 @@ namespace PLGUI
 
         private void btAddStation_Click(object sender, RoutedEventArgs e)
         {
-           // var v = sender as Button;
-           // PO.BusLine line =v.DataContext as PO.BusLine;
-            //MessageBox.Show(line.LineNumber.ToString());
+
             DataGrid d = new DataGrid();
             d = lineDataGrid;
-            AddStationToLine add = new AddStationToLine(bl, line ,d);
+            AddStationToLine add = new AddStationToLine(bl, line, d);
             add.Show();
-            //var addStopLine = new addStopLine(bl, Lines, ListViewStopsOfLine)
-            //{
-            //    DataContext = ListViewLines.SelectedItem
-            //};
-            //addStopLine.ShowDialog();
+
         }
 
         private void cbLineNum_Scroll(object sender, ScrollEventArgs e)
@@ -207,59 +266,7 @@ namespace PLGUI
             RefreshAllLinesComboBox();
         }
 
-        //private void cbStudentID_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    curStu = (cbStudentID.SelectedItem as BO.Student);
-        //    gridOneStudent.DataContext = curStu;
 
-        //    if (curStu != null)
-        //    {
-        //        //list of courses of selected student
-        //        RefreshAllRegisteredCoursesGrid();
-        //        //list of all courses (that selected student is not registered to it)
-        //        RefreshAllNotRegisteredCoursesGrid();
-        //    }
-        //}
-
-        //private void btUpdateStudent_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (curStu != null)
-        //            bl.UpdateStudentPersonalDetails(curStu);
-        //    }
-        //    catch (BO.BadStudentIdException ex)
-        //    {
-        //        MessageBox.Show(ex.Message, "Operation Failure", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
-
-        //private void btDeleteStudent_Click(object sender, RoutedEventArgs e)
-        //{
-        //    MessageBoxResult res = MessageBox.Show("Delete selected student?", "Verification", MessageBoxButton.YesNo, MessageBoxImage.Question);
-        //    if (res == MessageBoxResult.No)
-        //        return;
-
-        //    try
-        //    {
-        //        if (curStu != null)
-        //        {
-        //            bl.DeleteStudent(curStu.ID);
-        //            BO.Student stuToDel = curStu;
-
-        //            RefreshAllRegisteredCoursesGrid();
-        //            RefreshAllNotRegisteredCoursesGrid();
-        //            RefreshAllStudentComboBox();
-        //        }
-        //    }
-        //    catch (BO.BadStudentIdCourseIDException ex)
-        //    {
-        //        MessageBox.Show(ex.Message, "Operation Failure", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //    catch (BO.BadStudentIdException ex)
-        //    {
-        //        MessageBox.Show(ex.Message, "Operation Failure", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
     }
-    }
+}
 

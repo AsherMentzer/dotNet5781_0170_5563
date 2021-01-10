@@ -110,7 +110,9 @@ namespace BL
                 {
                     p = dl.GetPair(d.StationId, s.StationId);
                 }
-                catch(DO.BadPairIdException ex) { }
+                catch(DO.BadPairIdException ex) {
+                    throw new BO.BadPairIdException(d.StationId, s.StationId, "no pair enter details");
+                }
 
                 if(p !=null)
                 return p.AverageTravleTime;
@@ -128,7 +130,9 @@ namespace BL
                 {
                     p = dl.GetPair(d.StationId, s.StationId);
                 }
-                catch (DO.BadPairIdException ex) { }
+                catch (DO.BadPairIdException ex) {
+                    throw new BO.BadPairIdException(d.StationId, s.StationId, "no pair enter details");
+                }
                 if (p != null)
                     return p.Distance;
                 else return 0;
@@ -246,14 +250,14 @@ namespace BL
                 DO.PairOfConsecutiveStation p = dl.GetPair(s1.StationId, s2.StationId);
                 if (p == null)
                 {
-                    p = new DO.PairOfConsecutiveStation
-                    {
-                        StationId1 = s1.StationId,
-                        StationId2 = s2.StationId,
-                        AverageTravleTime = s1.AverageTravleTime,
-                        Distance = s1.Distance
-                    };
-                    dl.AddPair(p);
+                    //p = new DO.PairOfConsecutiveStation
+                    //{
+                    //    StationId1 = s1.StationId,
+                    //    StationId2 = s2.StationId,
+                    //    AverageTravleTime = s1.AverageTravleTime,
+                    //    Distance = s1.Distance
+                    //};
+                    dl.AddPair(s1.StationId, s2.StationId, s1.Distance, s1.AverageTravleTime);
                 }
             }
         }
@@ -280,7 +284,23 @@ namespace BL
                 throw new BO.BadBusLineIdException( id,"Station ID is illegal", ex);
             }
 
+            IEnumerable<DO.StationLine> stations = from s in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
+                                                   orderby s.NumInLine
+                                                   select s;
+            foreach(var s in stations)
+            {
+                dl.DeleteStationLine(s.LineId, s.StationId);
+            }
             
+            //foreach(var s in line.Stations)
+            //{
+            //    try
+            //    {
+            //        dl.DeleteStationLine(line.LineId, s.StationId);
+            //    }
+            //    catch(DO.BadStatioLinenIdException e) { }
+            //}
+
         }
         #endregion
         #region Line Exist
@@ -349,12 +369,21 @@ namespace BL
 
         public void AddPair(int id1, int id2, double distance, TimeSpan time)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dl.AddPair( id1, id2, distance, time);
+            }
+            catch(DO.BadPairIdException ex)
+            {
+                throw new BO.BadPairIdException(id1, id2, ex.Message);
+            }
         }
 
         public void UpdatePair(BO.PairOfConsecutiveStation pair)
         {
-            throw new NotImplementedException();
+            DO.PairOfConsecutiveStation p = new DO.PairOfConsecutiveStation();
+            pair.CopyPropertiesTo(p);
+            dl.UpdatePair(p);          
         }
 
         public void UpdatePair(int id, Action<BO.PairOfConsecutiveStation> update)

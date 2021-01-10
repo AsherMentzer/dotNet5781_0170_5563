@@ -224,20 +224,30 @@ namespace DL
             throw new BadPairIdException(id1,id2);
         }
 
-        public void AddPair(PairOfConsecutiveStation pair)
+        public void AddPair(int id1,int id2,double distance,TimeSpan time)
         {
+
             //if (DataSource.pairs.Find(p => p.StationId1 == id1 && p.StationId2 == id2) != null) ;
             //Station s1 = DataSource.stations.FirstOrDefault(s => s.StationId == id1);
             //Station s2 = DataSource.stations.FirstOrDefault(s => s.StationId == id2);
             //PairOfConsecutiveStation pair = new PairOfConsecutiveStation { StationId1 = id1, StationId2 = id2, Distance = distance, AverageTravleTime = time };
-            if (DataSource.pairs.Find(p => p.StationId1 == pair.StationId1 && p.StationId2 == pair.StationId2) == null)       
-            //throw new BadLinePairException(lineExist.LineId, "Duplicate  pair");
+            if (DataSource.pairs.Find(p => p.StationId1 == id1 && p.StationId2 == id2) != null)       
+            throw new DO.BadPairIdException(id1,id2, "Duplicate  pair");
+            DO.PairOfConsecutiveStation pair= new PairOfConsecutiveStation { StationId1 = id1, StationId2 = id2, Distance = distance, AverageTravleTime = time };
             DataSource.pairs.Add(pair);
         }
 
         public void UpdatePair(PairOfConsecutiveStation pair)
         {
-            throw new NotImplementedException();
+            PairOfConsecutiveStation nPair = DataSource.pairs.FirstOrDefault(p => p.StationId1 == pair.StationId1 && p.StationId2==pair.StationId2);
+            if (nPair != null)
+            {
+                DataSource.pairs.Remove(nPair);
+                DataSource.pairs.Add(pair.Clone());
+            }
+            else
+                throw new BadPairIdException(pair.StationId1, pair.StationId2,
+                    $"bad  pair:  Id1: {pair.StationId1}, id2{pair.StationId2}");
         }
 
         public void UpdatePair(int id, Action<PairOfConsecutiveStation> update)
