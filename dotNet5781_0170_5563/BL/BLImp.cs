@@ -493,9 +493,13 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void AddStationLine(int lineid,int stationId,int numInLined)
+        public void AddStationLine(int lineId,int stationId,int numInLined)
         {
-            DO.StationLine station = new DO.StationLine {LineId=lineid,StationId=stationId,NumInLine=numInLined };
+            BO.BusLine line = GetBusLine(lineId);
+           /// int size = line.Stations.LongCount;**************************need to complete
+            ///if (numInLined < 0 || numInLined > )
+           //// { }
+            DO.StationLine station = new DO.StationLine {LineId=lineId,StationId=stationId,NumInLine=numInLined };
             
             dl.AddStationLine(station);
         }

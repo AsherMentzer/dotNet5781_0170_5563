@@ -82,7 +82,7 @@ namespace PLGUI
 
         }
 
-
+        #region Lines
         void RefreshAllLinesComboBox()
         {
             cbLineNum.ItemsSource = lines;
@@ -257,7 +257,8 @@ namespace PLGUI
         {
             RefreshAllLinesComboBox();
         }
-
+        #endregion
+        #region stations
         private void stationsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var v = stationsDataGrid.SelectedItem;
@@ -280,6 +281,17 @@ namespace PLGUI
             //            s.StationName = station.StationName;
             //    }
             //}
+        }
+        #endregion
+        private void bUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void bAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            enterGrid.Visibility = Visibility.Hidden;
+            mainGrid.Visibility = Visibility.Visible;
         }
     }
 }
