@@ -11,7 +11,7 @@ using DO;
 
 namespace BL
 {
-    class BLImp:IBL
+    class BLImp : IBL
     {
         IDL dl = DLFactory.GetDL();
 
@@ -36,9 +36,9 @@ namespace BL
         {
             DO.Bus busDO;
             try {
-               busDO= dl.GetBus(licenseId);
+                busDO = dl.GetBus(licenseId);
             }
-            catch(DO.BadBusLicenceIdException ex)
+            catch (DO.BadBusLicenceIdException ex)
             {
                 return null;///////need to throw exception
             }
@@ -105,17 +105,17 @@ namespace BL
             DO.StationLine s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
             if (s != null)
             {
-                DO.PairOfConsecutiveStation p=new DO.PairOfConsecutiveStation();
+                DO.PairOfConsecutiveStation p = new DO.PairOfConsecutiveStation();
                 try
                 {
                     p = dl.GetPair(d.StationId, s.StationId);
                 }
-                catch(DO.BadPairIdException ex) {
+                catch (DO.BadPairIdException ex) {
                     throw new BO.BadPairIdException(d.StationId, s.StationId, "no pair enter details");
                 }
 
-                if(p !=null)
-                return p.AverageTravleTime;
+                if (p != null)
+                    return p.AverageTravleTime;
                 else return new TimeSpan();
             }
             else return new TimeSpan();
@@ -151,31 +151,31 @@ namespace BL
             BO.BusLine bl = new BO.BusLine();
             line.CopyPropertiesTo(bl);
             bl.Stations = from sl in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
-                               let station =new BO.StationLine()
-                               {
-                                   StationId = sl.StationId,
-                                   LineId = sl.LineId,
-                                   NumInLine = sl.NumInLine,
-                                   StationName=getName(sl.StationId),
-                                   AverageTravleTime = getTime(sl),
-                                   Distance = getDistance(sl),
-                               }
-           
-                                       orderby station.NumInLine
-                               select station;
-                                 
+                          let station = new BO.StationLine()
+                          {
+                              StationId = sl.StationId,
+                              LineId = sl.LineId,
+                              NumInLine = sl.NumInLine,
+                              StationName = getName(sl.StationId),
+                              AverageTravleTime = getTime(sl),
+                              Distance = getDistance(sl),
+                          }
+
+                          orderby station.NumInLine
+                          select station;
+
             return bl;
         }
 
         BO.BusLine IBL.CreateBusLine(int LineNum, int fId, int lId, BO.Areas myArea)
         {
-             try
+            try
             {
                 DO.Station s = dl.GetStation(fId);
             }
             catch (DO.BadStationIdException ex)
             {
-               throw new BO.BadStationIdException(fId,"Station ID is illegal",ex);
+                throw new BO.BadStationIdException(fId, "Station ID is illegal", ex);
             }
             try
             {
@@ -185,9 +185,9 @@ namespace BL
             {
                 throw new BO.BadStationIdException(lId, "Station ID is illegal", ex);
             }
-            AddStationLine(Data.DataSource.linesId , fId, 1);
+            AddStationLine(Data.DataSource.linesId, fId, 1);
             AddStationLine(Data.DataSource.linesId, lId, 2);
-            DO.BusLine line = new DO.BusLine { FirstStation = fId, LastStation = lId, LineNumber = LineNum,LineId=Data.DataSource.linesId++ ,area=(DO.Areas)myArea};
+            DO.BusLine line = new DO.BusLine { FirstStation = fId, LastStation = lId, LineNumber = LineNum, LineId = Data.DataSource.linesId++, area = (DO.Areas)myArea };
             BO.BusLine newLine = BusLineDoBoADapter(line);
             dl.AddBusLine(line);
             return newLine;
@@ -219,9 +219,9 @@ namespace BL
 
         public void AddBusLine(BO.BusLine busLine)
         {
-            DO.BusLine line=new DO.BusLine();
+            DO.BusLine line = new DO.BusLine();
             busLine.CopyPropertiesTo(line);
-            try 
+            try
             {
                 dl.AddBusLine(line);
             }
@@ -230,7 +230,7 @@ namespace BL
             foreach (var sl in busLine.Stations)
             {
                 sl.CopyPropertiesTo(s);
-                try 
+                try
                 {
                     dl.AddStationLine(s);
                 }
@@ -279,19 +279,19 @@ namespace BL
             {
                 dl.DeleteBusLine(id);
             }
-            catch(DO.BadBusLineIdException ex)
+            catch (DO.BadBusLineIdException ex)
             {
-                throw new BO.BadBusLineIdException( id,"Station ID is illegal", ex);
+                throw new BO.BadBusLineIdException(id, "Station ID is illegal", ex);
             }
 
             IEnumerable<DO.StationLine> stations = from s in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
                                                    orderby s.NumInLine
                                                    select s;
-            foreach(var s in stations)
+            foreach (var s in stations)
             {
                 dl.DeleteStationLine(s.LineId, s.StationId);
             }
-            
+
             //foreach(var s in line.Stations)
             //{
             //    try
@@ -355,15 +355,15 @@ namespace BL
             DO.PairOfConsecutiveStation p;
             try
             {
-                p = dl.GetPair(id1,id2);
+                p = dl.GetPair(id1, id2);
             }
             catch (DO.BadPairIdException ex)
             {
-                throw new BO.BadPairIdException(id1,id2);
+                throw new BO.BadPairIdException(id1, id2);
             }
-            BO.PairOfConsecutiveStation pair=new BO.PairOfConsecutiveStation();
+            BO.PairOfConsecutiveStation pair = new BO.PairOfConsecutiveStation();
             if (p != null)
-            p.CopyPropertiesTo(pair);
+                p.CopyPropertiesTo(pair);
             return pair;
         }
 
@@ -371,9 +371,9 @@ namespace BL
         {
             try
             {
-                dl.AddPair( id1, id2, distance, time);
+                dl.AddPair(id1, id2, distance, time);
             }
-            catch(DO.BadPairIdException ex)
+            catch (DO.BadPairIdException ex)
             {
                 throw new BO.BadPairIdException(id1, id2, ex.Message);
             }
@@ -383,7 +383,7 @@ namespace BL
         {
             DO.PairOfConsecutiveStation p = new DO.PairOfConsecutiveStation();
             pair.CopyPropertiesTo(p);
-            dl.UpdatePair(p);          
+            dl.UpdatePair(p);
         }
 
         public void UpdatePair(int id, Action<BO.PairOfConsecutiveStation> update)
@@ -402,18 +402,18 @@ namespace BL
             BO.Station stationBO = new BO.Station();
             stationDO.CopyPropertiesTo(stationBO);
             stationBO.lines = from sl in dl.GetAllStationsLineBy(sl => sl.StationId == stationBO.StationId)
-                               let line = new LineStation()
-                               { LineId = sl.LineId,
-                                   LineNumber = dl.GetBusLine(sl.LineId).LineNumber,
-                                   LastStationId = dl.GetBusLine(sl.LineId).LastStation
-                               }
-                               orderby line.LineNumber
-                               select line;
-            
+                              let line = new LineStation()
+                              { LineId = sl.LineId,
+                                  LineNumber = dl.GetBusLine(sl.LineId).LineNumber,
+                                  LastStationId = dl.GetBusLine(sl.LineId).LastStation
+                              }
+                              orderby line.LineNumber
+                              select line;
+
             return stationBO;
         }
 
-       
+
 
         public IEnumerable<BO.Station> GetAllStations()
         {
@@ -431,7 +431,7 @@ namespace BL
             DO.Station station;
             try
             {
-               station = dl.GetStation(id);
+                station = dl.GetStation(id);
             }
             catch (DO.BadBusLicenceIdException ex)
             {
@@ -447,13 +447,13 @@ namespace BL
 
         public void UpdateStation(BO.Station station)
         {
-            DO.Station s=new DO.Station();
+            DO.Station s = new DO.Station();
             station.CopyPropertiesTo(s);
             try
             {
                 dl.UpdateStation(s);
             }
-            catch(DO.BadStationIdException ex)
+            catch (DO.BadStationIdException ex)
             {
                 throw new BO.BadStationIdException(s.StationId);
             }
@@ -493,16 +493,90 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void AddStationLine(int lineId,int stationId,int numInLined)
+        public void AddStationLine(int lineId, int stationId, int numInLined)
         {
             BO.BusLine line = GetBusLine(lineId);
-           /// int size = line.Stations.LongCount;**************************need to complete
-            ///if (numInLined < 0 || numInLined > )
-           //// { }
-            DO.StationLine station = new DO.StationLine {LineId=lineId,StationId=stationId,NumInLine=numInLined };
-            
+            if(numInLined==1)
+            {
+                BO.BusLine newLine = new BO.BusLine
+                {
+                    LineId = line.LineId,
+                    LineNumber = line.LineNumber,
+                    area = line.area,
+                    LastStation = line.LastStation,
+                    FirstStation = stationId
+                };
+                UpdateBusLine(newLine);
+            }
+            BO.PairOfConsecutiveStation p;
+            foreach (var s in line.Stations)
+            {
+                if (s.StationId == stationId)
+                    throw new BO.BadStationIdException(stationId, "this satation already exist in this line");
+                if (s.NumInLine == numInLined - 1)
+                {
+                    try
+                    {
+                        p = GetPair(s.StationId, stationId);
+                    }
+                    catch (DO.BadPairIdException)
+                    {
+                        throw new BO.BadPairIdException(s.StationId, stationId);
+                    }
+                    BO.StationLine Ustation = new BO.StationLine()
+                    {
+                        StationId = s.StationId,
+                        StationName = s.StationName,
+                        LineId = s.LineId,
+                        NumInLine = s.NumInLine,
+                        Distance = p.Distance,
+                        AverageTravleTime = p.AverageTravleTime
+                    };
+                    UpdateStationLine(Ustation);
+                }
+                else if (s.NumInLine == numInLined)
+                {
+                    try
+                    {
+                        p = GetPair (stationId,s.StationId);
+
+                    }
+                    catch (DO.BadPairIdException)
+                    {
+                        throw new BO.BadPairIdException(stationId, s.StationId);
+                    }
+                    BO.StationLine Ustation = new BO.StationLine()
+                    {
+                        StationId = s.StationId,
+                        StationName = s.StationName,
+                        LineId = s.LineId,
+                        NumInLine = s.NumInLine+1,
+                        Distance = p.Distance,
+                        AverageTravleTime = p.AverageTravleTime
+                    };
+                    UpdateStationLine(Ustation);
+                }
+                else if(s.NumInLine>numInLined)
+                {
+                    BO.StationLine Ustation = new BO.StationLine()
+                    {
+                        StationId = s.StationId,
+                        StationName = s.StationName,
+                        LineId = s.LineId,
+                        NumInLine = s.NumInLine + 1,
+                        Distance = s.Distance,
+                        AverageTravleTime = s.AverageTravleTime
+                    };
+                    UpdateStationLine(Ustation);
+                }
+            }
+            DO.StationLine station = new DO.StationLine { LineId = lineId, StationId = stationId, NumInLine = numInLined };
             dl.AddStationLine(station);
         }
+        
+
+       
+        
 
         public void UpdateStationLine(BO.StationLine stationLine)
         {

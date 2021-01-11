@@ -250,6 +250,14 @@ namespace PLGUI
             d = lineDataGrid;
             AddStationToLine add = new AddStationToLine(bl, line, d);
             add.Show();
+            if (line != null)
+            {
+                BO.BusLine b = new BusLine();
+                b = bl.GetBusLine(line.LineId);
+                b.DeepCopyTo(line);
+                lineDataGrid.DataContext = line.Stations;
+
+            }
 
         }
 

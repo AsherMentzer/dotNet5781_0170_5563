@@ -68,39 +68,41 @@ namespace PLGUI
         {
             var v = sender as ComboBox;
             s = cbStationId.SelectedItem as BO.Station;
-            id = s.StationId;
-            int id1;
-            if (index != 1)
-            {
-                id1 = line.Stations[index - 2].StationId;
+            //id = s.StationId;
+            //int id1;
+            //if (index != 1)
+            //{
+            //    id1 = line.Stations[index - 2].StationId;
 
-                try
-                {
-                    p = bl.GetPair(id1, id);
-                }
-                catch (BO.BadPairIdException ex)
-                {
-                    tbDistancefromPrev.IsEnabled = true;
-                    cbMFromPrev.IsEnabled = true;
-                    cbSFromPrev.IsEnabled = true;
-                }
-            }
-            //check is not the last station so no next station
-            if (index - 1 != line.Stations.Count)
-            {
-                id1 = line.Stations[index - 1].StationId;
-                try
-                {
-                    p1 = bl.GetPair(id, id1);
-                }
-                catch (BO.BadPairIdException ex)
-                {
-                    tbDistanceforNext.IsEnabled = true;
-                    cbMForNext.IsEnabled = true;
-                    cbSForNext.IsEnabled = true;
-                }
-            }
+            //    try
+            //    {
+            //        p = bl.GetPair(id1, id);
+            //    }
+            //    catch (BO.BadPairIdException ex)
+            //    {
+            //        tbDistancefromPrev.IsEnabled = true;
+            //        cbMFromPrev.IsEnabled = true;
+            //        cbSFromPrev.IsEnabled = true;
+            //    }
+            //}
+            ////check is not the last station so no next station
+            //if (index - 1 != line.Stations.Count)
+            //{
+            //    id1 = line.Stations[index - 1].StationId;
+            //    try
+            //    {
+            //        p1 = bl.GetPair(id, id1);
+            //    }
+            //    catch (BO.BadPairIdException ex)
+            //    {
+            //        tbDistanceforNext.IsEnabled = true;
+            //        cbMForNext.IsEnabled = true;
+            //        cbSForNext.IsEnabled = true;
+            //    }
+            //}
         }
+
+
 
         private void cbMFromPrev_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -112,6 +114,10 @@ namespace PLGUI
         {
             var a = sender as ComboBox;
             sp = (int)cbSFromPrev.SelectedItem;
+            if (tbDistancefromPrev.IsEnabled == true && tbDistanceforNext.IsEnabled == false)
+            {
+                bl.AddPair(line.Stations[index - 2].StationId, s.StationId, disPrev, tPrev);
+            }
         }
 
 
@@ -125,6 +131,10 @@ namespace PLGUI
         {
             var a = sender as ComboBox;
             sn = (int)cbSForNext.SelectedItem;
+            if (tbDistanceforNext.IsEnabled == true)
+            {
+                bl.AddPair(s.StationId, line.Stations[index - 1].StationId, disNext, tNext);
+            }
         }
 
         private void tbDistancefromPrev_TextChanged(object sender, TextChangedEventArgs e)
@@ -140,43 +150,48 @@ namespace PLGUI
         }
         private void bAddStation_Click(object sender, RoutedEventArgs e)
         {
-            if (p.StationId1 != 0)
-            {
-                disPrev = p.Distance;
-                tPrev = p.AverageTravleTime;
-            }
-            else
-                tNext = new TimeSpan(0, mn, sn);
 
 
-            if (p1.StationId1 != 0)
-            {
-                disNext = p1.Distance;
-                tNext = p1.AverageTravleTime;
-            }
-            else
-                tPrev = new TimeSpan(0, mp, sp);
-
-          
             try
             {
                 bl.AddStationLine(line.LineId, s.StationId, index);
             }
-            catch(BO. BadBusLineIdException)
+            catch (BO.BadStationIdException exe)
             {
-                MessageBox.Show("the index is out of limits");
+                MessageBox.Show(exe.Message);
+                return;
+                //MessageBox.Show("the index is out of limits");
             }
-                //update all other stations
-                for (int i = index - 1; i < line.Stations.Count; ++i)
+            catch (BO.BadPairIdException exe)
+            {
+                if (exe.Station2ID == s.StationId)
+                {
+                    //enter.Visibility = Visibility.Hidden;
+                    //FirstDetailsGrid.Visibility = Visibility.Visible;
+                    tbDistancefromPrev.IsEnabled = true;
+                    cbMFromPrev.IsEnabled = true;
+                    cbSFromPrev.IsEnabled = true;
+                    MessageBox.Show("please update the details from previon station to the new one");
+                }
+                if (exe.station1ID == s.StationId)
+                {
+                    tbDistanceforNext.IsEnabled = true;
+                    cbMForNext.IsEnabled = true;
+                    cbSForNext.IsEnabled = true;
+                    MessageBox.Show("please update the details for the new station to the next station");
+                }
+                return;
+            }
+            //update();
+            for (int i = index - 1; i < line.Stations.Count; ++i)
             {
                 line.Stations[i].NumInLine++;
-                BO.StationLine news = new BO.StationLine();
-                line.Stations[i].DeepCopyTo(news);
-                bl.UpdateStationLine(news);
             }
-           
-            line.Stations[index - 2].AverageTravleTime = tPrev;
-            line.Stations[index - 2].Distance = disPrev;
+            if (index != 1)
+            {
+                line.Stations[index - 2].AverageTravleTime = tPrev;
+                line.Stations[index - 2].Distance = disPrev;
+            }
             BO.StationLine st = new BO.StationLine()
             {
                 LineId = line.LineId,
@@ -190,8 +205,38 @@ namespace PLGUI
             st.DeepCopyTo(ns);
             line.Stations.Insert(index - 1, ns);
             d.DataContext = line.Stations;
-            bl.AddStationLine(st.LineId, st.StationId, st.NumInLine);
             this.Close();
         }
+        //void update()
+        //{
+        //    //update all other stations
+        //    for (int i = index - 1; i < line.Stations.Count; ++i)
+        //    {
+        //        line.Stations[i].NumInLine++;
+        //        BO.StationLine news = new BO.StationLine();
+        //        line.Stations[i].DeepCopyTo(news);
+        //        bl.UpdateStationLine(news);
+        //    }
+        //    if (index != 1)
+        //    {
+        //        line.Stations[index - 2].AverageTravleTime = tPrev;
+        //        line.Stations[index - 2].Distance = disPrev;
+        //    }
+        //    BO.StationLine st = new BO.StationLine()
+        //    {
+        //        LineId = line.LineId,
+        //        StationId = s.StationId,
+        //        StationName = s.StationName,
+        //        NumInLine = index,
+        //        AverageTravleTime = tNext,
+        //        Distance = disNext
+        //    };
+        //    PO.StationLine ns = new PO.StationLine();
+        //    st.DeepCopyTo(ns);
+        //    line.Stations.Insert(index - 1, ns);
+        //    d.DataContext = line.Stations;
+        //    // bl.AddStationLine(st.LineId, st.StationId, st.NumInLine);
+        //    this.Close();
+        //}
     }
 }
