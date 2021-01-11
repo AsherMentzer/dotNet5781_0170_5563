@@ -21,11 +21,11 @@
         <Label Content="enter line number:" Grid.Row="0" Grid.Column="0"/>
         <TextBox x:Name="tbLineNumber" Grid.Row="0" Grid.Column="1" TextChanged="tbLineNumber_TextChanged"/>
         <Label Content="enter first station id:" Grid.Row="1" Grid.Column="0"/>
-        <TextBox x:Name="tbFirstStation" Grid.Row="1" Grid.Column="1" TextChanged="tbFirstStation_TextChanged"/>
+        <ComboBox x:Name="cbFStationId" Grid.Row="1" Grid.Column="1" SelectionChanged="cbFStationId_SelectionChanged"/>
         <Label Content="enter last station id:" Grid.Row="2" Grid.Column="0"/>
-        <TextBox x:Name="tbLastStation" Grid.Row="2" Grid.Column="1" TextChanged="tbLastStation_TextChanged"/>
+        <ComboBox x:Name="cbLStationId" Grid.Row="2" Grid.Column="1" SelectionChanged="cbLStationId_SelectionChanged"/>
         <Label Content="enter the area:" Grid.Row="3" Grid.Column="0"/>
-        <TextBox x:Name="tbArea" Grid.Row="3" Grid.Column="1" TextChanged="tbArea_TextChanged"/>
+        <ComboBox x:Name="cbArea" Grid.Row="3" Grid.Column="1" SelectionChanged="cbArea_SelectionChanged"/>
         <Button x:Name="bAddLine" Content="Add Line" Click="bAddLine_Click" Grid.Column="1" Grid.Row="4"/>
     </Grid>
    

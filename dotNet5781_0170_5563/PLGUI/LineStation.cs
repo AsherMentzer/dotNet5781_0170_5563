@@ -9,7 +9,7 @@ namespace PLGUI
 {
     namespace PO
     {
-        class LineStation : INotifyPropertyChanged
+        public class LineStation : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
             protected void OnPropertyChanged([CallerMemberName] string name = null)

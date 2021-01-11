@@ -1,0 +1,26 @@
+﻿<Window x:Class="PLGUI.ShowLines"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLGUI"
+        mc:Ignorable="d"
+        Title="ShowLines" Height="450" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<TextBlock x:Name="tbStation" Grid.Row="0" Text="{Binding StationName}" />-->
+        <DataGrid Grid.Row="1" x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                                      Margin="21,0,30,54" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}"
+                                      CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" >
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="lineId" Header="Line Id" Binding="{Binding Path=LineId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" MinWidth="0" MaxWidth="300" />
+                <DataGridTextColumn x:Name="lineNumber" Header="Line Number" Binding="{Binding  Path=LineNumber, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" MinWidth="0" MaxWidth="300"/>
+                <DataGridTextColumn x:Name="last" Header="Last Station" Binding="{Binding  Path=LastStationId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="0" MaxWidth="300"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

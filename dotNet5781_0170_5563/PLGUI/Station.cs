@@ -11,7 +11,7 @@ namespace PLGUI
 {
     namespace PO
     {
-        class Station : INotifyPropertyChanged
+       public class Station : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
             protected void OnPropertyChanged([CallerMemberName] string name = null)

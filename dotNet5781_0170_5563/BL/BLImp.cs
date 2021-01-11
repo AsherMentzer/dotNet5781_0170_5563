@@ -447,7 +447,16 @@ namespace BL
 
         public void UpdateStation(BO.Station station)
         {
-            throw new NotImplementedException();
+            DO.Station s=new DO.Station();
+            station.CopyPropertiesTo(s);
+            try
+            {
+                dl.UpdateStation(s);
+            }
+            catch(DO.BadStationIdException ex)
+            {
+                throw new BO.BadStationIdException(s.StationId);
+            }
         }
 
         public void UpdateStation(int id, Action<BO.Station> update)

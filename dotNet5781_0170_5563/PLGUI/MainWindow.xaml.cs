@@ -52,7 +52,7 @@ namespace PLGUI
 
         void getAllStations()
         {
-            foreach ( var item in bl.GetAllStations())
+            foreach (var item in bl.GetAllStations())
             {
                 PO.Station station = new PO.Station();
                 item.DeepCopyTo(station);
@@ -67,7 +67,6 @@ namespace PLGUI
             }
         }
 
-        //public ViewModel.MainWindow viewModel;
         public MainWindow()
         {
             getAllLines();
@@ -80,9 +79,7 @@ namespace PLGUI
             cbLineNum.SelectedValuePath = "LineId";
             getAllStations();
             stationsDataGrid.DataContext = stations;
-            //viewModel = new ViewModel.MainWindow();
-            //viewModel.Reset();
-            //DataContext = viewModel;
+
         }
 
 
@@ -93,25 +90,7 @@ namespace PLGUI
             // lines = bl.GetAllBusLines().ToList(); //ObserListOfStudents;
         }
 
-        //void RefreshAllRegisteredCoursesGrid()
-        //{
-        //    studentCourseDataGrid.DataContext = bl.GetAllCoursesPerStudent(curStu.ID);
-        //}
-
-        //void RefreshAllNotRegisteredCoursesGrid()
-        //{
-        //    List<BO.Course> listOfUnRegisteredCourses = bl.GetAllCourses().Where(c1 => bl.GetAllCoursesPerStudent(curStu.ID).All(c2 => c2.ID != c1.ID)).ToList();
-        //    courseDataGrid.DataContext = listOfUnRegisteredCourses;
-        //}
-
-
-        private void lbBuses_Scroll(object sender, ScrollEventArgs e)
-        {
-
-        }
-
-
-
+       
         private void cbLineNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             line = cbLineNum.SelectedItem as PO.BusLine;
@@ -123,13 +102,6 @@ namespace PLGUI
                 lineDataGrid.DataContext = line.Stations;
 
             }
-            //if (line != null)
-            //{
-            //    //list of courses of selected student
-            //    RefreshAllRegisteredCoursesGrid();
-            //    //list of all courses (that selected student is not registered to it)
-            //    RefreshAllNotRegisteredCoursesGrid();
-            //}
         }
 
         private void btUpdateStation_Click(object sender, RoutedEventArgs e)
@@ -150,13 +122,13 @@ namespace PLGUI
                 b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
                 //getAllLines();
-               
+
                 //foreach(var l in lines)
                 //{
                 //    if
                 //}
 
-                
+
                 DataGrid d = lineDataGrid;
                 d.DataContext = line.Stations;
             }
@@ -266,7 +238,7 @@ namespace PLGUI
 
         private void btAddLine_Click(object sender, RoutedEventArgs e)
         {
-            AddLine add = new AddLine(lines);
+            AddLine add = new AddLine(lines,bl);
             add.Show();
             RefreshAllLinesComboBox();
         }
@@ -290,6 +262,24 @@ namespace PLGUI
         {
             var v = stationsDataGrid.SelectedItem;
             PO.Station station = v as PO.Station;
+            int id = station.StationId;
+            ShowLines seeLines = new ShowLines(id, bl);
+            seeLines.ShowDialog();
+        }
+
+        private void bUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            PO.Station station = stationsDataGrid.SelectedItem as PO.Station;
+            StationName name = new StationName(station, bl);
+            name.ShowDialog();
+            //foreach (PO.BusLine v in lines)
+            //{
+            //    foreach (PO.StationLine s in v.Stations)
+            //    {
+            //        if (s.StationId == station.StationId)
+            //            s.StationName = station.StationName;
+            //    }
+            //}
         }
     }
 }

@@ -21,17 +21,25 @@ namespace PLGUI
     /// </summary>
     public partial class AddLine : Window
     {
-        IBL bl = BLFactory.GetBL("1");
+       // IBL bl = BLFactory.GetBL("1");
         int num, fId, lId;
         BO.Areas myArea;
-        ObservableCollection<PO.BusLine> lines; 
-        public AddLine(ObservableCollection<PO.BusLine>busLines)
+        ObservableCollection<PO.BusLine> lines;
+        IEnumerable<BO.Station> stations;
+
+        IBL bl;
+        public AddLine(ObservableCollection<PO.BusLine>busLines,IBL _bl)
         {
+            bl = _bl;
             lines = busLines;
             InitializeComponent();
             tbLineNumber.MaxLength = 3;
-            tbFirstStation.MaxLength = 5;
-            tbLastStation.MaxLength = 5;
+            stations = bl.GetAllStations();
+            cbFStationId.ItemsSource = stations;
+            cbLStationId.ItemsSource = stations;
+            cbFStationId.DisplayMemberPath = "StationId";
+            cbLStationId.DisplayMemberPath = "StationId";
+            cbArea.ItemsSource = Enum.GetValues(typeof(BO.Areas));
         }
 
         private void bAddLine_Click(object sender, RoutedEventArgs e)
@@ -70,24 +78,41 @@ namespace PLGUI
            
         }
 
-        private void tbArea_TextChanged(object sender, TextChangedEventArgs e)
+        //private void tbArea_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    var v = sender as TextBox;
+        //    int str = int.Parse(v.Text);
+        //    myArea = (BO.Areas)str;
+        //}
+
+        //private void tbLastStation_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    var v = sender as TextBox;
+        //    int.TryParse(v.Text, out lId);
+        //}
+
+        private void cbFStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var v = sender as TextBox;
-            int str = int.Parse(v.Text);
-            myArea = (BO.Areas)str;
+            BO.Station s= cbFStationId.SelectedItem as BO.Station;
+            fId = s.StationId;
         }
 
-        private void tbLastStation_TextChanged(object sender, TextChangedEventArgs e)
+        private void cbLStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var v = sender as TextBox;
-            int.TryParse(v.Text, out lId);
+            BO.Station s = cbLStationId.SelectedItem as BO.Station;
+            lId = s.StationId;
         }
 
-        private void tbFirstStation_TextChanged(object sender, TextChangedEventArgs e)
+        private void cbArea_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var v = sender as TextBox;
-            int.TryParse(v.Text, out fId);
+            BO.Areas area = (BO.Areas)cbArea.SelectedItem;
         }
+
+        //private void tbFirstStation_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    var v = sender as TextBox;
+        //    int.TryParse(v.Text, out fId);
+        //}
 
         private void tbLineNumber_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -303,7 +303,7 @@ namespace DL
 
             if (nStation != null)
             {
-                DataSource.stations.Remove(nStation);
+                DataSource.stations.Remove(station);
                 DataSource.stations.Add(nStation.Clone());
             }
             else
