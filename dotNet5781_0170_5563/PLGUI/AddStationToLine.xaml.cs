@@ -25,10 +25,11 @@ namespace PLGUI
         PO.BusLine line = new PO.BusLine();
         DataGrid d = new DataGrid();
         IBL bl;
-        int index, id, mp, sp, mn, sn;
-        double disPrev, disNext;
+        int index = 0, id, id1, mp, sp, mn, sn;
+        double disPrev = 0, disNext = 0;
         TimeSpan tPrev, tNext;
-        BO.Station s = new BO.Station();
+        bool flag = false;
+        BO.Station s = new BO.Station() { StationId = 0 };
         BO.PairOfConsecutiveStation p = new BO.PairOfConsecutiveStation();
         BO.PairOfConsecutiveStation p1 = new BO.PairOfConsecutiveStation();
         IEnumerable<BO.Station> stations;
@@ -54,9 +55,10 @@ namespace PLGUI
 
             cbMForNext.ItemsSource = ab;
             cbSForNext.ItemsSource = ab;
-
+            cbMFrom.ItemsSource = ab;
+            cbSFrom.ItemsSource = ab;
         }
-
+        #region select station and index
         private void tbStationIndexNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             var a = sender as TextBox;
@@ -68,42 +70,67 @@ namespace PLGUI
         {
             var v = sender as ComboBox;
             s = cbStationId.SelectedItem as BO.Station;
-            //id = s.StationId;
-            //int id1;
-            //if (index != 1)
-            //{
-            //    id1 = line.Stations[index - 2].StationId;
-
-            //    try
-            //    {
-            //        p = bl.GetPair(id1, id);
-            //    }
-            //    catch (BO.BadPairIdException ex)
-            //    {
-            //        tbDistancefromPrev.IsEnabled = true;
-            //        cbMFromPrev.IsEnabled = true;
-            //        cbSFromPrev.IsEnabled = true;
-            //    }
-            //}
-            ////check is not the last station so no next station
-            //if (index - 1 != line.Stations.Count)
-            //{
-            //    id1 = line.Stations[index - 1].StationId;
-            //    try
-            //    {
-            //        p1 = bl.GetPair(id, id1);
-            //    }
-            //    catch (BO.BadPairIdException ex)
-            //    {
-            //        tbDistanceforNext.IsEnabled = true;
-            //        cbMForNext.IsEnabled = true;
-            //        cbSForNext.IsEnabled = true;
-            //    }
-            //}
         }
+     
 
+        private void bAddStation_Click(object sender, RoutedEventArgs e)
+        {
+            //check if all fields are full
+            if (index == 0 || s.StationId == 0)
+            {
+                MessageBox.Show("enter all the details");
+                return;
+            }
 
+            try
+            {
+                bl.AddStationLine(line.LineId, s.StationId, index);
+            }
+            catch (IndexOutOfRangeException indexEX)
+            {
+                MessageBox.Show(indexEX.Message);
+                return;
+            }
+            catch (BO.BadStationIdException exe)
+            {
+                MessageBox.Show(exe.Message);
+                return;
+                //MessageBox.Show("the index is out of limits");
+            }
+            catch (BO.BadPairIdException exe)
+            {
+                if (exe.station2ID == s.StationId)
+                {
+                    enterGrid.Visibility = Visibility.Hidden;
+                    Update2Grid.Visibility = Visibility.Visible;
+                    id = exe.station1ID;
+                    id1 = exe.station3ID;
+                }
+                else if (exe.station1ID == s.StationId)
+                {
+                    enterGrid.Visibility = Visibility.Hidden;
+                    Update1Grid.Visibility = Visibility.Visible;
+                    id = exe.station1ID;
+                    flag = true;
+                }
+                else if (exe.station2ID == s.StationId)
+                {
+                    enterGrid.Visibility = Visibility.Hidden;
+                    Update1Grid.Visibility = Visibility.Visible;
+                    id = exe.station3ID;
 
+                    return;
+                }
+                //update the presentation
+                BO.BusLine b = bl.GetBusLine(line.LineId);
+                b.DeepCopyTo(line);
+                d.DataContext = line.Stations;
+                this.Close();
+            }
+
+        }
+        #endregion
+        #region 2update
         private void cbMFromPrev_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var a = sender as ComboBox;
@@ -114,10 +141,7 @@ namespace PLGUI
         {
             var a = sender as ComboBox;
             sp = (int)cbSFromPrev.SelectedItem;
-            if (tbDistancefromPrev.IsEnabled == true && tbDistanceforNext.IsEnabled == false)
-            {
-                bl.AddPair(line.Stations[index - 2].StationId, s.StationId, disPrev, tPrev);
-            }
+
         }
 
 
@@ -131,10 +155,6 @@ namespace PLGUI
         {
             var a = sender as ComboBox;
             sn = (int)cbSForNext.SelectedItem;
-            if (tbDistanceforNext.IsEnabled == true)
-            {
-                bl.AddPair(s.StationId, line.Stations[index - 1].StationId, disNext, tNext);
-            }
         }
 
         private void tbDistancefromPrev_TextChanged(object sender, TextChangedEventArgs e)
@@ -148,95 +168,77 @@ namespace PLGUI
             var a = sender as TextBox;
             Double.TryParse(a.Text, out disNext);
         }
-        private void bAddStation_Click(object sender, RoutedEventArgs e)
+        private void b2Update_Click(object sender, RoutedEventArgs e)
         {
-
-
-            try
+            tPrev = new TimeSpan(0, mp, sp);
+            tNext = new TimeSpan(0, mn, sn);
+            if (disPrev == 0 || tPrev.TotalSeconds == 0 || disNext == 0 || tNext.TotalSeconds == 0)
             {
-                bl.AddStationLine(line.LineId, s.StationId, index);
-            }
-            catch (BO.BadStationIdException exe)
-            {
-                MessageBox.Show(exe.Message);
-                return;
-                //MessageBox.Show("the index is out of limits");
-            }
-            catch (BO.BadPairIdException exe)
-            {
-                if (exe.Station2ID == s.StationId)
-                {
-                    //enter.Visibility = Visibility.Hidden;
-                    //FirstDetailsGrid.Visibility = Visibility.Visible;
-                    tbDistancefromPrev.IsEnabled = true;
-                    cbMFromPrev.IsEnabled = true;
-                    cbSFromPrev.IsEnabled = true;
-                    MessageBox.Show("please update the details from previon station to the new one");
-                }
-                if (exe.station1ID == s.StationId)
-                {
-                    tbDistanceforNext.IsEnabled = true;
-                    cbMForNext.IsEnabled = true;
-                    cbSForNext.IsEnabled = true;
-                    MessageBox.Show("please update the details for the new station to the next station");
-                }
+                MessageBox.Show("enter all the details");
                 return;
             }
-            //update();
-            for (int i = index - 1; i < line.Stations.Count; ++i)
-            {
-                line.Stations[i].NumInLine++;
-            }
-            if (index != 1)
-            {
-                line.Stations[index - 2].AverageTravleTime = tPrev;
-                line.Stations[index - 2].Distance = disPrev;
-            }
-            BO.StationLine st = new BO.StationLine()
-            {
-                LineId = line.LineId,
-                StationId = s.StationId,
-                StationName = s.StationName,
-                NumInLine = index,
-                AverageTravleTime = tNext,
-                Distance = disNext
-            };
-            PO.StationLine ns = new PO.StationLine();
-            st.DeepCopyTo(ns);
-            line.Stations.Insert(index - 1, ns);
+            bl.AddPair(id, s.StationId, disPrev, tPrev);
+            bl.AddPair(s.StationId, id1, disPrev, tPrev);
+            BO.StationLine newSt1 = bl.GetStationLine(line.LineId, id);
+            bl.UpdateStationLine(newSt1);
+            BO.StationLine newSt2 = bl.GetStationLine(line.LineId, id1);
+            bl.UpdateStationLine(newSt2);
+
+            //update the presentation
+            BO.BusLine b = bl.GetBusLine(line.LineId);
+            b.DeepCopyTo(line);
             d.DataContext = line.Stations;
             this.Close();
         }
-        //void update()
-        //{
-        //    //update all other stations
-        //    for (int i = index - 1; i < line.Stations.Count; ++i)
-        //    {
-        //        line.Stations[i].NumInLine++;
-        //        BO.StationLine news = new BO.StationLine();
-        //        line.Stations[i].DeepCopyTo(news);
-        //        bl.UpdateStationLine(news);
-        //    }
-        //    if (index != 1)
-        //    {
-        //        line.Stations[index - 2].AverageTravleTime = tPrev;
-        //        line.Stations[index - 2].Distance = disPrev;
-        //    }
-        //    BO.StationLine st = new BO.StationLine()
-        //    {
-        //        LineId = line.LineId,
-        //        StationId = s.StationId,
-        //        StationName = s.StationName,
-        //        NumInLine = index,
-        //        AverageTravleTime = tNext,
-        //        Distance = disNext
-        //    };
-        //    PO.StationLine ns = new PO.StationLine();
-        //    st.DeepCopyTo(ns);
-        //    line.Stations.Insert(index - 1, ns);
-        //    d.DataContext = line.Stations;
-        //    // bl.AddStationLine(st.LineId, st.StationId, st.NumInLine);
-        //    this.Close();
-        //}
+        #endregion
+        #region update1
+
+
+        private void tbDistance_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var a = sender as TextBox;
+            Double.TryParse(a.Text, out disPrev);
+        }
+
+        private void cbMFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var a = sender as ComboBox;
+            mp = (int)cbMFrom.SelectedItem;
+        }
+
+        private void cbSFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var a = sender as ComboBox;
+            sp = (int)cbSFrom.SelectedItem;
+        }
+
+        private void b1Update_Click(object sender, RoutedEventArgs e)
+        {
+            if (disPrev == 0 || tPrev.TotalSeconds == 0)
+            {
+                MessageBox.Show("enter all the details");
+                return;
+            }
+
+            if (flag)
+            {
+                bl.AddPair(id, s.StationId, disPrev, tPrev);
+                BO.StationLine newSt = bl.GetStationLine(line.LineId, id);
+                bl.UpdateStationLine(newSt);
+            }
+            else
+            {
+                bl.AddPair(s.StationId, id, disPrev, tPrev);
+                BO.StationLine newSt = bl.GetStationLine(line.LineId, id1);
+                bl.UpdateStationLine(newSt);
+
+            }
+            //update the presentation
+            BO.BusLine b = bl.GetBusLine(line.LineId);
+            b.DeepCopyTo(line);
+            d.DataContext = line.Stations;
+            this.Close();
+        }
+        #endregion
     }
 }

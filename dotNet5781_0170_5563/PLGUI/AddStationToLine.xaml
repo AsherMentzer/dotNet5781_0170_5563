@@ -5,18 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="AddStationToLine" Height="450" Width="400">
+        Title="AddStationToLine" Height="200" Width="400">
     <Grid>
-        <Grid>
+        <Grid x:Name="enterGrid" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -26,7 +22,7 @@
             <TextBox x:Name="tbStatioNumberNumber" Grid.Row="0" Grid.Column="1" TextChanged="tbStationIndexNumber_TextChanged"/>
             <Label Content="enter station id:" Grid.Row="1" Grid.Column="0"/>
             <ComboBox x:Name="cbStationId" Grid.Row="1" Grid.Column="1" SelectionChanged="cbStationId_SelectionChanged"/>
-            <Label Content="enter distance from previos station:" Grid.Row="2" Grid.Column="0"/>
+            <!--<Label Content="enter distance from previos station:" Grid.Row="2" Grid.Column="0"/>
             <TextBox x:Name="tbDistancefromPrev" Grid.Row="2" Grid.Column="1" IsEnabled="False" TextChanged="tbDistancefromPrev_TextChanged"/>
             <Label Content="enter the time from previos station:" Grid.Row="3" Grid.Column="0"/>
             <Label Content="Minutes" Grid.Row="3" Grid.Column="1" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40"/>
@@ -39,9 +35,55 @@
             <Label Content="Minutes" Grid.Row="5" Grid.Column="1" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40"/>
             <Label Content="Seconds" Grid.Row="5" Grid.Column="1"  Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
             <ComboBox x:Name="cbMForNext" Grid.Row="5" Grid.Column="1" IsEnabled="False" SelectionChanged="cbMForNext_SelectionChanged" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47"/>
-            <ComboBox x:Name="cbSForNext" Grid.Row="5" Grid.Column="1" IsEnabled="False" SelectionChanged="cbSForNext_SelectionChanged" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42"/>
+            <ComboBox x:Name="cbSForNext" Grid.Row="5" Grid.Column="1" IsEnabled="False" SelectionChanged="cbSForNext_SelectionChanged" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42"/>-->
             <Button x:Name="bAddStation" Content="Add Station" Click="bAddStation_Click"  Grid.Column="1" Grid.Row="6"/>
         </Grid>
-
+        <Grid x:Name="Update1Grid" Visibility="Hidden" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="enter distance:" Grid.Row="0" Grid.Column="0"/>
+            <TextBox x:Name="tbDistance" Grid.Row="0" Grid.Column="1"  TextChanged="tbDistance_TextChanged"/>
+            <Label Content="enter the time:" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="Minutes" Grid.Row="1" Grid.Column="1" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40"/>
+            <Label Content="Seconds" Grid.Row="1" Grid.Column="1"  Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
+            <ComboBox x:Name="cbMFrom"  Grid.Row="1" Grid.Column="1" SelectionChanged="cbMFrom_SelectionChanged"  Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47"/>
+            <ComboBox x:Name="cbSFrom" Grid.Row="1" Grid.Column="1" SelectionChanged="cbSFrom_SelectionChanged"  Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42"/>
+            <Button x:Name="b1Update" Content="update" Click="b1Update_Click"  Grid.Column="1" Grid.Row="2"/>
+        </Grid>
+        <Grid x:Name="Update2Grid" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="enter distance from previos station:" Grid.Row="0" Grid.Column="0"/>
+            <TextBox x:Name="tbDistancefromPrev" Grid.Row="0" Grid.Column="1"  TextChanged="tbDistancefromPrev_TextChanged"/>
+            <Label Content="enter the time from previos station:" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="Minutes" Grid.Row="1" Grid.Column="1" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40"/>
+            <Label Content="Seconds" Grid.Row="1" Grid.Column="1"  Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
+            <ComboBox x:Name="cbMFromPrev"  Grid.Row="1" Grid.Column="1"  SelectionChanged="cbMFromPrev_SelectionChanged" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47"/>
+            <ComboBox x:Name="cbSFromPrev" Grid.Row="1" Grid.Column="1"  SelectionChanged="cbSFromPrev_SelectionChanged" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42"/>
+            <Label Content="enter distance fro next station:" Grid.Row="2" Grid.Column="0"/>
+            <TextBox x:Name="tbDistanceforNext" Grid.Row="2" Grid.Column="1"  TextChanged="tbDistanceforNext_TextChanged"/>
+            <Label Content="enter the time for next station:" Grid.Row="3" Grid.Column="0"/>
+            <Label Content="Minutes" Grid.Row="3" Grid.Column="1" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40"/>
+            <Label Content="Seconds" Grid.Row="3" Grid.Column="1"  Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
+            <ComboBox x:Name="cbMForNext" Grid.Row="3" Grid.Column="1"  SelectionChanged="cbMForNext_SelectionChanged" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47"/>
+            <ComboBox x:Name="cbSForNext" Grid.Row="3" Grid.Column="1"  SelectionChanged="cbSForNext_SelectionChanged" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42"/>
+            <Button x:Name="b2Update" Content="update" Click="b2Update_Click"  Grid.Column="1" Grid.Row="4"/>
+        </Grid>
     </Grid>
 </Window>

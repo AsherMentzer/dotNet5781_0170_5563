@@ -6,9 +6,17 @@
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="800">
+    <Window.Resources>
+        <!--<Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            --><!--<Setter Property="Background" Value="Turquoise"/>
+            <Setter Property="BorderThickness" Value="0,0,1,2"/>
+            <Setter Property="BorderBrush" Value="Black" />--><!--
+        </Style>-->
+    </Window.Resources>
     <Grid>
         <!--#region enter-->
-        <Grid x:Name="enterGrid" Visibility="Visible">
+        <Grid x:Name="enterGrid" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -18,7 +26,7 @@
         </Grid>
         <!--#endregion-->
         <!--#region Main-->
-        <Grid x:Name="mainGrid" Visibility="Hidden">
+        <Grid x:Name="mainGrid" Visibility="Visible">
             <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="*"/>
@@ -30,14 +38,31 @@
                         <TabItem.Content>
                             <Grid Grid.Column="1">
                                 <DataGrid x:Name="stationsDataGrid"  AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                      ItemsSource="{Binding }" Margin="21,0,23,54.4" RowDetailsVisibilityMode="VisibleWhenSelected" 
-                                      CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" MouseDoubleClick="stationsDataGrid_MouseDoubleClick">
+                                      ItemsSource="{Binding }" Margin="10,0,10.4,54.8" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                      CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" MouseDoubleClick="stationsDataGrid_MouseDoubleClick" >
+                                    <DataGrid.Resources>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="Background" Value="Turquoise"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                           <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                                             <Setter Property="BorderBrush" Value="Black" />
+                                        </Style>
+                                        
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Setter Property="Foreground" Value="#FFFF5700"/>
+                                            <Setter Property="Background" Value="AliceBlue"/>
+                                            <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                                        </Style>
+                                    </DataGrid.Resources>
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn x:Name="stationId" Header="Station Number" Binding="{Binding StationId, Mode=OneWay, 
-                                        UpdateSourceTrigger=PropertyChanged }" MinWidth="0" MaxWidth="300" />
-                                        <DataGridTextColumn x:Name="name" Header="Station name" Binding="{Binding StationName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" Width="*"/>
-                                        <DataGridTextColumn x:Name="lat" Header="latitude" Binding="{Binding Latitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-                                        <DataGridTextColumn x:Name="log" Header="logitude" Binding="{Binding Longitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                                        <DataGridTextColumn x:Name="stationId" Header="Station Number"   Binding="{Binding StationId, Mode=OneWay, 
+                                        UpdateSourceTrigger=PropertyChanged }"  Width="95"/>
+                                        <DataGridTextColumn x:Name="name" Header="Station name" Binding="{Binding StationName, Mode=OneWay,
+                                            UpdateSourceTrigger=PropertyChanged }" Width="190"/>
+                                        <DataGridTextColumn x:Name="lat" Header="latitude" Binding="{Binding Latitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
+                                        <DataGridTextColumn x:Name="log" Header="logitude" Binding="{Binding Longitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
                                         <DataGridTemplateColumn Width="80">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>

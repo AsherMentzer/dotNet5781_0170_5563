@@ -55,7 +55,8 @@ namespace PLGUI
             {
                
                 //line.DeepCopyTo(busLine);
-                updateStation up = new updateStation(pair, 0);
+                //updateStation up = new updateStation(pair, 0);
+                updateStation up = new updateStation(pair);
                 up.ShowDialog();
                 bl.AddPair(fId, lId, pair.Distance, pair.AverageTravleTime);
             }

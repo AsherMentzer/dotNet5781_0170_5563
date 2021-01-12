@@ -58,12 +58,12 @@
     <Compile Include="AddStationToLine.xaml.cs">
       <DependentUpon>AddStationToLine.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LineStation.cs" />
+    <Compile Include="PO\LineStation.cs" />
     <Compile Include="ShowLines.xaml.cs">
       <DependentUpon>ShowLines.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Station.cs" />
-    <Compile Include="StationLine.cs" />
+    <Compile Include="PO\Station.cs" />
+    <Compile Include="PO\StationLine.cs" />
     <Compile Include="StationName.xaml.cs">
       <DependentUpon>StationName.xaml</DependentUpon>
     </Compile>
@@ -89,8 +89,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bus.cs" />
-    <Compile Include="BusLine.cs" />
+    <Compile Include="PO\Bus.cs" />
+    <Compile Include="PO\BusLine.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="MainWindow.cs" />
     <Compile Include="MainWindow.xaml.cs">

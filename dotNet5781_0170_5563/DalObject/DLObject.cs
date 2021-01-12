@@ -402,11 +402,11 @@ namespace DL
             station = DataSource.stationsLine.FirstOrDefault(s => s.LineId == lineId && s.StationId == stationId);
             if (station != null)
               
-            foreach(var s in DataSource.stationsLine)
-            {
-                if (s.LineId == lineId && s.NumInLine > station.NumInLine)
-                    s.NumInLine--;
-            }
+            //foreach(var s in DataSource.stationsLine)
+            //{
+            //    if (s.LineId == lineId && s.NumInLine > station.NumInLine)
+            //        s.NumInLine--;
+            //}
             DataSource.stationsLine.Remove(station);
         }
         #endregion

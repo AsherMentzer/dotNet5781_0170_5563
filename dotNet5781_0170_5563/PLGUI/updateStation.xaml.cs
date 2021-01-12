@@ -23,9 +23,9 @@ namespace PLGUI
         double dis;
          int   ti,index ;
         BO.PairOfConsecutiveStation update;
-        public updateStation(BO.PairOfConsecutiveStation p ,int _index)
+        public updateStation(BO.PairOfConsecutiveStation p)
         {
-            index = _index;
+            //index = _index;
            // dis = a;time = b;
             update = p;
             InitializeComponent();

@@ -78,19 +78,20 @@ namespace BO
     [Serializable]
     public class BadPairIdException : Exception
     {
-        public int station1ID, Station2ID;
+        public int station1ID, station2ID,station3ID;
 
-        public BadPairIdException(int lid, int sid) : base() { station1ID = lid; Station2ID = sid; }
+        public BadPairIdException(int lid, int sid) : base() { station1ID = lid; station2ID = sid; }
+        public BadPairIdException(int id1, int id2,int id3) : base() { station1ID = id1; station2ID = id2;station3ID = id3; }
         public BadPairIdException(int lid, int sid, string message) :
             base(message)
-        { station1ID = lid; Station2ID = sid; }
+        { station1ID = lid; station2ID = sid; }
 
 
         public BadPairIdException(int lid, int sid, string message, Exception innerException) :
             base(message, innerException)
-        { station1ID = lid; Station2ID = sid; }
+        { station1ID = lid; station2ID = sid; }
 
-        public override string ToString() => base.ToString() + $", bad first station id: {station1ID}, or bad last station id: {Station2ID}";
+        public override string ToString() => base.ToString() + $", bad first station id: {station1ID}, or bad last station id: {station2ID}";
 
     }
 }

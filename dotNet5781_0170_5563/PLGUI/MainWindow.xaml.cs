@@ -90,7 +90,7 @@ namespace PLGUI
             // lines = bl.GetAllBusLines().ToList(); //ObserListOfStudents;
         }
 
-       
+
         private void cbLineNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             line = cbLineNum.SelectedItem as PO.BusLine;
@@ -113,7 +113,8 @@ namespace PLGUI
             {
                 pair.StationId1 = station.StationId;
                 pair.StationId2 = line.Stations[station.NumInLine].StationId;
-                updateStation up = new updateStation(pair, station.NumInLine - 2);
+                //updateStation up = new updateStation(pair, station.NumInLine - 2);
+                updateStation up = new updateStation(pair);
                 up.ShowDialog();
 
                 bl.UpdatePair(pair);
@@ -145,68 +146,33 @@ namespace PLGUI
             if (res == MessageBoxResult.No)
                 return;
 
-            //try
-            //{
             if (line != null && station != null)
             {
-                bl.DeleteStationLine(line.LineId, station.StationId);
-                BO.BusLine b = new BusLine();
                 BO.PairOfConsecutiveStation pair = new BO.PairOfConsecutiveStation();
-                PO.BusLine p = new PO.BusLine();
-                //line.Stations.Remove(station);
-
+                //BO.StationLine stationLine = new BO.StationLine();
                 try
                 {
-                    b = bl.GetBusLine(line.LineId);
-                    b.DeepCopyTo(p);
+                    bl.DeleteStationLine(line.LineId, station.StationId);
                 }
                 catch (BO.BadPairIdException ex)
                 {
-                    // line = p;
-                    //  int dis = 0;
-                    // TimeSpan time = new TimeSpan();
-                    updateStation up = new updateStation(pair, station.NumInLine - 2);
+                    updateStation up = new updateStation(pair);
                     up.ShowDialog();
-
-                    int index = station.NumInLine;
-                    line.Stations[index - 2].Distance = pair.Distance;
-                    line.Stations[index - 2].AverageTravleTime = pair.AverageTravleTime;
-                    int id1 = line.Stations[index - 2].StationId;
-                    int id2 = line.Stations[index].StationId;
-
-                    bl.AddPair(id1, id2, pair.Distance, pair.AverageTravleTime);
-
-                    // line.Stations.RemoveAt(station.NumInLine - 1);
-                    b = bl.GetBusLine(line.LineId);
-                    b.DeepCopyTo(p);
-
-                }
-
-                line = p;
-                DataGrid d = lineDataGrid;
-                d.DataContext = line.Stations;
-                if (station.NumInLine == 1)
-                {
-
-                    b.FirstStation = line.Stations[1].StationId;
-                    //BO.BusLine l=new BO.BusLine();
-                    //line.DeepCopyTo(l);
-                    bl.UpdateBusLine(b);
-
-                }
-                if (station.NumInLine == line.Stations.Count)
-                {
-                    //BO.BusLine l = new BO.BusLine();
-                    //line.DeepCopyTo(l);
-                    b.LastStation = line.Stations[line.Stations.Count - 2].StationId;
-                    bl.UpdateBusLine(b);
-
+                    //get the previos station that nee to update
+                    BO.StationLine stationLine = bl.GetStationLine(line.LineId, ex.station1ID);
+                    stationLine.Distance = pair.Distance;
+                    stationLine.AverageTravleTime = pair.AverageTravleTime;
+                    bl.UpdateStationLine(stationLine);
+                    bl.AddPair(ex.station1ID, ex.station2ID, pair.Distance, pair.AverageTravleTime);
                 }
             }
 
-
-            //}
-            //catch (Exception EX) { }
+            //update the presentation
+            BO.BusLine lineBO = bl.GetBusLine(line.LineId);
+            lineBO.DeepCopyTo(line);
+            DataGrid d = lineDataGrid;
+            d.DataContext = line.Stations;
+            
         }
 
         private void btDeleteLine_Click(object sender, RoutedEventArgs e)
@@ -238,7 +204,7 @@ namespace PLGUI
 
         private void btAddLine_Click(object sender, RoutedEventArgs e)
         {
-            AddLine add = new AddLine(lines,bl);
+            AddLine add = new AddLine(lines, bl);
             add.Show();
             RefreshAllLinesComboBox();
         }
@@ -270,10 +236,13 @@ namespace PLGUI
         private void stationsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var v = stationsDataGrid.SelectedItem;
-            PO.Station station = v as PO.Station;
-            int id = station.StationId;
-            ShowLines seeLines = new ShowLines(id, bl);
-            seeLines.ShowDialog();
+            if (v != null)
+            {
+                PO.Station station = v as PO.Station;
+                int id = station.StationId;
+                ShowLines seeLines = new ShowLines(id, bl);
+                seeLines.ShowDialog();
+            }
         }
 
         private void bUpdate_Click(object sender, RoutedEventArgs e)
@@ -291,6 +260,7 @@ namespace PLGUI
             //}
         }
         #endregion
+        #region user
         private void bUser_Click(object sender, RoutedEventArgs e)
         {
 
@@ -301,6 +271,7 @@ namespace PLGUI
             enterGrid.Visibility = Visibility.Hidden;
             mainGrid.Visibility = Visibility.Visible;
         }
+        #endregion
     }
 }
 
