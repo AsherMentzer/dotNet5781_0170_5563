@@ -44,17 +44,17 @@
     <Compile Include="BLFactory.cs" />
     <Compile Include="BLImp.cs" />
     <Compile Include="BO\Bus.cs" />
-    <Compile Include="BO\BusLine.cs" />
+    <Compile Include="BO\Line.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="BO\Exceptions.cs" />
     <Compile Include="IBL.cs" />
-    <Compile Include="BO\LineExist.cs" />
+    <Compile Include="BO\LineTrip.cs" />
     <Compile Include="BO\LineStation.cs" />
-    <Compile Include="BO\PairOfConsecutiveStation.cs" />
+    <Compile Include="BO\AdjacentStations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BO\Station.cs" />
     <Compile Include="BO\StationLine.cs" />
-    <Compile Include="BO\TravelBus.cs" />
+    <Compile Include="BO\BusOnTrip.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DalApi\DLApi.csproj">

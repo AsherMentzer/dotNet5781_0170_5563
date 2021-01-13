@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
+namespace BO
 {
-    public class TravelBus
+  public  class BusOnTrip
     {
         public int TravleId { get; set; }
         public string LicenseId { get; set; }

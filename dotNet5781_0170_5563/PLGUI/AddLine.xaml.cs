@@ -44,8 +44,8 @@ namespace PLGUI
 
         private void bAddLine_Click(object sender, RoutedEventArgs e)
         {
-            BO.BusLine line=new BO.BusLine();
-            BO.PairOfConsecutiveStation pair=new BO.PairOfConsecutiveStation();
+            BO.Line line=new BO.Line();
+            BO.AdjacentStations pair=new BO.AdjacentStations();
             PO.BusLine busLine = new PO.BusLine();
             try
             {

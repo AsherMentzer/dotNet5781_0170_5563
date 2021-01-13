@@ -30,8 +30,8 @@ namespace PLGUI
         TimeSpan tPrev, tNext;
         bool flag = false;
         BO.Station s = new BO.Station() { StationId = 0 };
-        BO.PairOfConsecutiveStation p = new BO.PairOfConsecutiveStation();
-        BO.PairOfConsecutiveStation p1 = new BO.PairOfConsecutiveStation();
+        BO.AdjacentStations p = new BO.AdjacentStations();
+        BO.AdjacentStations p1 = new BO.AdjacentStations();
         IEnumerable<BO.Station> stations;
 
         public AddStationToLine(IBL _bl, PO.BusLine _line, DataGrid _d)
@@ -122,7 +122,7 @@ namespace PLGUI
                     return;
                 }
                 //update the presentation
-                BO.BusLine b = bl.GetBusLine(line.LineId);
+                BO.Line b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
                 d.DataContext = line.Stations;
                 this.Close();
@@ -185,7 +185,7 @@ namespace PLGUI
             bl.UpdateStationLine(newSt2);
 
             //update the presentation
-            BO.BusLine b = bl.GetBusLine(line.LineId);
+            BO.Line b = bl.GetBusLine(line.LineId);
             b.DeepCopyTo(line);
             d.DataContext = line.Stations;
             this.Close();
@@ -234,7 +234,7 @@ namespace PLGUI
 
             }
             //update the presentation
-            BO.BusLine b = bl.GetBusLine(line.LineId);
+            BO.Line b = bl.GetBusLine(line.LineId);
             b.DeepCopyTo(line);
             d.DataContext = line.Stations;
             this.Close();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BO
 {
     public enum Areas { General = 1, North, West, Center, Jerusalem };
-    public class BusLine
+    public class Line
     {
         public int LineId { get; set; }
         public int LineNumber { get; set; }

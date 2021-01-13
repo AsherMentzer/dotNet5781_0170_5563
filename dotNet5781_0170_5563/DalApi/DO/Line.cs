@@ -10,7 +10,7 @@ namespace DO
     /// enum for the area of the line
     /// </summary>
     public enum Areas { General = 1, North, West, Center, Jerusalem };
-    public class BusLine 
+    public class Line 
     {
         public int LineId { get; set; }
         public int LineNumber { get; set; }

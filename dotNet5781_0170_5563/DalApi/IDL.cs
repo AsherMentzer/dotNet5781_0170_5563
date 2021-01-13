@@ -26,32 +26,32 @@ namespace DLAPI
         #endregion
 
         #region BusLine
-        IEnumerable<BusLine> GetAllBusLines();
-        IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate);
-        BusLine GetBusLine(int lineId);
-        void AddBusLine(BusLine busLine);
-        void UpdateBusLine(BusLine busLine);
-        void UpdateBusLine(int lineId, Action<BusLine> update); //method that knows to updt specific fields in bus line
+        IEnumerable<Line> GetAllBusLines();
+        IEnumerable<Line> GetAllBusLinesBy(Predicate<Line> predicate);
+        Line GetBusLine(int lineId);
+        void AddBusLine(Line busLine);
+        void UpdateBusLine(Line busLine);
+        void UpdateBusLine(int lineId, Action<Line> update); //method that knows to updt specific fields in bus line
         void DeleteBusLine(int lineId);
         #endregion
 
         #region LineExist
-        IEnumerable<LineExist> GetAllExistsLines();
-        IEnumerable<LineExist> GetAllExistsLinesBy(Predicate<LineExist> predicate);
-        LineExist GetLineExist(int lineId);
-        void AddLineExist(LineExist lineExist);
-        void UpdateLineExist(LineExist lineExist);
-        void UpdateLineExist(int lineId, Action<BusLine> update); //method that knows to updt specific fields in bus line
+        IEnumerable<LineTrip> GetAllExistsLines();
+        IEnumerable<LineTrip> GetAllExistsLinesBy(Predicate<LineTrip> predicate);
+        LineTrip GetLineExist(int lineId);
+        void AddLineExist(LineTrip lineExist);
+        void UpdateLineExist(LineTrip lineExist);
+        void UpdateLineExist(int lineId, Action<Line> update); //method that knows to updt specific fields in bus line
         void DeleteLineExist(int lineId);
         #endregion
 
         #region PairOfConsecutiveStation
-        IEnumerable<PairOfConsecutiveStation> GetAllPairs();
-        IEnumerable<PairOfConsecutiveStation> GetAllPairsBy(Predicate<Station> predicate);
-        PairOfConsecutiveStation GetPair(int id1,int id2);
+        IEnumerable<AdjacentStations> GetAllPairs();
+        IEnumerable<AdjacentStations> GetAllPairsBy(Predicate<Station> predicate);
+        AdjacentStations GetPair(int id1,int id2);
         void AddPair(int id1, int id2, double distance, TimeSpan time);
-        void UpdatePair(PairOfConsecutiveStation pair);
-        void UpdatePair(int id, Action<PairOfConsecutiveStation> update); //method that knows to updt specific fields in Person
+        void UpdatePair(AdjacentStations pair);
+        void UpdatePair(int id, Action<AdjacentStations> update); //method that knows to updt specific fields in Person
         void DeletePair(int id1,int id2);
         #endregion
 
@@ -78,12 +78,12 @@ namespace DLAPI
         #endregion
 
         #region TravelBus
-        IEnumerable<TravelBus> GetAllTravelBuses();
-        IEnumerable<TravelBus> GetAllTravelBusesLineBy(Predicate<TravelBus> predicate);
+        IEnumerable<BusOnTrip> GetAllTravelBuses();
+        IEnumerable<BusOnTrip> GetAllTravelBusesLineBy(Predicate<BusOnTrip> predicate);
         Station GetTravelBus(int id);
-        void AddTravelBus(TravelBus travelBus);
-        void UpdateTravelBus(TravelBus travelBus);
-        void UpdateTravelBus(int id, Action<TravelBus> update); //method that knows to updt specific fields in Person
+        void AddTravelBus(BusOnTrip travelBus);
+        void UpdateTravelBus(BusOnTrip travelBus);
+        void UpdateTravelBus(int id, Action<BusOnTrip> update); //method that knows to updt specific fields in Person
         void DeleteTravelBus(int id);
         #endregion
     }

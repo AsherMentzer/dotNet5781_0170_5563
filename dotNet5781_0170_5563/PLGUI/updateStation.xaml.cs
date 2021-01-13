@@ -22,8 +22,8 @@ namespace PLGUI
         TimeSpan time;
         double dis;
          int   ti,index ;
-        BO.PairOfConsecutiveStation update;
-        public updateStation(BO.PairOfConsecutiveStation p)
+        BO.AdjacentStations update;
+        public updateStation(BO.AdjacentStations p)
         {
             //index = _index;
            // dis = a;time = b;

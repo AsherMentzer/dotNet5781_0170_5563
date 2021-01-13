@@ -32,10 +32,10 @@ namespace PLGUI
         PO.BusLine line;
         ObservableCollection<PO.BusLine> lines = new ObservableCollection<PO.BusLine>();
         ObservableCollection<PO.Station> stations = new ObservableCollection<PO.Station>();
-        List<BO.BusLine> alines = new List<BO.BusLine>();
+        List<BO.Line> alines = new List<BO.Line>();
         void getAllLines()
         {
-            foreach (BO.BusLine b in bl.GetAllBusLines())
+            foreach (BO.Line b in bl.GetAllBusLines())
             {
                 // b.DeepCopyTo(line);
                 alines.Add(b);
@@ -96,7 +96,7 @@ namespace PLGUI
             line = cbLineNum.SelectedItem as PO.BusLine;
             if (line != null)
             {
-                BO.BusLine b = new BusLine();
+                BO.Line b = new BO.Line();
                 b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
                 lineDataGrid.DataContext = line.Stations;
@@ -108,7 +108,7 @@ namespace PLGUI
         {
             var v = sender as Button;
             PO.StationLine station = v.DataContext as PO.StationLine;
-            BO.PairOfConsecutiveStation pair = new BO.PairOfConsecutiveStation();
+            BO.AdjacentStations pair = new BO.AdjacentStations();
             if (station != null)
             {
                 pair.StationId1 = station.StationId;
@@ -119,7 +119,7 @@ namespace PLGUI
 
                 bl.UpdatePair(pair);
 
-                BO.BusLine b = new BusLine();
+                BO.Line b = new BO.Line();
                 b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
                 //getAllLines();
@@ -148,7 +148,7 @@ namespace PLGUI
 
             if (line != null && station != null)
             {
-                BO.PairOfConsecutiveStation pair = new BO.PairOfConsecutiveStation();
+                BO.AdjacentStations pair = new BO.AdjacentStations();
                 //BO.StationLine stationLine = new BO.StationLine();
                 try
                 {
@@ -168,7 +168,7 @@ namespace PLGUI
             }
 
             //update the presentation
-            BO.BusLine lineBO = bl.GetBusLine(line.LineId);
+            BO.Line lineBO = bl.GetBusLine(line.LineId);
             lineBO.DeepCopyTo(line);
             DataGrid d = lineDataGrid;
             d.DataContext = line.Stations;
@@ -180,7 +180,7 @@ namespace PLGUI
             MessageBoxResult res = MessageBox.Show("Delete selected Line?", "Verification", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.No)
                 return;
-            BO.BusLine l = new BO.BusLine();
+            BO.Line l = new BO.Line();
             PO.BusLine p = new PO.BusLine();
             line.DeepCopyTo(p);
 
@@ -218,7 +218,7 @@ namespace PLGUI
             add.Show();
             if (line != null)
             {
-                BO.BusLine b = new BusLine();
+                BO.Line b = new BO.Line();
                 b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
                 lineDataGrid.DataContext = line.Stations;

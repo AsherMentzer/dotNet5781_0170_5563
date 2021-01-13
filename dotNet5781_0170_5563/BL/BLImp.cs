@@ -106,7 +106,7 @@ namespace BL
             DO.StationLine s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
             if (s != null)
             {
-                DO.PairOfConsecutiveStation p = new DO.PairOfConsecutiveStation();
+                DO.AdjacentStations p = new DO.AdjacentStations();
                 try
                 {
                     p = dl.GetPair(d.StationId, s.StationId);
@@ -127,7 +127,7 @@ namespace BL
             DO.StationLine s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
             if (s != null)
             {
-                DO.PairOfConsecutiveStation p = new DO.PairOfConsecutiveStation();
+                DO.AdjacentStations p = new DO.AdjacentStations();
                 try
                 {
                     p = dl.GetPair(d.StationId, s.StationId);
@@ -149,9 +149,9 @@ namespace BL
                 return s.StationName;
             return null;
         }
-        BO.BusLine BusLineDoBoADapter(DO.BusLine line)
+        BO.Line BusLineDoBoADapter(DO.Line line)
         {
-            BO.BusLine bl = new BO.BusLine();
+            BO.Line bl = new BO.Line();
             line.CopyPropertiesTo(bl);
             bl.Stations = from sl in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
                           let station = new BO.StationLine()
@@ -170,7 +170,7 @@ namespace BL
             return bl;
         }
 
-        BO.BusLine IBL.CreateBusLine(int LineNum, int fId, int lId, BO.Areas myArea)
+        BO.Line IBL.CreateBusLine(int LineNum, int fId, int lId, BO.Areas myArea)
         {
             try
             {
@@ -190,25 +190,25 @@ namespace BL
             }
             AddStationLine(Data.DataSource.linesId, fId, 1);
             AddStationLine(Data.DataSource.linesId, lId, 2);
-            DO.BusLine line = new DO.BusLine { FirstStation = fId, LastStation = lId, LineNumber = LineNum, LineId = Data.DataSource.linesId++, area = (DO.Areas)myArea };
-            BO.BusLine newLine = BusLineDoBoADapter(line);
+            DO.Line line = new DO.Line { FirstStation = fId, LastStation = lId, LineNumber = LineNum, LineId = Data.DataSource.linesId++, area = (DO.Areas)myArea };
+            BO.Line newLine = BusLineDoBoADapter(line);
             dl.AddBusLine(line);
             return newLine;
         }
-        public IEnumerable<BO.BusLine> GetAllBusLines()
+        public IEnumerable<BO.Line> GetAllBusLines()
         {
             return from l in dl.GetAllBusLines()
                    select BusLineDoBoADapter(l);
         }
 
-        public IEnumerable<BO.BusLine> GetAllBusLinesBy(Predicate<BO.BusLine> predicate)
+        public IEnumerable<BO.Line> GetAllBusLinesBy(Predicate<BO.Line> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public BO.BusLine GetBusLine(int lineId)
+        public BO.Line GetBusLine(int lineId)
         {
-            DO.BusLine line;
+            DO.Line line;
             try
             {
                 line = dl.GetBusLine(lineId);
@@ -220,9 +220,9 @@ namespace BL
             return BusLineDoBoADapter(line);
         }
 
-        public void AddBusLine(BO.BusLine busLine)
+        public void AddBusLine(BO.Line busLine)
         {
-            DO.BusLine line = new DO.BusLine();
+            DO.Line line = new DO.Line();
             busLine.CopyPropertiesTo(line);
             try
             {
@@ -250,7 +250,7 @@ namespace BL
                     if (s.NumInLine == i + 1)
                         s2 = sl;
                 }
-                DO.PairOfConsecutiveStation p = dl.GetPair(s1.StationId, s2.StationId);
+                DO.AdjacentStations p = dl.GetPair(s1.StationId, s2.StationId);
                 if (p == null)
                 {
                     dl.AddPair(s1.StationId, s2.StationId, s1.Distance, s1.AverageTravleTime);
@@ -258,20 +258,20 @@ namespace BL
             }
         }
 
-        public void UpdateBusLine(BO.BusLine busLine)
+        public void UpdateBusLine(BO.Line busLine)
         {
-            DO.BusLine line = new DO.BusLine();
+            DO.Line line = new DO.Line();
             busLine.CopyPropertiesTo(line);
             dl.UpdateBusLine(line);
             //throw new NotImplementedException();
         }
 
-        public void UpdateBusLine(int lineId, Action<BO.BusLine> update)
+        public void UpdateBusLine(int lineId, Action<BO.Line> update)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteBusLine(BO.BusLine line)
+        public void DeleteBusLine(BO.Line line)
         {
             int id = line.LineId;
             try
@@ -294,32 +294,32 @@ namespace BL
         }
         #endregion
         #region Line Exist
-        public IEnumerable<BO.LineExist> GetAllExistsLines()
+        public IEnumerable<BO.LineTrip> GetAllExistsLines()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BO.LineExist> GetAllExistsLinesBy(Predicate<BO.LineExist> predicate)
+        public IEnumerable<BO.LineTrip> GetAllExistsLinesBy(Predicate<BO.LineTrip> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public BO.LineExist GetLineExist(int lineId)
+        public BO.LineTrip GetLineExist(int lineId)
         {
             throw new NotImplementedException();
         }
 
-        public void AddLineExist(BO.LineExist lineExist)
+        public void AddLineExist(BO.LineTrip lineExist)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateLineExist(BO.LineExist lineExist)
+        public void UpdateLineExist(BO.LineTrip lineExist)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateLineExist(int lineId, Action<BO.BusLine> update)
+        public void UpdateLineExist(int lineId, Action<BO.Line> update)
         {
             throw new NotImplementedException();
         }
@@ -330,19 +330,19 @@ namespace BL
         }
         #endregion
         #region Pairs
-        public IEnumerable<BO.PairOfConsecutiveStation> GetAllPairs()
+        public IEnumerable<BO.AdjacentStations> GetAllPairs()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BO.PairOfConsecutiveStation> GetAllPairsBy(Predicate<BO.Station> predicate)
+        public IEnumerable<BO.AdjacentStations> GetAllPairsBy(Predicate<BO.Station> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public BO.PairOfConsecutiveStation GetPair(int id1, int id2)
+        public BO.AdjacentStations GetPair(int id1, int id2)
         {
-            DO.PairOfConsecutiveStation p;
+            DO.AdjacentStations p;
             try
             {
                 p = dl.GetPair(id1, id2);
@@ -351,7 +351,7 @@ namespace BL
             {
                 throw new BO.BadPairIdException(id1, id2);
             }
-            BO.PairOfConsecutiveStation pair = new BO.PairOfConsecutiveStation();
+            BO.AdjacentStations pair = new BO.AdjacentStations();
             if (p != null)
                 p.CopyPropertiesTo(pair);
             return pair;
@@ -369,14 +369,14 @@ namespace BL
             }
         }
 
-        public void UpdatePair(BO.PairOfConsecutiveStation pair)
+        public void UpdatePair(BO.AdjacentStations pair)
         {
-            DO.PairOfConsecutiveStation p = new DO.PairOfConsecutiveStation();
+            DO.AdjacentStations p = new DO.AdjacentStations();
             pair.CopyPropertiesTo(p);
             dl.UpdatePair(p);
         }
 
-        public void UpdatePair(int id, Action<BO.PairOfConsecutiveStation> update)
+        public void UpdatePair(int id, Action<BO.AdjacentStations> update)
         {
             throw new NotImplementedException();
         }
@@ -496,7 +496,7 @@ namespace BL
 
         public void AddStationLine(int lineId, int stationId, int numInLined)
         {
-            BO.BusLine line = GetBusLine(lineId);
+            BO.Line line = GetBusLine(lineId);
             //check if the index in ligal
             if (numInLined < 1 || numInLined > line.Stations.Count()+1)
             {
@@ -537,7 +537,7 @@ namespace BL
             //in case is the first station
             if (numInLined == 1)
             {
-                BO.BusLine newLine = new BO.BusLine
+                BO.Line newLine = new BO.Line
                 {
                     LineId = line.LineId,
                     LineNumber = line.LineNumber,
@@ -550,7 +550,7 @@ namespace BL
             //in case is the last station
             if (numInLined == line.Stations.Count()+1)
             {
-                BO.BusLine newLine = new BO.BusLine
+                BO.Line newLine = new BO.Line
                 {
                     LineId = line.LineId,
                     LineNumber = line.LineNumber,
@@ -570,7 +570,7 @@ namespace BL
             dl.AddStationLine(stationLine);
 
 
-            DO.PairOfConsecutiveStation pair=new DO.PairOfConsecutiveStation();
+            DO.AdjacentStations pair=new DO.AdjacentStations();
             //search if there is pair between the previos station to the new one 
             if(prevId !=0)
             try
@@ -639,7 +639,7 @@ namespace BL
 
         public void DeleteStationLine(int lId, int stId)
         {
-            BO.BusLine line = GetBusLine(lId);
+            BO.Line line = GetBusLine(lId);
             BO.StationLine st = GetStationLine(lId, stId);
             int size = line.Stations.Count();
             int prevId = 0;
@@ -682,7 +682,7 @@ namespace BL
             {
                 line.FirstStation = nextId;
             }
-            DO.PairOfConsecutiveStation pair;
+            DO.AdjacentStations pair;
             try
             {
                 pair = dl.GetPair(prevId, nextId);
@@ -699,12 +699,12 @@ namespace BL
         }
         #endregion
         #region travle Line
-        public IEnumerable<BO.TravelBus> GetAllTravelBuses()
+        public IEnumerable<BO.BusOnTrip> GetAllTravelBuses()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BO.TravelBus> GetAllTravelBusesLineBy(Predicate<BO.TravelBus> predicate)
+        public IEnumerable<BO.BusOnTrip> GetAllTravelBusesLineBy(Predicate<BO.BusOnTrip> predicate)
         {
             throw new NotImplementedException();
         }
@@ -714,17 +714,17 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void AddTravelBus(BO.TravelBus travelBus)
+        public void AddTravelBus(BO.BusOnTrip travelBus)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateTravelBus(BO.TravelBus travelBus)
+        public void UpdateTravelBus(BO.BusOnTrip travelBus)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateTravelBus(int id, Action<BO.TravelBus> update)
+        public void UpdateTravelBus(int id, Action<BO.BusOnTrip> update)
         {
             throw new NotImplementedException();
         }
