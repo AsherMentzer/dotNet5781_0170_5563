@@ -25,7 +25,7 @@ namespace DLAPI
         void DeleteBus(string licenceId);
         #endregion
 
-        #region BusLine
+        #region Line
         IEnumerable<Line> GetAllBusLines();
         IEnumerable<Line> GetAllBusLinesBy(Predicate<Line> predicate);
         Line GetBusLine(int lineId);
