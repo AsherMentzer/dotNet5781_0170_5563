@@ -46,6 +46,7 @@
     <Compile Include="DLConfig.cs" />
     <Compile Include="DLFactory.cs" />
     <Compile Include="DO\Exceptions.cs" />
+    <Compile Include="DO\XmlignorAttribute.cs" />
     <Compile Include="IDL.cs" />
     <Compile Include="DO\LineTrip.cs" />
     <Compile Include="DO\AdjacentStations.cs" />

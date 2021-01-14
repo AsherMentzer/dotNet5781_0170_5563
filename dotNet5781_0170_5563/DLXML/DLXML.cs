@@ -1,11 +1,9 @@
-﻿using System;
+﻿using DLAPI;
+using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using DLAPI;
-using DO;
 
 namespace DL
 {
@@ -28,6 +26,8 @@ namespace DL
         string LineTripPath = @"LineTripXml.xml"; //XElement
         string TripPath = @"TripXml.xml"; //XElement
         string StationLinePath = @"LineStationXml.xml"; //XElement
+        string SerialNumbersPath = @"SerialNumbersXml.xml"; //XElement
+
         #endregion
 
         //empty
@@ -106,7 +106,7 @@ namespace DL
             XElement LineRootElem = XMLTools.LoadListFromXMLElement(LinePath);
 
             Line line = (from l in LineRootElem.Elements()
-                         where int.Parse(l.Element("ID").Value) == lineId
+                         where int.Parse(l.Element("LineId").Value) == lineId
                          select new Line()
                          {
                              LineId = int.Parse(l.Element("LineId").Value),
@@ -125,10 +125,49 @@ namespace DL
 
         public void AddBusLine(Line busLine)
         {
-            throw new NotImplementedException();
+            XElement lineRootElem = XMLTools.LoadListFromXMLElement(LinePath);
+
+            XElement SerialNum = XMLTools.LoadListFromXMLElement(SerialNumbersPath);
+            int id = int.Parse(SerialNum.Element("LineId").Value) + 1;            
+            SerialNum.Element("LineId").Value = (int.Parse(SerialNum.Element("LineId").Value) + 1).ToString();
+            SerialNum.Save(SerialNumbersPath);
+
+                XElement bl = new XElement("Line",
+                    new XElement("LineId", id),
+                    new XElement("LineNumber", busLine.LineNumber), 
+                    new XElement("FirstStation", busLine.FirstStation), 
+                    new XElement("LastStation", busLine.LastStation), 
+                    new XElement("area", busLine.area.ToString())
+                    );
+
+            lineRootElem.Add(bl);
+            XMLTools.SaveListToXMLElement(lineRootElem, LinePath);
         }
 
-        public void UpdateBusLine(Line busLine)
+        //{
+        //    XElement personsRootElem = XMLTools.LoadListFromXMLElement(personsPath);
+
+        //XElement per1 = (from p in personsRootElem.Elements()
+        //                 where int.Parse(p.Element("ID").Value) == person.ID
+        //                 select p).FirstOrDefault();
+
+        //    if (per1 != null)
+        //        throw new DO.BadPersonIdException(person.ID, "Duplicate person ID");
+
+        //    XElement personElem = new XElement("Person",
+        //                           new XElement("ID", person.ID),
+        //                           new XElement("Name", person.Name),
+        //                           new XElement("Street", person.Street),
+        //                           new XElement("HouseNumber", person.HouseNumber.ToString()),
+        //                           new XElement("City", person.City),
+        //                           new XElement("BirthDate", person.BirthDate),
+        //                           new XElement("PersonalStatus", person.PersonalStatus.ToString()));
+
+        //personsRootElem.Add(personElem);
+            
+        //    XMLTools.SaveListToXMLElement(personsRootElem, personsPath);
+        //}
+    public void UpdateBusLine(Line busLine)
         {
             throw new NotImplementedException();
         }
