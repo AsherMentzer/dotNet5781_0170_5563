@@ -156,15 +156,21 @@ namespace PLGUI
                 }
                 catch (BO.BadPairIdException ex)
                 {
-                    updateStation up = new updateStation(pair);
+                    try
+                    {
+                        BO.StationLine stationLine = bl.GetStationLine(line.LineId, ex.station1ID);
+                        updateStation up = new updateStation(pair);
                     up.ShowDialog();
                     //get the previos station that nee to update
-                    BO.StationLine stationLine = bl.GetStationLine(line.LineId, ex.station1ID);
-                    stationLine.Distance = pair.Distance;
-                    stationLine.AverageTravleTime = pair.AverageTravleTime;
-                    bl.UpdateStationLine(stationLine);
-                    bl.AddPair(ex.station1ID, ex.station2ID, pair.Distance, pair.AverageTravleTime);
-                }
+                    
+                        stationLine.Distance = pair.Distance;
+                        stationLine.AverageTravleTime = pair.AverageTravleTime;
+                        bl.UpdateStationLine(stationLine);
+                        bl.AddPair(ex.station1ID, ex.station2ID, pair.Distance, pair.AverageTravleTime);
+                    }//is first station so no need to update
+                    catch(BO.BadStationIdException)
+                    { }
+                    }
             }
 
             //update the presentation
@@ -215,7 +221,7 @@ namespace PLGUI
             DataGrid d = new DataGrid();
             d = lineDataGrid;
             AddStationToLine add = new AddStationToLine(bl, line, d);
-            add.Show();
+            add.ShowDialog();
             if (line != null)
             {
                 BO.Line b = new BO.Line();
@@ -259,6 +265,83 @@ namespace PLGUI
             //    }
             //}
         }
+        private void bAddStation_Click(object sender, RoutedEventArgs e)
+        {
+            addStationGrid.Visibility = Visibility.Hidden;
+            EnterStationGrid.Visibility = Visibility.Visible;
+           
+        }
+        #region add station details
+        int newStationId=0;
+        string newStationName;
+        double lon=0, la=0;
+        private void tbstationId_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int.TryParse(tbstationId.Text, out newStationId);
+        }
+
+        private void tbStationName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            newStationName = tbStationName.Text;
+        }
+
+        private void tbLatitude_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double.TryParse(tbLatitude.Text, out la);
+        }
+
+        private void tbLongitude_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double.TryParse(tbLongitude.Text, out lon);
+        }
+
+        private void bAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (newStationId == 0 || lon == 0 || la == 0 || newStationName == null)
+            {
+                MessageBox.Show("enter all details");
+                return;
+            }
+            BO.Station newS = new BO.Station()
+            {
+                StationId = newStationId,
+                StationName = newStationName,
+                Latitude = la,
+                Longitude = lon
+            };
+            try
+            {
+                bl.AddStation(newS);
+                PO.Station station = new PO.Station();
+                newS.DeepCopyTo(station);
+                stations.Add(station);
+                stationsDataGrid.DataContext = stations;
+                addStationGrid.Visibility = Visibility.Visible;
+                EnterStationGrid.Visibility = Visibility.Hidden;
+                newStationName = null;
+                newStationId = 0; lon = 0; la = 0;
+                tbLatitude.Text = "";
+                tbLongitude.Text = "";
+                tbStationName.Text = "";
+                tbstationId.Text = "";
+            }
+            catch(BO.BadStationIdException newSE)
+            { MessageBox.Show(newSE.Message);return; }
+
+        }
+        private void bCancel_Click(object sender, RoutedEventArgs e)
+        {
+            addStationGrid.Visibility = Visibility.Visible;
+            EnterStationGrid.Visibility = Visibility.Hidden;
+            newStationName = null;
+            newStationId = 0; lon = 0; la = 0;
+            tbLatitude.Text = "";
+            tbLongitude.Text = "";
+            tbStationName.Text = "";
+            tbstationId.Text = "";
+        }
+
+        #endregion
         #endregion
         #region user
         private void bUser_Click(object sender, RoutedEventArgs e)
@@ -266,12 +349,17 @@ namespace PLGUI
 
         }
 
+      
+
+       
         private void bAdmin_Click(object sender, RoutedEventArgs e)
         {
             enterGrid.Visibility = Visibility.Hidden;
             mainGrid.Visibility = Visibility.Visible;
         }
+
         #endregion
+        
     }
 }
 

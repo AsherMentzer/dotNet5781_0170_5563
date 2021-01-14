@@ -9,9 +9,11 @@
     <Window.Resources>
         <!--<Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            --><!--<Setter Property="Background" Value="Turquoise"/>
+            -->
+        <!--<Setter Property="Background" Value="Turquoise"/>
             <Setter Property="BorderThickness" Value="0,0,1,2"/>
-            <Setter Property="BorderBrush" Value="Black" />--><!--
+            <Setter Property="BorderBrush" Value="Black" />-->
+        <!--
         </Style>-->
     </Window.Resources>
     <Grid>
@@ -36,43 +38,67 @@
                     <!--#region  stations-->
                     <TabItem Header="stations" Width="100" Margin="-1,-2,1.8,-60" >
                         <TabItem.Content>
-                            <Grid Grid.Column="1">
-                                <DataGrid x:Name="stationsDataGrid"  AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                      ItemsSource="{Binding }" Margin="10,0,10.4,54.8" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                            <Grid  x:Name="stationGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="110"/>
+                                </Grid.RowDefinitions>
+                                <Grid x:Name="ststionsGrid" Grid.Column="1" Margin="0,0,0.4,0.8">
+                                    <DataGrid x:Name="stationsDataGrid" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                                      ItemsSource="{Binding }" Margin="10,0,10,9.6" RowDetailsVisibilityMode="VisibleWhenSelected" 
                                       CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" MouseDoubleClick="stationsDataGrid_MouseDoubleClick" >
-                                    <DataGrid.Resources>
-                                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Turquoise"/>
-                                            <Setter Property="FontWeight" Value="SemiBold"/>
-                                           <Setter Property="BorderThickness" Value="0,0,1,2"/>
-                                             <Setter Property="BorderBrush" Value="Black" />
-                                        </Style>
-                                        
-                                        <Style TargetType="{x:Type DataGridCell}">
-                                            <Setter Property="Foreground" Value="#FFFF5700"/>
-                                            <Setter Property="Background" Value="AliceBlue"/>
-                                            <Setter Property="BorderThickness" Value="0,0,1,2"/>
-                                        </Style>
-                                    </DataGrid.Resources>
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn x:Name="stationId" Header="Station Number"   Binding="{Binding StationId, Mode=OneWay, 
-                                        UpdateSourceTrigger=PropertyChanged }"  Width="95"/>
-                                        <DataGridTextColumn x:Name="name" Header="Station name" Binding="{Binding StationName, Mode=OneWay,
-                                            UpdateSourceTrigger=PropertyChanged }" Width="190"/>
-                                        <DataGridTextColumn x:Name="lat" Header="latitude" Binding="{Binding Latitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                        Width="*"/>
-                                        <DataGridTextColumn x:Name="log" Header="logitude" Binding="{Binding Longitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                        Width="*"/>
-                                        <DataGridTemplateColumn Width="80">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button x:Name="bUpdate" Content="Update" Click="bUpdate_Click"  ToolTip="Update station for selected station, for selected line"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                        <DataGrid.Resources>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Background" Value="Turquoise"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                                                <Setter Property="BorderBrush" Value="Black" />
+                                            </Style>
 
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Foreground" Value="#FFFF5700"/>
+                                                <Setter Property="Background" Value="AliceBlue"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                                            </Style>
+                                        </DataGrid.Resources>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn x:Name="stationId" Header="Station Number"   Binding="{Binding StationId, Mode=OneWay, 
+                                        UpdateSourceTrigger=PropertyChanged }"  Width="95"/>
+                                            <DataGridTextColumn x:Name="name" Header="Station name" Binding="{Binding StationName, Mode=OneWay,
+                                            UpdateSourceTrigger=PropertyChanged }" Width="190"/>
+                                            <DataGridTextColumn x:Name="lat" Header="latitude" Binding="{Binding Latitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
+                                            <DataGridTextColumn x:Name="log" Header="logitude" Binding="{Binding Longitude, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
+                                            <DataGridTemplateColumn Width="80">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button x:Name="bUpdate" Content="Update" Click="bUpdate_Click"  ToolTip="Update station for selected station, for selected line"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                                <Grid x:Name="addGrid" Grid.Row="1">
+                                    <Grid x:Name="addStationGrid"  Visibility="Visible">
+                                        <Button x:Name="bAddStation" Content="Add Station"  HorizontalAlignment="Left" Margin="534,27,0,0" VerticalAlignment="Top" Width="142" Height="61" Click="bAddStation_Click"/>
+                                    </Grid>
+                                    <Grid x:Name="EnterStationGrid"  Visibility="Hidden"  RenderTransformOrigin="0.456,0.451">
+                                        <Label Content="station id:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.323,-0.148" Width="58"/>
+                                        <TextBox x:Name="tbstationId"  HorizontalAlignment="Left" Height="23" Margin="85,14,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="-1.53,-1.33" TextChanged="tbstationId_TextChanged"/>
+                                        <Label Content="station name:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="58"/>
+                                        <TextBox x:Name="tbStationName" TextChanged="tbStationName_TextChanged" HorizontalAlignment="Left" Height="23" Margin="85,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+                                        <Label Content="Latitude:" HorizontalAlignment="Left" Margin="254,19,0,0" VerticalAlignment="Top" Width="80"/>
+                                        <Label Content="Longitude:" HorizontalAlignment="Left" Margin="254,58,0,0" VerticalAlignment="Top" Width="80" Height="33"/>
+                                        <TextBox x:Name="tbLatitude" TextChanged="tbLatitude_TextChanged" HorizontalAlignment="Left" Height="23" Margin="336,22,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+                                        <TextBox x:Name="tbLongitude" TextChanged="tbLongitude_TextChanged" HorizontalAlignment="Left" Height="23" Margin="336,64,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+                                        <Button x:Name="bAdd" Click="bAdd_Click" Content="ADD" HorizontalAlignment="Left" Margin="588,14,0,0" VerticalAlignment="Top" Width="75" Height="49" RenderTransformOrigin="0.555,0.349"/>
+                                        <Button x:Name="bCancel" Content="cancel" HorizontalAlignment="Left" Margin="588,81,0,0" VerticalAlignment="Top" Width="75" Click="bCancel_Click"/>
+
+
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>

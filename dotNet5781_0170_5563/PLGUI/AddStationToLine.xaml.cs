@@ -105,6 +105,11 @@ namespace PLGUI
                     Update2Grid.Visibility = Visibility.Visible;
                     id = exe.station1ID;
                     id1 = exe.station3ID;
+                    if (disPrev == 0 || tPrev.TotalSeconds == 0 || disNext == 0 || tNext.TotalSeconds == 0)
+                    {
+                        MessageBox.Show("enter all the details");
+                        return;
+                    }
                 }
                 else if (exe.station1ID == s.StationId)
                 {
@@ -121,6 +126,8 @@ namespace PLGUI
 
                     return;
                 }
+
+                
                 //update the presentation
                 BO.Line b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);

@@ -118,7 +118,7 @@ namespace DL
                         ).FirstOrDefault();
 
             if (line == null)
-                throw new DO.BadBusLineIdException(lineId, $"bad person id: {lineId}");
+                throw new DO.BadBusLineIdException(lineId, $"bad line id: {lineId}");
 
             return line;
         }
@@ -144,32 +144,26 @@ namespace DL
             XMLTools.SaveListToXMLElement(lineRootElem, LinePath);
         }
 
-        //{
-        //    XElement personsRootElem = XMLTools.LoadListFromXMLElement(personsPath);
-
-        //XElement per1 = (from p in personsRootElem.Elements()
-        //                 where int.Parse(p.Element("ID").Value) == person.ID
-        //                 select p).FirstOrDefault();
-
-        //    if (per1 != null)
-        //        throw new DO.BadPersonIdException(person.ID, "Duplicate person ID");
-
-        //    XElement personElem = new XElement("Person",
-        //                           new XElement("ID", person.ID),
-        //                           new XElement("Name", person.Name),
-        //                           new XElement("Street", person.Street),
-        //                           new XElement("HouseNumber", person.HouseNumber.ToString()),
-        //                           new XElement("City", person.City),
-        //                           new XElement("BirthDate", person.BirthDate),
-        //                           new XElement("PersonalStatus", person.PersonalStatus.ToString()));
-
-        //personsRootElem.Add(personElem);
-            
-        //    XMLTools.SaveListToXMLElement(personsRootElem, personsPath);
-        //}
     public void UpdateBusLine(Line busLine)
         {
-            throw new NotImplementedException();
+            XElement LineRootElem = XMLTools.LoadListFromXMLElement(LinePath);
+
+            XElement line = (from l in LineRootElem.Elements()
+                             where int.Parse(l.Element("LineId").Value) == busLine.LineId
+                             select l).FirstOrDefault();
+
+            if (line != null)
+            {
+                line.Element("LineId").Value = busLine.LineId.ToString();
+                line.Element("LineNumber").Value = busLine.LineNumber.ToString();
+                line.Element("FirstStation").Value = busLine.FirstStation.ToString();
+                line.Element("LastStation").Value = busLine.LastStation.ToString();
+                line.Element("area").Value = busLine.area.ToString();
+               
+                XMLTools.SaveListToXMLElement(LineRootElem, LinePath);
+            }
+            else
+                throw new DO.BadBusLineIdException(busLine.LineId, $"bad person id: {busLine.LineId}");
         }
 
         public void UpdateBusLine(int lineId, Action<Line> update)
@@ -182,7 +176,7 @@ namespace DL
             XElement LineRootElem = XMLTools.LoadListFromXMLElement(LinePath);
 
             XElement line = (from l in LineRootElem.Elements()
-                             where int.Parse(l.Element("ID").Value) == lineId
+                             where int.Parse(l.Element("LineId").Value) == lineId
                              select l).FirstOrDefault();
 
             if(line != null)

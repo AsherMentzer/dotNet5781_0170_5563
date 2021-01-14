@@ -108,7 +108,7 @@ namespace BL
             {
                 s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
             }
-            catch(DO.BadStatioLinenIdException)
+            catch (DO.BadStatioLinenIdException)
             {
                 return new TimeSpan();
             }
@@ -306,7 +306,7 @@ namespace BL
             {
                 dl.DeleteStationLine(s.LineId, s.StationId);
             }
-   
+
         }
         #endregion
         #region Line Exist
@@ -449,7 +449,16 @@ namespace BL
 
         public void AddStation(BO.Station station)
         {
-            throw new NotImplementedException();
+            DO.Station st = new DO.Station();
+            station.CopyPropertiesTo(st);
+            try
+            {
+                dl.AddStation(st);
+            }
+            catch (DO.BadStationIdException e)
+            {
+                throw new BO.BadStationIdException(station.StationId, e.Message);
+            }
         }
 
         public void UpdateStation(BO.Station station)
@@ -513,10 +522,11 @@ namespace BL
         public void AddStationLine(int lineId, int stationId, int numInLined)
         {
             BO.Line line = GetBusLine(lineId);
+            int size = line.Stations.Count() + 1;
             //check if the index in ligal
-            if (numInLined < 1 || numInLined > line.Stations.Count()+1)
+            if (numInLined < 1 || numInLined > size)
             {
-                throw new IndexOutOfRangeException($"index can be only between: 0 - {line.Stations.Count()+1}");
+                throw new IndexOutOfRangeException($"index can be only between: 0 - {line.Stations.Count() + 1}");
             }
             //check if this station already exist un this line
             foreach (var s in line.Stations)
@@ -528,7 +538,7 @@ namespace BL
             bool update1 = false, update2 = false;
             int prevId = 0, nextId = 0;
 
-           
+
             foreach (var s in line.Stations)
             {
                 if (s.NumInLine == numInLined - 1)
@@ -542,13 +552,13 @@ namespace BL
                     UpdateStationLine(newStationLine);
                 }
             }
-            DO.Station st= dl.GetStation(stationId);
+            DO.Station st = dl.GetStation(stationId);
             BO.StationLine newSt = new BO.StationLine()
             {
                 LineId = lineId,
                 NumInLine = numInLined,
                 StationId = stationId,
-                StationName=st.StationName
+                StationName = st.StationName
             };
             //in case is the first station
             if (numInLined == 1)
@@ -564,7 +574,7 @@ namespace BL
                 UpdateBusLine(newLine);
             }
             //in case is the last station
-            if (numInLined == line.Stations.Count()+1)
+            if (numInLined == size)
             {
                 BO.Line newLine = new BO.Line
                 {
@@ -576,70 +586,77 @@ namespace BL
                 };
                 UpdateBusLine(newLine);
             }
-            //add the new station
+
+            // add the new station
             DO.StationLine stationLine = new DO.StationLine()
             {
                 LineId = lineId,
                 NumInLine = numInLined,
                 StationId = stationId,
             };
-            dl.AddStationLine(stationLine);
-
-
-            DO.AdjacentStations pair=new DO.AdjacentStations();
-            //search if there is pair between the previos station to the new one 
-            if(prevId !=0)
             try
             {
-               pair= dl.GetPair(prevId, stationId);
+                dl.AddStationLine(stationLine);
             }
-            catch (DO.BadPairIdException) { update1 = true; }
-            //if the pair exist update the previos station with the details
-            if (!update1)
+            catch (DO.BadStatioLinenIdException) { }
+
+            DO.AdjacentStations pair = new DO.AdjacentStations();
+            //search if there is pair between the previos station to the new one 
+            if (prevId != 0)
             {
-                DO.Station stat= dl.GetStation(prevId);
-                BO.StationLine stationLine1 = new BO.StationLine()
+                try
                 {
-                    LineId = lineId,
-                    NumInLine = numInLined - 1,
-                    StationId = prevId,
-                    Distance = pair.Distance,
-                    AverageTravleTime = pair.AverageTravleTime,
-                    StationName = stat.StationName
-                };
-                UpdateStationLine(stationLine1);
+                    pair = dl.GetPair(prevId, stationId);
+                }
+                catch (DO.BadPairIdException) { update1 = true; }
+                //if the pair exist update the previos station with the details
+                if (!update1)
+                {
+                    DO.Station stat = dl.GetStation(prevId);
+                    BO.StationLine stationLine1 = new BO.StationLine()
+                    {
+                        LineId = lineId,
+                        NumInLine = numInLined - 1,
+                        StationId = prevId,
+                        Distance = pair.Distance,
+                        AverageTravleTime = pair.AverageTravleTime,
+                        StationName = stat.StationName
+                    };
+                    UpdateStationLine(stationLine1);
+                }
             }
             //search if there is pair between the previos station to the new one 
             if (nextId != 0)
+            {
                 try
                 {
-                   pair= dl.GetPair(stationId,nextId);
+                    pair = dl.GetPair(stationId, nextId);
                 }
                 catch (DO.BadPairIdException) { update2 = true; }
-            //update the details of the new station
-            if (!update2)
-            {
-                DO.Station stat = dl.GetStation(stationId);
-                BO.StationLine stationLine1 = new BO.StationLine()
+                //update the details of the new station
+                if (!update2)
                 {
-                    LineId = lineId,
-                    NumInLine = numInLined,
-                    StationId = stationId,
-                    Distance = pair.Distance,
-                    AverageTravleTime = pair.AverageTravleTime,
-                    StationName = stat.StationName
-                };
-                UpdateStationLine(stationLine1);                  //(stationLine);
-            }          
-
+                    DO.Station stat = dl.GetStation(stationId);
+                    BO.StationLine stationLine1 = new BO.StationLine()
+                    {
+                        LineId = lineId,
+                        NumInLine = numInLined,
+                        StationId = stationId,
+                        Distance = pair.Distance,
+                        AverageTravleTime = pair.AverageTravleTime,
+                        StationName = stat.StationName
+                    };
+                    UpdateStationLine(stationLine1);                  //(stationLine);
+                }
+            }
             if (update1 && update2)
-                throw new BO.BadPairIdException(prevId,stationId,nextId);
+                throw new BO.BadPairIdException(prevId, stationId, nextId);
             else if (update1 && !update2)
                 throw new BO.BadPairIdException(prevId, stationId);
             else if (!update1 && update2)
                 throw new BO.BadPairIdException(nextId, stationId);
-            
-        }    
+
+        }
 
         public void UpdateStationLine(BO.StationLine stationLine)
         {
@@ -659,7 +676,7 @@ namespace BL
             BO.StationLine st = GetStationLine(lId, stId);
             int size = line.Stations.Count();
             int prevId = 0;
-            int nextId=0;
+            int nextId = 0;
 
             ///update all the numbers of stations in line  
             foreach (var s in line.Stations)
@@ -674,7 +691,7 @@ namespace BL
                     newStationLine.NumInLine--;
                     UpdateStationLine(newStationLine);
                 }
-            }           
+            }
             try
             {
                 dl.DeleteStationLine(lId, stId);
@@ -687,7 +704,8 @@ namespace BL
             if (st.NumInLine == size)
             {
                 line.LastStation = prevId;
-                BO.StationLine LSt=GetStationLine(lId, prevId);
+                UpdateBusLine(line);
+                BO.StationLine LSt = GetStationLine(lId, prevId);
                 st.Distance = 0;
                 st.AverageTravleTime = new TimeSpan();
                 UpdateStationLine(LSt);
@@ -697,13 +715,15 @@ namespace BL
             if (st.NumInLine == 1)
             {
                 line.FirstStation = nextId;
+                UpdateBusLine(line);
+                return;
             }
             DO.AdjacentStations pair;
             try
             {
                 pair = dl.GetPair(prevId, nextId);
             }
-            catch (DO.BadPairIdException) 
+            catch (DO.BadPairIdException)
             {
                 throw new BO.BadPairIdException(prevId, nextId);
             }
