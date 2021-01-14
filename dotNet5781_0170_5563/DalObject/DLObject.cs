@@ -209,7 +209,7 @@ namespace DL
                                                            select pair.Clone());
         }
 
-        public IEnumerable<AdjacentStations> GetAllPairsBy(Predicate<Station> predicate)
+        public IEnumerable<AdjacentStations> GetAllPairsBy(Predicate<AdjacentStations> predicate)
         {
             throw new NotImplementedException();
         }
@@ -358,8 +358,7 @@ namespace DL
             if (s != null)
                 return s.Clone();
             else
-                return null;
-            //throw new BadBusLicenceIdException(id, $"bad Bus LicenceId: {id}");
+               throw new DO.BadStatioLinenIdException(lineId, numInLine, $"bad station Line id: line id: {lineId}");
         }
         //StationLine GetStationLineBy(int lineId, int numInLine)
         //{

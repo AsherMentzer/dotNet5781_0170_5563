@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 using DO;
 
 namespace Data
@@ -17,9 +19,25 @@ namespace Data
         public static List<StationLine> stationsLine;
         public static List<BusOnTrip> travelBuses;
         public static List<LineTrip> linesExists;
+
         static DataSource()
         {
+            string BusPath = @"BusXml.xml"; //XElement
+            string LinePath = @"LineXml.xml"; //XElement
+            string StationPath = @"StationXml.xml"; //XElement
+            //string UserPath = @"UserXml.xml"; //XElement
+            //string BusOnTripPath = @"BusOnTripXml.xml"; //XElement
+            string AdjacentStationsPath = @"AdjacentStationsXml.xml"; //XElement
+            //string LineTripPath = @"LineTripXml.xml"; //XElement
+           // string TripPath = @"TripXml.xml"; //XElement
+            string StationLinePath = @"LineStationXml.xml"; //XElement  
             InitialAllList();
+            XMLTools.SaveListToXMLSerializer<Bus>(buses, BusPath);
+            XMLTools.SaveListToXMLSerializer<Station>(stations, StationPath);
+            XMLTools.SaveListToXMLSerializer<Line>(lines, LinePath);
+            XMLTools.SaveListToXMLSerializer<StationLine>(stationsLine, StationLinePath);
+            XMLTools.SaveListToXMLSerializer<AdjacentStations>(pairs, AdjacentStationsPath);
+           // XMLTools.SaveListToXMLSerializer<Station>(stations, @"StationXml.xml");
         }
         static void InitialAllList()
         {
@@ -413,6 +431,8 @@ namespace Data
             new AdjacentStations { StationId1 = 6248, StationId2 = 5666, Distance = 1.1, AverageTravleTime = new TimeSpan(0, 2, 45) },
 
             #endregion
+          // XMLTools
+            
             };
         }
     }

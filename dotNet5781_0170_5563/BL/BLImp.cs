@@ -103,7 +103,15 @@ namespace BL
         #region Bus Line
         TimeSpan getTime(DO.StationLine d)
         {
-            DO.StationLine s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
+            DO.StationLine s;
+            try
+            {
+                s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
+            }
+            catch(DO.BadStatioLinenIdException)
+            {
+                return new TimeSpan();
+            }
             if (s != null)
             {
                 DO.AdjacentStations p = new DO.AdjacentStations();
@@ -124,7 +132,15 @@ namespace BL
         }
         double getDistance(DO.StationLine d)
         {
-            DO.StationLine s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
+            DO.StationLine s;
+            try
+            {
+                s = dl.GetStationLineBy(d.LineId, d.NumInLine + 1);
+            }
+            catch (DO.BadStatioLinenIdException)
+            {
+                return 0;
+            }
             if (s != null)
             {
                 DO.AdjacentStations p = new DO.AdjacentStations();

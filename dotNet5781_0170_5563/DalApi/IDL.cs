@@ -47,7 +47,7 @@ namespace DLAPI
 
         #region PairOfConsecutiveStation
         IEnumerable<AdjacentStations> GetAllPairs();
-        IEnumerable<AdjacentStations> GetAllPairsBy(Predicate<Station> predicate);
+        IEnumerable<AdjacentStations> GetAllPairsBy(Predicate<AdjacentStations> predicate);
         AdjacentStations GetPair(int id1,int id2);
         void AddPair(int id1, int id2, double distance, TimeSpan time);
         void UpdatePair(AdjacentStations pair);
