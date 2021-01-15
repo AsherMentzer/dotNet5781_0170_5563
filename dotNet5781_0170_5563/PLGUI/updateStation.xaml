@@ -3,23 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PLGUI"
+        xmlns:local="clr-namespace:PLGUI" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="updateStation" Height="450" Width="800">
+        Title="updateStation" Height="320" Width="230" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Content="enter the diatance:" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="enter the time:" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbDistance" TextChanged="tbDistance_TextChanged"  Grid.Column="1" Margin="10,10" Grid.Row="0"/>
-        <TextBox x:Name="tbTime" TextChanged="tbTime_TextChanged"  Grid.Column="1" Margin="10,10" Grid.Row="1"/>
-        <Button x:Name="bUpdate" Content="update" Click="bUpdate_Click" Grid.Row="2"/>
+        <!--<Label Content="enter the diatance:" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
+        <!--<Label Content="enter the time:" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
+        <TextBox x:Name="tbDistance" Grid.Row="0" Margin="20" materialDesign:HintAssist.Hint="Diatance" materialDesign:HintAssist.Foreground="Green"
+         materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="tbDistance_TextChanged"/>
+
+        <materialDesign:TimePicker x:Name="tpTime" materialDesign:HintAssist.Hint="With Seconds" SelectedTimeChanged="tpTime_SelectedTimeChanged"
+  Is24Hours="{Binding IsChecked, ElementName=Is24HourCheckbox}" WithSeconds="True" Grid.Row="1"  Text="00:00:00" Margin="102,28,9.6,10.2"/>
+        <Button x:Name="bUpdate" Content="update" Click="bUpdate_Click" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="enter the time:" HorizontalAlignment="Left" Margin="0,45.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="85"/>
     </Grid>
 </Window>

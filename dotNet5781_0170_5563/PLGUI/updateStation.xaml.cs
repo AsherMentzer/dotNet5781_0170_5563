@@ -21,7 +21,7 @@ namespace PLGUI
     {
         TimeSpan time;
         double dis;
-         int   ti,index ;
+        int ti;
         BO.AdjacentStations update;
         public updateStation(BO.AdjacentStations p)
         {
@@ -39,6 +39,12 @@ namespace PLGUI
 
         private void bUpdate_Click(object sender, RoutedEventArgs e)
         {
+           
+            if(time==null ||dis ==0)
+            {
+                MessageBox.Show("enter all the details");
+                return;
+            }
             update.Distance = dis;
             update.AverageTravleTime = time;
           
@@ -50,6 +56,15 @@ namespace PLGUI
             var v = sender as TextBox;
             int.TryParse(v.Text, out ti);
             time = new TimeSpan(0, ti, 0);
+        }
+
+        private void tpTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            DateTime atime=new DateTime();
+            var v= tpTime.SelectedTime;
+           if(v != null)
+            atime= v.Value;
+            time = atime.TimeOfDay;
         }
     }
 }

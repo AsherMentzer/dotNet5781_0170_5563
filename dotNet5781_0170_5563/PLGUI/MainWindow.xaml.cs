@@ -349,13 +349,24 @@ namespace PLGUI
 
         }
 
-      
+        private void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            enterGrid.Visibility = Visibility.Hidden;
+            mainGrid.Visibility = Visibility.Visible;
+            Application.Current.MainWindow.Width = 900;
+            Application.Current.MainWindow.Height =540;
+        }
 
-       
+        private void bRegister_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void bAdmin_Click(object sender, RoutedEventArgs e)
         {
             enterGrid.Visibility = Visibility.Hidden;
             mainGrid.Visibility = Visibility.Visible;
+          
         }
 
         #endregion
