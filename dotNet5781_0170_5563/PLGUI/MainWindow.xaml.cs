@@ -19,6 +19,8 @@ using BO;
 using BL;
 using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading;
 
 namespace PLGUI
 {
@@ -27,7 +29,7 @@ namespace PLGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        #region get the data
         IBL bl = BLFactory.GetBL("1");
         PO.BusLine line;
         ObservableCollection<PO.BusLine> lines = new ObservableCollection<PO.BusLine>();
@@ -49,7 +51,6 @@ namespace PLGUI
 
             //  alines.DeepCopyTo(lines);
         }
-
         void getAllStations()
         {
             foreach (var item in bl.GetAllStations())
@@ -66,7 +67,11 @@ namespace PLGUI
                 stations.Add(station);
             }
         }
-
+        #endregion
+        BackgroundWorker Simulatorworker;
+        int rate;
+        TimeSpan startTime;
+        string userName, password;
         public MainWindow()
         {
             getAllLines();
@@ -79,7 +84,11 @@ namespace PLGUI
             cbLineNum.SelectedValuePath = "LineId";
             getAllStations();
             stationsDataGrid.DataContext = stations;
-
+            Simulatorworker = new BackgroundWorker();
+            Simulatorworker.DoWork += Simulatorworker_DoWork;
+            Simulatorworker.ProgressChanged += Simulatorworker_ProgressChanged;
+            Simulatorworker.WorkerReportsProgress = true;
+            Simulatorworker.WorkerSupportsCancellation = true;
         }
 
         #region Lines
@@ -160,17 +169,17 @@ namespace PLGUI
                     {
                         BO.StationLine stationLine = bl.GetStationLine(line.LineId, ex.station1ID);
                         updateStation up = new updateStation(pair);
-                    up.ShowDialog();
-                    //get the previos station that nee to update
-                    
+                        up.ShowDialog();
+                        //get the previos station that nee to update
+
                         stationLine.Distance = pair.Distance;
                         stationLine.AverageTravleTime = pair.AverageTravleTime;
                         bl.UpdateStationLine(stationLine);
                         bl.AddPair(ex.station1ID, ex.station2ID, pair.Distance, pair.AverageTravleTime);
                     }//is first station so no need to update
-                    catch(BO.BadStationIdException)
+                    catch (BO.BadStationIdException)
                     { }
-                    }
+                }
             }
 
             //update the presentation
@@ -178,7 +187,7 @@ namespace PLGUI
             lineBO.DeepCopyTo(line);
             DataGrid d = lineDataGrid;
             d.DataContext = line.Stations;
-            
+
         }
 
         private void btDeleteLine_Click(object sender, RoutedEventArgs e)
@@ -269,12 +278,12 @@ namespace PLGUI
         {
             addStationGrid.Visibility = Visibility.Hidden;
             EnterStationGrid.Visibility = Visibility.Visible;
-           
+
         }
         #region add station details
-        int newStationId=0;
+        int newStationId = 0;
         string newStationName;
-        double lon=0, la=0;
+        double lon = 0, la = 0;
         private void tbstationId_TextChanged(object sender, TextChangedEventArgs e)
         {
             int.TryParse(tbstationId.Text, out newStationId);
@@ -325,8 +334,8 @@ namespace PLGUI
                 tbStationName.Text = "";
                 tbstationId.Text = "";
             }
-            catch(BO.BadStationIdException newSE)
-            { MessageBox.Show(newSE.Message);return; }
+            catch (BO.BadStationIdException newSE)
+            { MessageBox.Show(newSE.Message); return; }
 
         }
         private void bCancel_Click(object sender, RoutedEventArgs e)
@@ -351,26 +360,122 @@ namespace PLGUI
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            enterGrid.Visibility = Visibility.Hidden;
-            mainGrid.Visibility = Visibility.Visible;
-            Application.Current.MainWindow.Width = 900;
-            Application.Current.MainWindow.Height =540;
+            if(userName ==null ||password==null )
+            {
+                MessageBox.Show("enter all the details");
+                return;
+            }
+            BO.User user=new BO.User();
+            try
+            {
+                user = bl.GetUser(userName);
+            }
+            catch(BO.BadUSerNameException)
+            {
+                MessageBox.Show("Wrong User Name");
+            }
+            if (user.UserName == userName && user.Password == password)
+            {
+                enterGrid.Visibility = Visibility.Hidden;
+                mainGrid.Visibility = Visibility.Visible;
+                Application.Current.MainWindow.Width = 960;
+                Application.Current.MainWindow.Height = 590;
+                this.Left = SystemParameters.PrimaryScreenWidth - 1200;
+                this.Top = SystemParameters.PrimaryScreenHeight - 700;
+            }
+            else
+                PsPassword.BorderBrush = Brushes.Red; 
+        }
+        private void tbUserName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            userName = tbUserName.Text;
+        }
+
+        private void PsPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            password = PsPassword.Password;
         }
 
         private void bRegister_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("you can't redister now");
+            return;
         }
 
-        private void bAdmin_Click(object sender, RoutedEventArgs e)
-        {
-            enterGrid.Visibility = Visibility.Hidden;
-            mainGrid.Visibility = Visibility.Visible;
-          
-        }
 
         #endregion
-        
+
+        #region simulator
+       TimeSpan time;
+        private void bsimulator_Click(object sender, RoutedEventArgs e)
+        {
+            if (startTime == null || rate < 1)
+            {
+                MessageBox.Show("enter the details");
+                return;
+            }
+
+            //string str = "Start";
+            if (bsimulator.Content != "Stop")
+            {
+                bsimulator.Content = "Stop";
+                tbrate.IsEnabled = false;
+                tpTime.IsEnabled = false;
+               
+                Simulatorworker.RunWorkerAsync();
+            }
+            else
+            {
+                bsimulator.Content = "Start";
+                tbrate.IsEnabled = true;
+                tpTime.IsEnabled = true;
+                tpTime.SelectedTime = new DateTime(0);
+                tpTime.Text = "00:00:00";
+                rate = 0;
+                tbrate.Text = "";
+                bl.StopSimulator();
+                if(Simulatorworker.IsBusy)
+                Simulatorworker.CancelAsync();
+            }
+        }
+
+        private void Simulatorworker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            int progress = e.ProgressPercentage;
+            time = new TimeSpan(0, 0, progress);
+             tpTime.SelectedTime = new DateTime((long)(time.TotalSeconds * 10000000));
+        }
+
+        private void Simulatorworker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bl.StartSimulator(startTime, rate, GetTime);
+            while(!Simulatorworker.CancellationPending)
+                Thread.Sleep(1000);
+        }
+        void GetTime(TimeSpan a)
+        {
+            if (a != null)
+            {
+                Simulatorworker.ReportProgress((int)a.TotalSeconds);
+            }
+        }
+
+       
+        private void tbrate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int.TryParse(tbrate.Text, out rate);
+        }
+
+        private void tpTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            var v = tpTime.SelectedTime;
+            if (v != null && startTime !=null)
+                startTime = v.Value.TimeOfDay;
+        }
+
+
+        #endregion
+
     }
 }
 

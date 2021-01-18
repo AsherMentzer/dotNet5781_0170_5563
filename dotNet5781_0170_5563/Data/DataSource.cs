@@ -12,6 +12,7 @@ namespace Data
     public static class DataSource
     {
         public static List<Bus> buses;
+        public static List<User> users;
         public static List<Station> stations = new List<Station>();
         public static List<Line> lines;
         public static int linesId = 1;
@@ -24,6 +25,7 @@ namespace Data
         static DataSource()
         {
             string BusPath = @"BusXml.xml"; //XElement
+            string UserPath = @"UserXml.xml"; //XElement
             string LinePath = @"LineXml.xml"; //XElement
             string StationPath = @"StationXml.xml"; //XElement
             //string UserPath = @"UserXml.xml"; //XElement
@@ -35,6 +37,7 @@ namespace Data
             string SerialNumbers = @"SerialNumbersXml.xml";
             InitialAllList();
             XMLTools.SaveListToXMLSerializer<Bus>(buses, BusPath);
+            XMLTools.SaveListToXMLSerializer<User>(users, UserPath);
             XMLTools.SaveListToXMLSerializer<Station>(stations, StationPath);
             XMLTools.SaveListToXMLSerializer<Line>(lines, LinePath);
             XMLTools.SaveListToXMLSerializer<StationLine>(stationsLine, StationLinePath);
@@ -432,11 +435,33 @@ namespace Data
             new AdjacentStations { StationId1 = 4218, StationId2 = 4116, Distance = 1.3, AverageTravleTime = new TimeSpan(0, 1, 0) },
             new AdjacentStations { StationId1 = 4116, StationId2 = 6248, Distance = 2, AverageTravleTime = new TimeSpan(0, 3, 0) },
             new AdjacentStations { StationId1 = 6248, StationId2 = 5666, Distance = 1.1, AverageTravleTime = new TimeSpan(0, 2, 45) },
-
+              };
             #endregion
-          // XMLTools
-            
+
+
+            #region Users
+            users = new List<User>
+            {
+               new User
+               {
+                   UserName="Asher",
+                   Password="1111",
+                   isAdmin=true
+               },
+               new User
+               {
+                   UserName="Israel",
+                   Password="0000",
+                   isAdmin=true
+               },
+               new User
+               {
+                   UserName="1",
+                   Password="1",
+                   isAdmin=true,
+               }
             };
+                #endregion
         }
     }
 }

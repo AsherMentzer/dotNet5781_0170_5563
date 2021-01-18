@@ -8,6 +8,8 @@ using BLAPI;
 using System.Threading;
 using BO;
 using DO;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace BL
 {
@@ -771,6 +773,71 @@ namespace BL
         }
 
 
+
+
+        #endregion
+        static Watch watch = Watch.Instance;
+        BackgroundWorker SimulatorWorker;
+        public void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
+        {
+            //BackgroundWorker SimulatorWorker;
+            Stopwatch stopwatch = new Stopwatch();
+            watch.Time = startTime;
+            watch.cancel = false;
+            WatchObserver observer = new WatchObserver(updateTime);
+            SimulatorWorker = new BackgroundWorker();
+            SimulatorWorker.DoWork += (object sender, DoWorkEventArgs e) =>
+            {
+               while(!watch.cancel)
+                {
+                    watch.Time = startTime + new TimeSpan(stopwatch.ElapsedTicks * Rate);
+                    Thread.Sleep(1000);
+                }
+            };
+            stopwatch.Restart();
+            SimulatorWorker.RunWorkerAsync();
+        }
+
+       
+
+        public void StopSimulator()
+        {
+            watch.cancel = true;
+        }
+
+        public void SetStationPanel(int station, Action<LineTiming> updateBus)
+        {
+            throw new NotImplementedException();
+        }
+        #region User
+        public BO.User GetUser(string userName)
+        {
+            DO.User user;
+            try
+            {
+              user= dl.GetUser(userName);
+            }
+            catch(DO.BadUSerNameException e)
+            {
+                throw new BO.BadUSerNameException(e.Message);
+            }
+            BO.User user1=new BO.User();
+            user.CopyPropertiesTo(user1);
+            return user1;
+        }
+
+        public void AddUser(string userName, string paaword)
+        {
+            DO.User user= new DO.User { UserName = userName, Password = paaword, isAdmin = true };
+            try
+            {
+                dl.AddUser(user);
+            }
+            catch(DO.BadUSerNameException e)
+            {
+                throw new BO.BadUSerNameException(e.Message);
+            }
+        }
         #endregion
     }
 }

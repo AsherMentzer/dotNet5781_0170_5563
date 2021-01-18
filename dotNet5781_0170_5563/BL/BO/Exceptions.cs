@@ -94,6 +94,23 @@ namespace BO
         public override string ToString() => base.ToString() + $", bad first station id: {station1ID}, or bad last station id: {station2ID}";
 
     }
+    [Serializable]
+    public class BadUSerNameException : Exception
+    {
+        public string ID;
+        // private string v;
+
+        public BadUSerNameException(string id) : base() => ID = id;
+        public BadUSerNameException(string id, string message) :
+            base(message) => ID = id;
+
+
+        public BadUSerNameException(string id, string message, Exception innerException) :
+            base(message, innerException) => ID = id;
+
+        public override string ToString() => base.ToString() + $", bad user name: {ID}";
+
+    }
 }
 
 

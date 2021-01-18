@@ -51,10 +51,14 @@
     <Compile Include="BO\LineTrip.cs" />
     <Compile Include="BO\LineStation.cs" />
     <Compile Include="BO\AdjacentStations.cs" />
+    <Compile Include="BO\LineTiming.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BO\Station.cs" />
     <Compile Include="BO\StationLine.cs" />
     <Compile Include="BO\BusOnTrip.cs" />
+    <Compile Include="BO\User.cs" />
+    <Compile Include="WachObserver.cs" />
+    <Compile Include="Watch.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DalApi\DLApi.csproj">

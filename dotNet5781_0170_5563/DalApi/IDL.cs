@@ -35,14 +35,14 @@ namespace DLAPI
         void DeleteBusLine(int lineId);
         #endregion
 
-        #region LineExist
-        IEnumerable<LineTrip> GetAllExistsLines();
-        IEnumerable<LineTrip> GetAllExistsLinesBy(Predicate<LineTrip> predicate);
-        LineTrip GetLineExist(int lineId);
-        void AddLineExist(LineTrip lineExist);
-        void UpdateLineExist(LineTrip lineExist);
-        void UpdateLineExist(int lineId, Action<Line> update); //method that knows to updt specific fields in bus line
-        void DeleteLineExist(int lineId);
+        #region LineTrip
+        IEnumerable<LineTrip> GetAllLinesTrip();
+        IEnumerable<LineTrip> GetAllLinesTripBy(Predicate<LineTrip> predicate);
+        LineTrip GetLineTrip(int lineId,TimeSpan time);
+        void AddLineTrip(LineTrip lineTrip);
+        void UpdateLineTrip(LineTrip lineTrip);
+        void UpdateLineTrip(int lineId, Action<Line> update); //method that knows to updt specific fields in bus line
+        void DeleteLineTrip(int lineId,TimeSpan time);
         #endregion
 
         #region PairOfConsecutiveStation
@@ -85,6 +85,10 @@ namespace DLAPI
         void UpdateTravelBus(BusOnTrip travelBus);
         void UpdateTravelBus(int id, Action<BusOnTrip> update); //method that knows to updt specific fields in Person
         void DeleteTravelBus(int id);
+        #endregion
+        #region User
+        User GetUser(string userName);
+        void AddUser(User user);
         #endregion
     }
 }

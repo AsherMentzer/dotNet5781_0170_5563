@@ -38,9 +38,9 @@ Background="AliceBlue"
                         <TextBlock HorizontalAlignment="Center" Text="Please enter your credentials"/>
                     </StackPanel>
                 </Border>
-                <TextBox Margin="20" materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.Foreground="Green"
+                <TextBox x:Name="tbUserName" TextChanged="tbUserName_TextChanged" Margin="20" materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.Foreground="Green"
                 materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                <PasswordBox Margin="20" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.Foreground="Green"
+                <PasswordBox x:Name="PsPassword" PasswordChanged="PsPassword_PasswordChanged" Margin="20" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.Foreground="Green"
                 materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button  x:Name="loginButton" Margin="15 2" Content="Login" Click="loginButton_Click"/>
@@ -64,11 +64,18 @@ Background="AliceBlue"
         <!--#endregion-->
         <!--#region Main-->
         <Grid x:Name="mainGrid" Visibility="Hidden">
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>-->
-            <TabControl TabStripPlacement="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="AliceBlue">
+                <materialDesign:TimePicker x:Name="tpTime" FontSize="30" materialDesign:HintAssist.Hint="With Seconds" SelectedTimeChanged="tpTime_SelectedTimeChanged"
+          Is24Hours="True" WithSeconds="True" Grid.Row="0" IsEnabled="True" Text="00:00:00" Margin="10,21,0,12" Height="47"   HorizontalAlignment="Left" Width="133" />
+                <TextBox x:Name="tbrate" TextChanged="tbrate_TextChanged" IsEnabled="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" Margin="165,21,0,10" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Rate" materialDesign:HintAssist.Foreground="Green"
+                materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="136"/>
+                <Button x:Name="bsimulator" Content="Start" HorizontalAlignment="Left" Margin="329,25,0,0" VerticalAlignment="Top" Width="75" Click="bsimulator_Click"/>
+            </Grid>
+            <TabControl TabStripPlacement="Left" Grid.Row="1">
                 <TabControl.Items>
                     <!--#region  stations-->
                     <TabItem Header="stations" Width="100" Margin="-1,-2,1.8,-60">
@@ -80,7 +87,7 @@ Background="AliceBlue"
                                 </Grid.RowDefinitions>
                                 <Grid x:Name="ststionsGrid" Grid.Column="1" Margin="0,0,0.4,0.8">
                                     <DataGrid x:Name="stationsDataGrid" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                      ItemsSource="{Binding }" Margin="10,0,10,9.6" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                      ItemsSource="{Binding }" Margin="10,0,0.4,-0.2" RowDetailsVisibilityMode="VisibleWhenSelected" 
                                       CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" MouseDoubleClick="stationsDataGrid_MouseDoubleClick" >
                                         <DataGrid.Resources>
                                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -163,7 +170,7 @@ Background="AliceBlue"
 
 
 
-                                <DataGrid Grid.Row="1" x:Name="lineDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding }" Margin="21,0,30,54" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+                                <DataGrid Grid.Row="1" x:Name="lineDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding }" Margin="10,0.2,10.4,53.8" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn x:Name="numInLine" Binding="{Binding NumInLine ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Number" Width="SizeToHeader"/>
                                         <DataGridTextColumn x:Name="iDColumn" Binding="{Binding StationId ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="50"/>
@@ -198,8 +205,30 @@ Background="AliceBlue"
                         </TabItem.Content>
                     </TabItem>
                     <!--#endregion-->
+                    <!--#region simulator -->
+                    <!--
+                    <TabItem x:Name="simulator" Header="simulator" Margin="0,145.6,-2,-219.6">
+                        <TabItem.Content>
+                            <Grid>
+                                <TextBlock x:Name="tbtimer" HorizontalAlignment="Left"   Margin="262,62,0,0" TextWrapping="Wrap" FontSize="45" TextAlignment="Center" 
+                                           Text="00:00:00" VerticalAlignment="Top" Height="52" Width="220"/>
+                                <materialDesign:TimePicker materialDesign:HintAssist.Hint="With Seconds"   Is24Hours="True"
+                                x:Name="WithSecondsTimePicker"  WithSeconds="True" Margin="417,168,225.4,284.8" Height="52" />
+                                <TextBox materialDesign:HintAssist.Hint="multiply"  Style="{StaticResource MaterialDesignFloatingHintTextBox }"
+                                        VerticalAlignment="Center" Margin="150,260,194.4,182.8" Height="62" />
+                                <Button x:Name="bsimulator" Style="{StaticResource MaterialDesignIconButton}" ToolTip="MaterialDesignIconButton"  Click="bsimulator_Click"                          
+                           Background="{DynamicResource MaterialDesignTextFieldBoxBackground}" Margin="345,368,393.4,88.8" Width="Auto">
+                                    <materialDesign:PackIcon Kind="Stop"/>
+                                </Button>
+                                <Label Content="enter the time:" HorizontalAlignment="Left" Margin="167,168,0,0" VerticalAlignment="Top" Width="226"/>
+                            </Grid>
+                        </TabItem.Content>
+                    </TabItem>
+                    -->
+                    <!--#endregion-->
                 </TabControl.Items>
             </TabControl>
+
         </Grid>
         <!--#endregion-->
     </Grid>

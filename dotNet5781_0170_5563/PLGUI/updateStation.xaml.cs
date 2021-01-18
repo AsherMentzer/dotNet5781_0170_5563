@@ -60,11 +60,9 @@ namespace PLGUI
 
         private void tpTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
-            DateTime atime=new DateTime();
             var v= tpTime.SelectedTime;
            if(v != null)
-            atime= v.Value;
-            time = atime.TimeOfDay;
+            time = v.Value.TimeOfDay;
         }
     }
 }

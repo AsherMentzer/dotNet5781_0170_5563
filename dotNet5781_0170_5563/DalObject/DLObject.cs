@@ -144,53 +144,53 @@ namespace DL
         }
         #endregion
 
-        #region LineExist CRUD
-        public IEnumerable<LineTrip> GetAllExistsLines()
+        #region LineTrip CRUD
+        public IEnumerable<LineTrip> GetAllLinesTrip()
         {
             return (IEnumerable<LineTrip>)(from l in DataSource.linesExists
                                             select l.Clone());
         }
 
-        public IEnumerable<LineTrip> GetAllExistsLinesBy(Predicate<LineTrip> predicate)
+        public IEnumerable<LineTrip> GetAllLinesTripBy(Predicate<LineTrip> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public LineTrip GetLineExist(int id)
+        public LineTrip GetLineTrip(int id, TimeSpan time)
         {
             LineTrip line = DataSource.linesExists.Find(l => l.LineId == id);
 
             if (line != null)
                 return line.Clone();
             else
-                throw new BadLineExistException(id, $"bad Bus LicenceId: {id}");
+                throw new BadLineTripException(id, time,$"bad Bus LicenceId: {id}");
         }
 
-        public void AddLineExist(LineTrip lineExist)
+        public void AddLineTrip(LineTrip lineTrip)
         {
-            if (DataSource.linesExists.FirstOrDefault(l => l.LineId == lineExist.LineId) != null)
-                throw new BadLineExistException(lineExist.LineId, "Duplicate  Line exist number");
-            DataSource.linesExists.Add(lineExist.Clone());
+            if (DataSource.linesExists.FirstOrDefault(l => l.LineId == lineTrip.LineId) != null)
+                throw new BadLineTripException(lineTrip.LineId,lineTrip.StartTime ,"Duplicate  Line exist number");
+            DataSource.linesExists.Add(lineTrip.Clone());
         }
 
-        public void UpdateLineExist(LineTrip lineExist)
+        public void UpdateLineTrip(LineTrip lineTrip)
         {
-            LineTrip line = DataSource.linesExists.FirstOrDefault(l => l.LineId == lineExist.LineId);
+            LineTrip line = DataSource.linesExists.FirstOrDefault(l => l.LineId == lineTrip.LineId);
             if (line != null)
             {
                 DataSource.linesExists.Remove(line);
-                DataSource.linesExists.Add(lineExist.Clone());
+                DataSource.linesExists.Add(lineTrip.Clone());
             }
             else
-                throw new BadLineExistException(lineExist.LineId, $"bad Bus Line Id: {lineExist.LineId}");
+                throw new BadLineTripException(lineTrip.LineId,lineTrip.StartTime ,$"bad Bus Line Id: {lineTrip.LineId}");
         }
 
-        public void UpdateLineExist(int lineId, Action<Line> update)
+        public void UpdateLineTrip(int lineId, Action<Line> update)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteLineExist(int lineId)
+        public void DeleteLineTrip(int lineId, TimeSpan time)
         {
             LineTrip line = DataSource.linesExists.FirstOrDefault(l => l.LineId == lineId);
             if (line != null)
@@ -198,7 +198,7 @@ namespace DL
                 DataSource.linesExists.Remove(line);
             }
             else
-                throw new BadLineExistException(lineId, $"bad Bus Line Id: {lineId}");
+                throw new BadLineTripException(lineId, time,$"bad Bus Line Id: {lineId}");
         }
         #endregion
 
@@ -450,8 +450,27 @@ namespace DL
         {
             throw new NotImplementedException();
         }
+        #endregion
+        #region User
+        public User GetUser(string userName)
+        {
+            User user = DataSource.users.FirstOrDefault(u => u.UserName == userName);
+            if (user != null)
+                return user;
+            else
+                throw new BadUSerNameException(userName);
+        }
 
-        
+        public void AddUser(User user)
+        {
+            User us = DataSource.users.FirstOrDefault(u => u.UserName ==user.UserName);
+            if (user != null)
+                throw new BadUSerNameException($"Duplicate User Name: {user.UserName}");
+            else
+                DataSource.users.Add(user);
+        }
+
+
         #endregion
     }
 }

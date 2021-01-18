@@ -80,5 +80,15 @@ namespace BLAPI
         void UpdateTravelBus(int id, Action<BO.BusOnTrip> update); //method that knows to updt specific fields in Person
         void DeleteTravelBus(int id);
         #endregion
+        #region User
+        BO.User GetUser(string userName);
+        void AddUser(string userName, string paaword);
+        #endregion
+        #region Simulator
+        void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
+        void StopSimulator();
+        #endregion
+        void SetStationPanel(int station, Action<BO.LineTiming> updateBus);
+
     }
 }

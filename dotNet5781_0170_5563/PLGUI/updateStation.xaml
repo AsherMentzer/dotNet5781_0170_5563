@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLGUI" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="updateStation" Height="320" Width="230" WindowStartupLocation="CenterScreen">
+        Title="updateStation" Height="220" Width="230" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <!--<Label Content="enter the diatance:" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
         <!--<Label Content="enter the time:" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
@@ -18,8 +18,8 @@
          materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="tbDistance_TextChanged"/>
 
         <materialDesign:TimePicker x:Name="tpTime" materialDesign:HintAssist.Hint="With Seconds" SelectedTimeChanged="tpTime_SelectedTimeChanged"
-  Is24Hours="{Binding IsChecked, ElementName=Is24HourCheckbox}" WithSeconds="True" Grid.Row="1"  Text="00:00:00" Margin="102,28,9.6,10.2"/>
+          Is24Hours="True" WithSeconds="True" Grid.Row="1"  Text="00:00:00" Margin="102,28,9.6,10.2"/>
         <Button x:Name="bUpdate" Content="update" Click="bUpdate_Click" Grid.Row="2" Grid.Column="1"/>
-        <Label Content="enter the time:" HorizontalAlignment="Left" Margin="0,45.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="85"/>
+        <Label Content="enter the time:" HorizontalAlignment="Left" Margin="0,28,0,0" Grid.Row="1" VerticalAlignment="Top" Width="89"/>
     </Grid>
 </Window>

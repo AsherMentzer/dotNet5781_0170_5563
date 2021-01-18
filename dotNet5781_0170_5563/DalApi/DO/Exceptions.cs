@@ -23,6 +23,23 @@ namespace DO
         public override string ToString() => base.ToString() + $", bad bus Licence id: {ID}";
 
     }
+    [Serializable]
+    public class BadUSerNameException : Exception
+    {
+        public string ID;
+        // private string v;
+
+        public BadUSerNameException(string id) : base() => ID = id;
+        public BadUSerNameException(string id, string message) :
+            base(message) => ID = id;
+
+
+        public BadUSerNameException(string id, string message, Exception innerException) :
+            base(message, innerException) => ID = id;
+
+        public override string ToString() => base.ToString() + $", bad user name: {ID}";
+
+    }
 
     [Serializable]
     public class BadStationIdException : Exception
@@ -60,19 +77,19 @@ namespace DO
     }
 
     [Serializable]
-    public class BadLineExistException : Exception
+    public class BadLineTripException : Exception
     {
         public int ID;
+        public TimeSpan Time;
+        public BadLineTripException(int id, TimeSpan time) : base() { ID = id; time = Time; }
+        public BadLineTripException(int id,TimeSpan time,string message) :
+            base(message) { id = ID;time = Time; }
 
-        public BadLineExistException(int id) : base() => ID = id;
-        public BadLineExistException(int id, string message) :
-            base(message) => ID = id;
 
+        public BadLineTripException(int id, TimeSpan time, string message, Exception innerException) :
+            base(message, innerException) { id = ID; time = Time; }
 
-        public BadLineExistException(int id, string message, Exception innerException) :
-            base(message, innerException) => ID = id;
-
-        public override string ToString() => base.ToString() + $", bad bus Line id: {ID}";
+        public override string ToString() => base.ToString() + $", bad Line id: {ID}";
 
     }
 
