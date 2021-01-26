@@ -3,16 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PLGUI"
+        xmlns:local="clr-namespace:PLGUI" xmlns:wpf="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ShowLines" Height="450" Width="400">
+        Title="ShowLines" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <wpf:Map x:Name="map"  CredentialsProvider="gHqGQf0LsHV64GAaTBJv~TOkd3LgsMb9m481Uu9pRgg~AhkYz1pq3k8AYAP1Jevo99bmjkF4JB6OlWcHPVX3PolB7brhDR-wZIetDs28JJYI"
+                 Grid.Column="1" Grid.Row="1" Mode="Road" ZoomLevel="18" >
+            <wpf:MapItemsControl ItemsSource="{Binding Locations,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpf:MapItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <wpf:Pushpin x:Name="push" Location="{Binding Location,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </DataTemplate>
+                </wpf:MapItemsControl.ItemTemplate>  
+            </wpf:MapItemsControl>
+            <Canvas x:Name="cmap"
+                 wpf:MapLayer.Position="{Binding Path=Location,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                 wpf:MapLayer.PositionOrigin="Bottomcenter" Width="30" Height="30">
+                <materialDesign:PackIcon Kind="MapMarker" Width="30" Height="30"/>
+            </Canvas>
+            
+        </wpf:Map>
+        
         <!--<TextBlock x:Name="tbStation" Grid.Row="0" Text="{Binding StationName}" />-->
-        <DataGrid Grid.Row="1" x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+        <DataGrid Grid.Row="1" Grid.Column="0" x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                       Margin="21,0,30,54" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}"
                                       CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" >
             <DataGrid.Columns>

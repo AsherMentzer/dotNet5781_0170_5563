@@ -287,8 +287,8 @@ namespace DL
                        Id = int.Parse(lt.Element("Id").Value),
                        LineId = int.Parse(lt.Element("LineId").Value),
                        StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                       Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
-                       EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
+                       //Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
+                       //EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                    };
             //List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
             //return from line in ListLinesTrip
@@ -304,10 +304,11 @@ namespace DL
                        Id = int.Parse(lt.Element("Id").Value),
                        LineId = int.Parse(lt.Element("LineId").Value),
                        StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                       Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
-                       EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
+                       //Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
+                       //EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                    }
                    where predicate(l1)
+                   orderby l1.StartTime
                    select (l1);
 
             //List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
@@ -327,8 +328,8 @@ namespace DL
                                  Id = int.Parse(lt.Element("Id").Value),
                                  LineId = int.Parse(lt.Element("LineId").Value),
                                  StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                                 Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
-                                 EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
+                                 //Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
+                                 //EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                              }).FirstOrDefault();
 
             if (line != null)
@@ -355,9 +356,9 @@ namespace DL
             XElement lt = new XElement("LineTrip",
                 new XElement("Id", line.Id),
                 new XElement("LineId", line.LineId),
-                new XElement("StartTime", XmlConvert.ToString(line.StartTime)),
-                new XElement("Frequncy", XmlConvert.ToString(line.Frequncy)),
-                new XElement("EndTime", XmlConvert.ToString(line.EndTime))
+                new XElement("StartTime", XmlConvert.ToString(line.StartTime))
+                //new XElement("Frequncy", XmlConvert.ToString(line.Frequncy)),
+               // new XElement("EndTime", XmlConvert.ToString(line.EndTime))
                 );
 
             LineTripRootElem.Add(lt);

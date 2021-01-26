@@ -11,7 +11,7 @@ using Data;
 namespace DL
 {
     sealed class DLObject : IDL
-    {
+    {      
         #region singelton
         static readonly DLObject instance = new DLObject();
         static DLObject() { }// static ctor to ensure instance init is done just before first usage
@@ -147,8 +147,8 @@ namespace DL
         #region LineTrip CRUD
         public IEnumerable<LineTrip> GetAllLinesTrip()
         {
-            return (IEnumerable<LineTrip>)(from l in DataSource.linesExists
-                                            select l.Clone());
+            return (IEnumerable<LineTrip>)(from l in DataSource.linesTrip
+                                           select l.Clone());
         }
 
         public IEnumerable<LineTrip> GetAllLinesTripBy(Predicate<LineTrip> predicate)
@@ -158,7 +158,7 @@ namespace DL
 
         public LineTrip GetLineTrip(int id, TimeSpan time)
         {
-            LineTrip line = DataSource.linesExists.Find(l => l.LineId == id);
+            LineTrip line = DataSource.linesTrip.Find(l => l.LineId == id);
 
             if (line != null)
                 return line.Clone();
@@ -168,18 +168,18 @@ namespace DL
 
         public void AddLineTrip(LineTrip lineTrip)
         {
-            if (DataSource.linesExists.FirstOrDefault(l => l.LineId == lineTrip.LineId) != null)
+            if (DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineTrip.LineId) != null)
                 throw new BadLineTripException(lineTrip.LineId,lineTrip.StartTime ,"Duplicate  Line exist number");
-            DataSource.linesExists.Add(lineTrip.Clone());
+            DataSource.linesTrip.Add(lineTrip.Clone());
         }
 
         public void UpdateLineTrip(LineTrip lineTrip)
         {
-            LineTrip line = DataSource.linesExists.FirstOrDefault(l => l.LineId == lineTrip.LineId);
+            LineTrip line = DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineTrip.LineId);
             if (line != null)
             {
-                DataSource.linesExists.Remove(line);
-                DataSource.linesExists.Add(lineTrip.Clone());
+                DataSource.linesTrip.Remove(line);
+                DataSource.linesTrip.Add(lineTrip.Clone());
             }
             else
                 throw new BadLineTripException(lineTrip.LineId,lineTrip.StartTime ,$"bad Bus Line Id: {lineTrip.LineId}");
@@ -192,10 +192,10 @@ namespace DL
 
         public void DeleteLineTrip(int lineId, TimeSpan time)
         {
-            LineTrip line = DataSource.linesExists.FirstOrDefault(l => l.LineId == lineId);
+            LineTrip line = DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineId);
             if (line != null)
             {
-                DataSource.linesExists.Remove(line);
+                DataSource.linesTrip.Remove(line);
             }
             else
                 throw new BadLineTripException(lineId, time,$"bad Bus Line Id: {lineId}");

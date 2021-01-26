@@ -19,7 +19,7 @@ namespace Data
         public static List<AdjacentStations> pairs;
         public static List<StationLine> stationsLine;
         public static List<BusOnTrip> travelBuses;
-        public static List<LineTrip> linesExists;
+        public static List<LineTrip> linesTrip;
         static List<int> serialNumbers = new List<int>();
 
         static DataSource()
@@ -35,6 +35,7 @@ namespace Data
            // string TripPath = @"TripXml.xml"; //XElement
             string StationLinePath = @"LineStationXml.xml"; //XElement 
             string SerialNumbers = @"SerialNumbersXml.xml";
+            string LineTripPath = @"LineTripXml.xml";
             InitialAllList();
             XMLTools.SaveListToXMLSerializer<Bus>(buses, BusPath);
             XMLTools.SaveListToXMLSerializer<User>(users, UserPath);
@@ -43,7 +44,7 @@ namespace Data
             XMLTools.SaveListToXMLSerializer<StationLine>(stationsLine, StationLinePath);
             XMLTools.SaveListToXMLSerializer<AdjacentStations>(pairs, AdjacentStationsPath);
             XMLTools.SaveListToXMLSerializer<int>(serialNumbers, SerialNumbers);
-           // XMLTools.SaveListToXMLSerializer<Station>(stations, @"StationXml.xml");
+            XMLTools.SaveListToXMLSerializer<LineTrip>(linesTrip, LineTripPath);
         }
         static void InitialAllList()
         {
@@ -461,7 +462,37 @@ namespace Data
                    isAdmin=true,
                }
             };
-                #endregion
+            #endregion
+            #region LineTrip
+            linesTrip = new List<LineTrip>()
+            {
+                new LineTrip
+                {
+                    LineId=1,
+                    StartTime=new TimeSpan(13,0,0)
+                },
+                new LineTrip
+                {
+                    LineId=1,
+                    StartTime=new TimeSpan(13,5,0)
+                },
+                new LineTrip
+                {
+                    LineId=1,
+                    StartTime=new TimeSpan(13,10,0)
+                },
+                new LineTrip
+                {
+                    LineId=2,
+                    StartTime=new TimeSpan(13,2,0)
+                },
+                    new LineTrip
+                {
+                    LineId=3,
+                    StartTime=new TimeSpan(13,3,0)
+                },
+            };
+            #endregion
         }
     }
 }

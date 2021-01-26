@@ -31,6 +31,10 @@ namespace PLGUI
     {
         #region get the data
         IBL bl = BLFactory.GetBL("1");
+        void f()
+        {
+            var v = bl.GetAllStations();
+        }  
         PO.BusLine line;
         ObservableCollection<PO.BusLine> lines = new ObservableCollection<PO.BusLine>();
         ObservableCollection<PO.Station> stations = new ObservableCollection<PO.Station>();
@@ -76,7 +80,7 @@ namespace PLGUI
         {
             getAllLines();
             InitializeComponent();
-
+            f();
             //lvStations.ItemsSource = lines;
             cbLineNum.ItemsSource = lines;
             // RefreshAllLinesComboBox();
@@ -416,7 +420,7 @@ namespace PLGUI
             }
 
             //string str = "Start";
-            if (bsimulator.Content != "Stop")
+            if ((string)bsimulator.Content != "Stop")
             {
                 bsimulator.Content = "Stop";
                 tbrate.IsEnabled = false;

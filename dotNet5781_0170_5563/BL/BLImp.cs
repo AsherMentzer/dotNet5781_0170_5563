@@ -776,6 +776,7 @@ namespace BL
 
 
         #endregion
+        #region simulator
         static Watch watch = Watch.Instance;
         BackgroundWorker SimulatorWorker;
         public void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
@@ -809,6 +810,44 @@ namespace BL
         {
             throw new NotImplementedException();
         }
+        void operate(int lineId)
+        {
+            List<DO.LineTrip> trips = dl.GetAllLinesTripBy(lt => lt.LineId == lineId).ToList();
+            for(int i=0;i<trips.Count;++i)
+            {
+                if (watch.Time==trips[i].StartTime)
+                {                    
+                   // trip(DO.LineTrip trip);
+                }
+                if (i == trips.Count)
+                    i = 0;
+                int sleepTime = (int)(trips[i + 1].StartTime.TotalSeconds - trips[i].StartTime.TotalSeconds) * 1000;
+                //operateWorker.Sleep(sleepTime);
+            }
+            
+        }
+        void trip(DO.LineTrip trip)
+        {
+            BackgroundWorker tripWorker = new BackgroundWorker();
+            tripWorker.DoWork += (object sender, DoWorkEventArgs e) =>
+             {
+                 BO.Line line = GetBusLine(trip.LineId);
+                 DO.Station station = dl.GetStation(line.LastStation);
+                 
+                 BO.LineTiming TripBO = new BO.LineTiming()
+                 {
+                     StartTime=trip.StartTime,
+                     LineId=trip.LineId,
+                     LineNumber=line.LineNumber,
+                     LastStationName= station.StationName,
+                     ArriveTime=new TimeSpan()
+                 };
+                
+             };
+        }
+
+       
+        #endregion
         #region User
         public BO.User GetUser(string userName)
         {

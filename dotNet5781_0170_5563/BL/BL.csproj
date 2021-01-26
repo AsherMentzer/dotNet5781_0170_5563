@@ -57,6 +57,7 @@
     <Compile Include="BO\StationLine.cs" />
     <Compile Include="BO\BusOnTrip.cs" />
     <Compile Include="BO\User.cs" />
+    <Compile Include="TripsOperator.cs" />
     <Compile Include="WachObserver.cs" />
     <Compile Include="Watch.cs" />
   </ItemGroup>
