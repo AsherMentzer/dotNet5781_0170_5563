@@ -34,7 +34,7 @@ namespace PLGUI
         void f()
         {
             var v = bl.GetAllStations();
-        }  
+        }
         PO.BusLine line;
         ObservableCollection<PO.BusLine> lines = new ObservableCollection<PO.BusLine>();
         ObservableCollection<PO.Station> stations = new ObservableCollection<PO.Station>();
@@ -73,9 +73,21 @@ namespace PLGUI
         }
         #endregion
         BackgroundWorker Simulatorworker;
+        BackgroundWorker Operatorworker;
         int rate;
         TimeSpan startTime;
         string userName, password;
+        ObservableCollection<BO.LineTiming> linesTiming = new ObservableCollection<BO.LineTiming>();
+        //{
+        //    new BO.LineTiming
+        //    {
+        //        LineId=1,
+        //        LineNumber=66,
+        //        LastStationName="בדיקה",
+        //        StartTime=new TimeSpan(12,58,00),
+        //        ArriveTime=new TimeSpan(0,10,20)
+        //    }
+        //};
         public MainWindow()
         {
             getAllLines();
@@ -88,11 +100,18 @@ namespace PLGUI
             cbLineNum.SelectedValuePath = "LineId";
             getAllStations();
             stationsDataGrid.DataContext = stations;
+            lvPanel.DataContext = linesTiming;
+           // dgBoard.DataContext = linesTiming;
             Simulatorworker = new BackgroundWorker();
             Simulatorworker.DoWork += Simulatorworker_DoWork;
             Simulatorworker.ProgressChanged += Simulatorworker_ProgressChanged;
             Simulatorworker.WorkerReportsProgress = true;
             Simulatorworker.WorkerSupportsCancellation = true;
+            Operatorworker = new BackgroundWorker();
+            Operatorworker.DoWork += Operatorworker_DoWork;
+            Operatorworker.ProgressChanged += Operatorworker_ProgressChanged;
+            Operatorworker.WorkerReportsProgress = true;
+            Operatorworker.WorkerSupportsCancellation = true;
         }
 
         #region Lines
@@ -357,24 +376,19 @@ namespace PLGUI
         #endregion
         #endregion
         #region user
-        private void bUser_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            if(userName ==null ||password==null )
+            if (userName == null || password == null)
             {
                 MessageBox.Show("enter all the details");
                 return;
             }
-            BO.User user=new BO.User();
+            BO.User user = new BO.User();
             try
             {
                 user = bl.GetUser(userName);
             }
-            catch(BO.BadUSerNameException)
+            catch (BO.BadUSerNameException)
             {
                 MessageBox.Show("Wrong User Name");
             }
@@ -388,7 +402,7 @@ namespace PLGUI
                 this.Top = SystemParameters.PrimaryScreenHeight - 700;
             }
             else
-                PsPassword.BorderBrush = Brushes.Red; 
+                PsPassword.BorderBrush = Brushes.Red;
         }
         private void tbUserName_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -410,7 +424,7 @@ namespace PLGUI
         #endregion
 
         #region simulator
-       TimeSpan time;
+        TimeSpan time;
         private void bsimulator_Click(object sender, RoutedEventArgs e)
         {
             if (startTime == null || rate < 1)
@@ -425,7 +439,7 @@ namespace PLGUI
                 bsimulator.Content = "Stop";
                 tbrate.IsEnabled = false;
                 tpTime.IsEnabled = false;
-               
+                Operatorworker.RunWorkerAsync();
                 Simulatorworker.RunWorkerAsync();
             }
             else
@@ -438,22 +452,25 @@ namespace PLGUI
                 rate = 0;
                 tbrate.Text = "";
                 bl.StopSimulator();
-                if(Simulatorworker.IsBusy)
-                Simulatorworker.CancelAsync();
+                if (Simulatorworker.IsBusy)
+                    Simulatorworker.CancelAsync();
+                if (Operatorworker.IsBusy)
+                    Operatorworker.CancelAsync();
             }
         }
 
         private void Simulatorworker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            
             int progress = e.ProgressPercentage;
             time = new TimeSpan(0, 0, progress);
-             tpTime.SelectedTime = new DateTime((long)(time.TotalSeconds * 10000000));
+            tpTime.SelectedTime = new DateTime((long)(time.TotalSeconds * 10000000));
         }
 
         private void Simulatorworker_DoWork(object sender, DoWorkEventArgs e)
         {
             bl.StartSimulator(startTime, rate, GetTime);
-            while(!Simulatorworker.CancellationPending)
+            while (!Simulatorworker.CancellationPending)
                 Thread.Sleep(1000);
         }
         void GetTime(TimeSpan a)
@@ -464,7 +481,57 @@ namespace PLGUI
             }
         }
 
+
        
+        private void Operatorworker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            BO.LineTiming timing = (BO.LineTiming)e.UserState;
+            BO.LineTiming temp = linesTiming.FirstOrDefault(x => x.LineId == timing.LineId && x.StartTime == timing.StartTime);
+            //if not exist add it
+            if (temp == null)
+            {
+                linesTiming.Add(timing);
+                ltime.Content = timing.ArriveTime.Minutes;
+            }
+            else if (timing.ArriveTime == TimeSpan.Zero)//the time is 0 remove it
+                linesTiming.Remove(temp);
+            else
+            {
+                //this.Dispatcher.Invoke(() =>
+                //{
+                //    temp.ArriveTime = timing.ArriveTime;
+                //});
+                //int index = linesTiming.IndexOf(temp);
+                ltime.Content = timing.ArriveTime.Minutes;
+                linesTiming.Remove(temp);
+                linesTiming.Add(timing);
+
+            }
+            lvPanel.DataContext = linesTiming;
+                //dgPanel.DataContext = linesTiming;
+        }
+
+        private void Operatorworker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bl.SetStationPanel(32276, UpdateLineTiming);
+            while (!Operatorworker.CancellationPending)
+                Thread.Sleep(1000);
+        }
+        void UpdateLineTiming(BO.LineTiming timing)
+        {
+            //TimeSpan time = new TimeSpan();
+            //BO.LineTiming temp = linesTiming.FirstOrDefault(x => x.LineId == timing.LineId && x.StartTime == timing.StartTime);
+            ////if not exist add it
+            //if (temp==null)
+            //    linesTiming.Add(timing);
+            //else if (timing.ArriveTime == TimeSpan.Zero)//the time is 0 remove it
+            //    linesTiming.Remove(temp);
+            //else
+            //temp.ArriveTime = timing.ArriveTime;
+            if(timing !=null)
+            Operatorworker.ReportProgress(1,timing);
+        }
+
         private void tbrate_TextChanged(object sender, TextChangedEventArgs e)
         {
             int.TryParse(tbrate.Text, out rate);
@@ -473,11 +540,9 @@ namespace PLGUI
         private void tpTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
             var v = tpTime.SelectedTime;
-            if (v != null && startTime !=null)
+            if (v != null && startTime != null)
                 startTime = v.Value.TimeOfDay;
         }
-
-
         #endregion
 
     }

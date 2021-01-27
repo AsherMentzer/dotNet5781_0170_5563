@@ -33,6 +33,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Extensions, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Extensions.4.3.1\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +63,7 @@
     <Compile Include="BO\BusOnTrip.cs" />
     <Compile Include="BO\User.cs" />
     <Compile Include="TripsOperator.cs" />
+    <Compile Include="TripsOperatorObserver.cs" />
     <Compile Include="WachObserver.cs" />
     <Compile Include="Watch.cs" />
   </ItemGroup>
@@ -74,6 +80,9 @@
       <Project>{c6d11688-985d-40a1-aa92-0e6a5adf4517}</Project>
       <Name>Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

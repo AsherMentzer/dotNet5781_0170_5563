@@ -142,7 +142,7 @@ namespace Data
                     LineId=linesId++,
                     LineNumber=51 ,
                     FirstStation= 22980,
-                    LastStation=32799,
+                    LastStation=32779,
                     area=Areas.Center,
                 },
                 new Line//4
@@ -395,8 +395,7 @@ namespace Data
                 // 66
             //new PairOfConsecutiveStation{ StationId1 = 22980, StationId2 = 26416, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
             new AdjacentStations{ StationId1 = 26416, StationId2 = 26544, Distance = 0.5, AverageTravleTime = new TimeSpan(0,2,0) },
-            new AdjacentStations{ StationId1 = 26544, StationId2 = 32276, Distance = 1.3, AverageTravleTime = new TimeSpan(0,3,0) },
-            //new PairOfConsecutiveStation{ StationId1 = 26544, StationId2 = 32276, Distance = 1.3, AverageTravleTime = new TimeSpan(0,5,0) },
+           // new AdjacentStations{ StationId1 = 26544, StationId2 = 32276, Distance = 1.3, AverageTravleTime = new TimeSpan(0,5,0) },
             //new PairOfConsecutiveStation{ StationId1 = 32276, StationId2 = 32270, Distance = 0.6, AverageTravleTime = new TimeSpan(0,1,0) },
             //new PairOfConsecutiveStation{ StationId1 = 32270, StationId2 = 32267, Distance = 0.3, AverageTravleTime = new TimeSpan(0,1,0) },
             //new PairOfConsecutiveStation{ StationId1 = 32267, StationId2 = 32269, Distance = 1, AverageTravleTime = new TimeSpan(0,3,0) },
@@ -471,26 +470,26 @@ namespace Data
                     LineId=1,
                     StartTime=new TimeSpan(13,0,0)
                 },
-                new LineTrip
-                {
-                    LineId=1,
-                    StartTime=new TimeSpan(13,5,0)
-                },
-                new LineTrip
-                {
-                    LineId=1,
-                    StartTime=new TimeSpan(13,10,0)
-                },
-                new LineTrip
-                {
-                    LineId=2,
-                    StartTime=new TimeSpan(13,2,0)
-                },
-                    new LineTrip
-                {
-                    LineId=3,
-                    StartTime=new TimeSpan(13,3,0)
-                },
+                //new LineTrip
+                //{
+                //    LineId=1,
+                //    StartTime=new TimeSpan(13,5,0)
+                //},
+                //new LineTrip
+                //{
+                //    LineId=1,
+                //    StartTime=new TimeSpan(13,10,0)
+                //},
+                //new LineTrip
+                //{
+                //    LineId=2,
+                //    StartTime=new TimeSpan(13,12,0)
+                //},
+                //    new LineTrip
+                //{
+                //    LineId=3,
+                //    StartTime=new TimeSpan(13,0,0)
+                //},
             };
             #endregion
         }

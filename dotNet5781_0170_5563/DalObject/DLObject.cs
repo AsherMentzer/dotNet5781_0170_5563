@@ -153,7 +153,9 @@ namespace DL
 
         public IEnumerable<LineTrip> GetAllLinesTripBy(Predicate<LineTrip> predicate)
         {
-            throw new NotImplementedException();
+            return from l in DataSource.linesTrip
+                   where predicate(l)
+                   select l.Clone();
         }
 
         public LineTrip GetLineTrip(int id, TimeSpan time)

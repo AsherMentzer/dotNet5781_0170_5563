@@ -6,9 +6,20 @@
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="370" Width="300"
+        Title="MainWindow" Height="590" Width="960"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <!--<Setter Property="Background" Value="Turquoise"/>-->
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0,0,1,2"/>
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Turquoise"/>
+        </Style>
         <!--<Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             -->
@@ -31,7 +42,7 @@ Background="AliceBlue"
        
         Title="MainWindow" >-->
 
-        <Grid x:Name="enterGrid" Visibility="Visible" Height="370" Width="300" Background="AliceBlue">
+        <Grid x:Name="enterGrid" Visibility="Hidden" Height="370" Width="300" Background="AliceBlue">
             <StackPanel >
                 <Border Background="WhiteSmoke" Margin="10 20" CornerRadius="5">
                     <StackPanel Margin="25">
@@ -63,7 +74,7 @@ Background="AliceBlue"
         </Grid>-->
         <!--#endregion-->
         <!--#region Main-->
-        <Grid x:Name="mainGrid" Visibility="Hidden">
+        <Grid x:Name="mainGrid" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
@@ -75,7 +86,7 @@ Background="AliceBlue"
                 materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="136"/>
                 <Button x:Name="bsimulator" Content="Start" HorizontalAlignment="Left" Margin="329,25,0,0" VerticalAlignment="Top" Width="75" Click="bsimulator_Click"/>
             </Grid>
-            <TabControl TabStripPlacement="Left" Grid.Row="1">
+            <TabControl TabStripPlacement="Left" Grid.Row="1" >
                 <TabControl.Items>
                     <!--#region  stations-->
                     <TabItem Header="stations" Width="100" Margin="-1,-2,1.8,-60">
@@ -170,13 +181,13 @@ Background="AliceBlue"
 
 
 
-                                <DataGrid Grid.Row="1" x:Name="lineDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding }" Margin="10,0.2,10.4,53.8" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+                                <DataGrid x:Name="lineDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding }" Margin="10,35,0.4,61.2" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn x:Name="numInLine" Binding="{Binding NumInLine ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Number" Width="SizeToHeader"/>
+                                        <DataGridTextColumn x:Name="numInLine" Binding="{Binding NumInLine ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Number" Width="65"/>
                                         <DataGridTextColumn x:Name="iDColumn" Binding="{Binding StationId ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="50"/>
-                                        <DataGridTextColumn x:Name="nameColumn" Binding="{Binding StationName ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="180"/>
-                                        <DataGridTextColumn x:Name="distanceColumn" Binding="{Binding Distance ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="DistanceToNext" Width="SizeToHeader"/>
-                                        <DataGridTextColumn x:Name="timeColumn" Binding="{Binding AverageTravleTime ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="TimeToNext" Width="SizeToHeader"/>
+                                        <DataGridTextColumn x:Name="nameColumn" Binding="{Binding StationName ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="205"/>
+                                        <DataGridTextColumn x:Name="distanceColumn" Binding="{Binding Distance ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="DistanceToNext" Width="110"/>
+                                        <DataGridTextColumn x:Name="timeColumn" Binding="{Binding AverageTravleTime ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="TimeToNext" Width="110"/>
 
                                         <DataGridTemplateColumn>
                                             <DataGridTemplateColumn.CellTemplate>
@@ -205,26 +216,42 @@ Background="AliceBlue"
                         </TabItem.Content>
                     </TabItem>
                     <!--#endregion-->
-                    <!--#region simulator -->
-                    <!--
+                    <!--#region simulator-->
+
                     <TabItem x:Name="simulator" Header="simulator" Margin="0,145.6,-2,-219.6">
                         <TabItem.Content>
                             <Grid>
-                                <TextBlock x:Name="tbtimer" HorizontalAlignment="Left"   Margin="262,62,0,0" TextWrapping="Wrap" FontSize="45" TextAlignment="Center" 
-                                           Text="00:00:00" VerticalAlignment="Top" Height="52" Width="220"/>
-                                <materialDesign:TimePicker materialDesign:HintAssist.Hint="With Seconds"   Is24Hours="True"
-                                x:Name="WithSecondsTimePicker"  WithSeconds="True" Margin="417,168,225.4,284.8" Height="52" />
-                                <TextBox materialDesign:HintAssist.Hint="multiply"  Style="{StaticResource MaterialDesignFloatingHintTextBox }"
-                                        VerticalAlignment="Center" Margin="150,260,194.4,182.8" Height="62" />
-                                <Button x:Name="bsimulator" Style="{StaticResource MaterialDesignIconButton}" ToolTip="MaterialDesignIconButton"  Click="bsimulator_Click"                          
-                           Background="{DynamicResource MaterialDesignTextFieldBoxBackground}" Margin="345,368,393.4,88.8" Width="Auto">
-                                    <materialDesign:PackIcon Kind="Stop"/>
-                                </Button>
-                                <Label Content="enter the time:" HorizontalAlignment="Left" Margin="167,168,0,0" VerticalAlignment="Top" Width="226"/>
+
+                                <!--<DataGrid x:Name="dgPanel" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="274" Margin="101,10,0,0" VerticalAlignment="Top" Width="579">-->
+                                <!--<DataGrid.Columns>
+                                        <DataGridTextColumn x:Name="lineNumber" Binding="{Binding LineNumber ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Line Number" Width="120"/>
+                                        <DataGridTextColumn x:Name="lastStationName" Binding="{Binding LastStationName ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Last station"  Width="190"/>
+                                        <DataGridTextColumn x:Name="arriveTime" Binding="{Binding ArriveTime ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Arrive Time" Width="sizeToHeader"/>
+                                    </DataGrid.Columns>-->
+
+                                <!--</DataGrid>-->
+
+                                <DataGrid x:Name="dgBoard" HorizontalAlignment="Left" Height="100" Margin="262,322,0,0" VerticalAlignment="Top" Width="315">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn x:Name="lineNum" Binding="{Binding LineNumber ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Line Number" Width="120"/>
+                                        <DataGridTextColumn x:Name="lastStation" Binding="{Binding LastStationName ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Last station" Width="190"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <ListView x:Name="lvPanel" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="243" Margin="25,26,0,0" VerticalAlignment="Top" Width="496">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="lineNumber" DisplayMemberBinding="{Binding LineNumber}"/>
+                                            <GridViewColumn x:Name="lastStationName" DisplayMemberBinding="{Binding LastStationName}"/>
+                                            <GridViewColumn x:Name="ArriveTime" DisplayMemberBinding="{Binding ArriveTime}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Label x:Name="ltime" Content="0" FontSize="50" Margin="642,79,134.4,325.2" />
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
-                    -->
+
+
                     <!--#endregion-->
                 </TabControl.Items>
             </TabControl>
