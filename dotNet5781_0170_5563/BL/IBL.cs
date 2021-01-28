@@ -8,7 +8,7 @@ namespace BLAPI
 {
     public interface IBL
     {
-
+       
         #region Bus
         IEnumerable<BO.Bus> GetAllBuses();
         IEnumerable<BO.Bus> GetAllBusesBy(Predicate<BO.Bus> predicate);
@@ -63,12 +63,12 @@ namespace BLAPI
         #region StationLine
         IEnumerable<BO.StationLine> GetAllStationsLine();
         IEnumerable<BO.StationLine> GetAllStationsLineBy(Predicate<BO.StationLine> predicate);
-        BO.StationLine GetStationLine(int Lineid,int stationId);
-        void AddStationLine(int lineId,int stationId,int numInLine);
-       // void AddStationLine(int lineId, int stationId, int numInLined, BO.PairOfConsecutiveStation p);
+        BO.StationLine GetStationLine(int Lineid, int stationId);
+        void AddStationLine(int lineId, int stationId, int numInLine);
+        // void AddStationLine(int lineId, int stationId, int numInLined, BO.PairOfConsecutiveStation p);
         void UpdateStationLine(BO.StationLine stationLine);
         void UpdateStationLine(int id, Action<BO.StationLine> update); //method that knows to updt specific fields in Person
-        void DeleteStationLine(int id,int sId);
+        void DeleteStationLine(int id, int sId);
         #endregion
 
         #region TravelBus
@@ -87,8 +87,7 @@ namespace BLAPI
         #region Simulator
         void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
         void StopSimulator();
-        #endregion
         void SetStationPanel(int station, Action<BO.LineTiming> updateBus);
-
+        #endregion
     }
 }

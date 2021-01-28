@@ -6,7 +6,7 @@
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="590" Width="960"
+        Title="MainWindow" Height="370" Width="300"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -32,17 +32,7 @@
     <Grid>
         <!--#region register-->
 
-        <!--mc:Ignorable="d"
-Height="370"
-Width="300"
-WindowStartupLocation="CenterScreen"
-ResizeMode="NoResize"
-WindowStyle="None"
-Background="AliceBlue"
-       
-        Title="MainWindow" >-->
-
-        <Grid x:Name="enterGrid" Visibility="Hidden" Height="370" Width="300" Background="AliceBlue">
+        <Grid x:Name="enterGrid" Visibility="Visible" Height="370" Width="300" Background="AliceBlue">
             <StackPanel >
                 <Border Background="WhiteSmoke" Margin="10 20" CornerRadius="5">
                     <StackPanel Margin="25">
@@ -63,7 +53,30 @@ Background="AliceBlue"
                 </StackPanel>
             </StackPanel>
         </Grid>
+        <Grid x:Name="registerGrid" Visibility="Hidden">
+            <StackPanel >
+                <Border Background="WhiteSmoke" Margin="10 20" CornerRadius="5">
+                    <StackPanel Margin="25">
+                        <TextBlock HorizontalAlignment="Center" Text="Please enter your details"/>
+                    </StackPanel>
+                </Border>
+                <TextBox x:Name="tbRegName" TextChanged="tbRegName_TextChanged"  Margin="20,0,19.6,20" materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.Foreground="Green"
+                materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <PasswordBox x:Name="RegPassword" PasswordChanged="RegPassword_PasswordChanged"  Margin="10,10,9.6,10" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.Foreground="Green"
+                materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                <PasswordBox x:Name="ConfirmPassword" PasswordChanged="ConfirmPassword_PasswordChanged"  Margin="20,20,19.6,20" materialDesign:HintAssist.Hint="Confirm Password" materialDesign:HintAssist.Foreground="Green"
+                materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
 
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button  x:Name="RegButton" Margin="15 2" Content="Register" Click="RegButton_Click"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Content="You can always" Margin="-25 5 10 0" />
+                    <Button x:Name="bRegcancel" Margin="-15 1 0 0" Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="MaterialDesignFlatButton" Content="Cancel" Click="bRegcancel_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
         <!--<Grid x:Name="enterGrid" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -74,7 +87,7 @@ Background="AliceBlue"
         </Grid>-->
         <!--#endregion-->
         <!--#region Main-->
-        <Grid x:Name="mainGrid" Visibility="Visible">
+        <Grid x:Name="mainGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>

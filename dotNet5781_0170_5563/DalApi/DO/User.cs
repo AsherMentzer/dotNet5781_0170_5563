@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-   public class User
+    /// <summary>
+    /// class with only properties
+    /// for defenition of user
+    /// </summary>
+    public class User
     {
         public string UserName { get; set; }
         public string Password { get; set; }

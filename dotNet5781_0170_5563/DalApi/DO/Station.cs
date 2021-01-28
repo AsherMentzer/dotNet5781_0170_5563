@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    /// <summary>
+    /// class with only properties
+    /// for defenition of Station
+    /// </summary>
     public class Station 
     {
         public int StationId { get; set; }

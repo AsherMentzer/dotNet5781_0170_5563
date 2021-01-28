@@ -416,8 +416,60 @@ namespace PLGUI
 
         private void bRegister_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("you can't redister now");
-            return;
+            enterGrid.Visibility = Visibility.Hidden;
+            registerGrid.Visibility = Visibility.Visible;
+            Application.Current.MainWindow.Height = 450;
+        }
+        string regName, regPassword, regConfirm;
+        private void tbRegName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            regName = tbRegName.Text;
+        }
+
+        private void RegPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            regPassword = RegPassword.Password;
+        }
+        private void ConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            string a= ConfirmPassword.Password;
+            if (a != regPassword)
+            {
+                ConfirmPassword.BorderBrush = Brushes.Red;
+                return;
+            }
+            else
+            {
+                regConfirm = a;
+                ConfirmPassword.BorderBrush = Brushes.Green;
+            }
+        }
+        private void RegButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (regName == null || regPassword == null ||regConfirm==null)
+            {
+                MessageBox.Show("enter all the details");
+                return;
+            }
+
+            try
+            {
+                bl.AddUser(regName, regPassword);
+                enterGrid.Visibility = Visibility.Visible;
+                registerGrid.Visibility = Visibility.Hidden;
+                Application.Current.MainWindow.Height = 370;
+            }
+            catch (BO.BadUSerNameException)
+            {
+                MessageBox.Show("faild to add");
+            }
+        }
+
+        private void bRegcancel_Click(object sender, RoutedEventArgs e)
+        {
+            enterGrid.Visibility = Visibility.Visible;
+            registerGrid.Visibility = Visibility.Hidden;
+            Application.Current.MainWindow.Height = 370;
         }
 
 
@@ -469,7 +521,7 @@ namespace PLGUI
 
         private void Simulatorworker_DoWork(object sender, DoWorkEventArgs e)
         {
-            bl.StartSimulator(startTime, rate, GetTime);
+           // bl.StartSimulator(startTime, rate, GetTime);
             while (!Simulatorworker.CancellationPending)
                 Thread.Sleep(1000);
         }
@@ -515,7 +567,7 @@ namespace PLGUI
         {
             bl.SetStationPanel(32276, UpdateLineTiming);
             while (!Operatorworker.CancellationPending)
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
         }
         void UpdateLineTiming(BO.LineTiming timing)
         {

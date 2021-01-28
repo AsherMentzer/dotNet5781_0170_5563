@@ -16,7 +16,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <wpf:Map x:Name="map"  CredentialsProvider="gHqGQf0LsHV64GAaTBJv~TOkd3LgsMb9m481Uu9pRgg~AhkYz1pq3k8AYAP1Jevo99bmjkF4JB6OlWcHPVX3PolB7brhDR-wZIetDs28JJYI"
-                 Grid.Column="1" Grid.Row="1" Mode="Road" ZoomLevel="18" >
+                 Grid.Column="1" Grid.Row="1" Mode="Road" ZoomLevel="18">
             <wpf:MapItemsControl ItemsSource="{Binding Locations,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpf:MapItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -25,7 +25,7 @@
                 </wpf:MapItemsControl.ItemTemplate>  
             </wpf:MapItemsControl>
             <Canvas x:Name="cmap"
-                 wpf:MapLayer.Position="{Binding Path=Location,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                 wpf:MapLayer.Position="0,0"
                  wpf:MapLayer.PositionOrigin="Bottomcenter" Width="30" Height="30">
                 <materialDesign:PackIcon Kind="MapMarker" Width="30" Height="30"/>
             </Canvas>

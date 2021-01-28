@@ -8,6 +8,10 @@ using System.Xml.Linq;
 
 namespace DL
 {
+    /// <summary>
+    /// class for all the function that need to deal with the data that stored in xml fiels
+    /// to get spesific data add data delete data and update data
+    /// </summary>
     sealed class DLXML : IDL    //internal
     {
         #region singelton
@@ -74,7 +78,7 @@ namespace DL
         {
             XElement LineRootElem = XMLTools.LoadListFromXMLElement(LinePath);
 
-            return (from l in LineRootElem.Elements()
+            return from l in LineRootElem.Elements()
                     select new Line()
                     {
                         LineId = int.Parse(l.Element("LineId").Value),
@@ -82,7 +86,7 @@ namespace DL
                         FirstStation = int.Parse(l.Element("FirstStation").Value),
                         LastStation = int.Parse(l.Element("LastStation").Value),
                         area = (Areas)Enum.Parse(typeof(Areas), l.Element("area").Value)
-                    });
+                    };
         }
 
         public IEnumerable<Line> GetAllBusLinesBy(Predicate<Line> predicate)
@@ -309,7 +313,7 @@ namespace DL
                    }
                    where predicate(l1)
                    orderby l1.StartTime
-                   select (l1);
+                   select l1;
 
             //List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
             //return from line in ListLinesTrip

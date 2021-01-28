@@ -19,32 +19,43 @@ using Microsoft.Maps.MapControl.WPF;
 using System.Globalization;
 using System.Device.Location;
 using PLGUI.PO;
+using System.Threading;
 //using System.Device.Location;
 //using System.Globalization;
 
 namespace PLGUI
 {
-
+   
     /// <summary>
     /// Interaction logic for ShowLines.xaml
     /// </summary>
     public partial class ShowLines : Window
     {
-
+        Location location; 
         PO.Station s = new PO.Station();
         PO.LineStation ls = new PO.LineStation();
         BO.Station station = new BO.Station();
         ObservableCollection<PO.LineStation> lines = new ObservableCollection<PO.LineStation>();
         IBL bl;
+       // public string Location { get; set; }
         public ShowLines(int id, IBL _bl)
         {
-
+            //Location = "32.091435,34.825758";
             InitializeComponent();
-            //map.Center.Latitude = 32.091435;
-            //map.Center.Longitude = 34.825758;
+            
+            
+               // map.Center.Latitude = 32.091435;
+               // map.Center.Longitude = 34.825758;
+               
+           
             // "32.091435,34.825758"
             bl = _bl;
             station = bl.GetStation(id);
+            location = new Location(station.Latitude, station.Longitude);
+            map.Center = location;
+            MapLayer.SetPosition(cmap,location); //layer = new MapLayer.PositionProperty();
+            
+            //cmap.MapLayer
             station.DeepCopyTo(s);
             foreach (var i in station.lines)
             {
@@ -59,7 +70,8 @@ namespace PLGUI
             };
             if (m != null)
             s.Locations.Add(m);
-              
+             
+           
             //push.Location = s.Location;
             linesDataGrid.DataContext = s.Lines;
             //map.DataContext = s.Locations;

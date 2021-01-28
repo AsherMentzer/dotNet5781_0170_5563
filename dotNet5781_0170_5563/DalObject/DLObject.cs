@@ -10,6 +10,10 @@ using DO;
 using Data;
 namespace DL
 {
+    /// <summary>
+    /// class for all the function that need to deal with the data that stored in the data source
+    /// to get spesific data add data delete data and update data
+    /// </summary>
     sealed class DLObject : IDL
     {      
         #region singelton
@@ -466,7 +470,7 @@ namespace DL
         public void AddUser(User user)
         {
             User us = DataSource.users.FirstOrDefault(u => u.UserName ==user.UserName);
-            if (user != null)
+            if (us != null)
                 throw new BadUSerNameException($"Duplicate User Name: {user.UserName}");
             else
                 DataSource.users.Add(user);

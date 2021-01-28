@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    /// <summary>
+    /// class with only properties
+    /// for defenition of station in line 
+    /// </summary>
     public class StationLine 
     {
         public int LineId { get; set; }

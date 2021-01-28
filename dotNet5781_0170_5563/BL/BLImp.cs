@@ -777,31 +777,34 @@ namespace BL
 
         #endregion
         #region simulator
-        static Watch watch = Watch.Instance;
+        //static Watch watch = Watch.Instance;
         BackgroundWorker SimulatorWorker;
         BackgroundWorker OperatorWorker;
         BackgroundWorker tripWorker;
         int id;
         public void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
         {
+            WatchSimulator.Instance.Observer += updateTime;
+            WatchSimulator.Instance.StartWatch(startTime, Rate);
+
             //BackgroundWorker SimulatorWorker;
-            Stopwatch stopwatch = new Stopwatch();
-            watch.Time = startTime;
-            watch.cancel = false;
-            WatchObserver observer = new WatchObserver(updateTime);
-            SimulatorWorker = new BackgroundWorker();
+            //Stopwatch stopwatch = new Stopwatch();
+            //watch.Time = startTime;
+            //watch.cancel = false;
+            //WatchObserver observer = new WatchObserver(updateTime);
+            //SimulatorWorker = new BackgroundWorker();
             
-            SimulatorWorker.DoWork += (object sender, DoWorkEventArgs e) =>
-            {
-                while (!watch.cancel)
-                {
-                    watch.Time = startTime + new TimeSpan(stopwatch.ElapsedTicks * Rate);
-                    Thread.Sleep(1000);
-                }
-            };
+            //SimulatorWorker.DoWork += (object sender, DoWorkEventArgs e) =>
+            //{
+            //    while (!watch.cancel)
+            //    {
+            //        watch.Time = startTime + new TimeSpan(stopwatch.ElapsedTicks * Rate);
+            //        Thread.Sleep(1000);
+            //    }
+            //};
            
-                stopwatch.Restart();
-            SimulatorWorker.RunWorkerAsync();
+            //    stopwatch.Restart();
+            //SimulatorWorker.RunWorkerAsync();
            
            
         }
@@ -848,138 +851,138 @@ namespace BL
         //    }
         //}
         static Random r = new Random();
-        private void TripWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            DO.LineTrip trip = (DO.LineTrip)e.Argument;
-            BO.Line line = GetBusLine(trip.LineId);
-            DO.Station station = dl.GetStation(line.LastStation);
-            TimeSpan time =  TimeSpan.Zero;
-            List<BO.StationLine> st = line.Stations.ToList();
-            BO.LineTiming TripBO = new BO.LineTiming()
-            {
-                StartTime = trip.StartTime,
-                LineId = trip.LineId,
-                LineNumber = line.LineNumber,
-                LastStationName = station.StationName,
-                ArriveTime = time
-            };
-            for(int i=0;i< st.Count; ++i)
-            {
-                if (st[i].StationId == id)
-                {
-                    TripsOperator.Instance.LineTiming = TripBO;
-                }
-                TripBO.ArriveTime += st[i].AverageTravleTime;
-            }
-            int counter = TripBO.ArriveTime.Minutes;
-            for (int i = 0; i < counter; ++i)
-            {
-                Thread.Sleep(3000);
-                TripBO.ArriveTime -= new TimeSpan(0, 1, 0);
-                TripsOperator.Instance.LineTiming = TripBO;
-            }
-            TripBO.ArriveTime = TimeSpan.Zero;
-            TripsOperator.Instance.LineTiming = TripBO;
-            //for (int i = 0; i < st.Count; ++i)
-            //{
-            //    for (int j = i; j < st.Count; ++j)
-            //    {
-            //        //if you reach to the selected station
-            //        if (st[j].StationId == id)
-            //        {
-            //            //for soft stop to this thread
-            //            //while (!watch.cancel)
+        //private void TripWorker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    DO.LineTrip trip = (DO.LineTrip)e.Argument;
+        //    BO.Line line = GetBusLine(trip.LineId);
+        //    DO.Station station = dl.GetStation(line.LastStation);
+        //    TimeSpan time =  TimeSpan.Zero;
+        //    List<BO.StationLine> st = line.Stations.ToList();
+        //    BO.LineTiming TripBO = new BO.LineTiming()
+        //    {
+        //        StartTime = trip.StartTime,
+        //        LineId = trip.LineId,
+        //        LineNumber = line.LineNumber,
+        //        LastStationName = station.StationName,
+        //        ArriveTime = time
+        //    };
+        //    for(int i=0;i< st.Count; ++i)
+        //    {
+        //        if (st[i].StationId == id)
+        //        {
+        //            TripsOperator.Instance.LineTiming = TripBO;
+        //        }
+        //        TripBO.ArriveTime += st[i].AverageTravleTime;
+        //    }
+        //    int counter = TripBO.ArriveTime.Minutes;
+        //    for (int i = 0; i < counter; ++i)
+        //    {
+        //        Thread.Sleep(3000);
+        //        TripBO.ArriveTime -= new TimeSpan(0, 1, 0);
+        //        TripsOperator.Instance.LineTiming = TripBO;
+        //    }
+        //    TripBO.ArriveTime = TimeSpan.Zero;
+        //    TripsOperator.Instance.LineTiming = TripBO;
+        //    //for (int i = 0; i < st.Count; ++i)
+        //    //{
+        //    //    for (int j = i; j < st.Count; ++j)
+        //    //    {
+        //    //        //if you reach to the selected station
+        //    //        if (st[j].StationId == id)
+        //    //        {
+        //    //            //for soft stop to this thread
+        //    //            //while (!watch.cancel)
 
-            //                TripsOperator.Instance.LineTiming = TripBO;
-            //                int min = (int)( st[i].AverageTravleTime.TotalMilliseconds * 0.9);
-            //                int max = (int)(st[i].AverageTravleTime.TotalMilliseconds  * 2);
-            //            // Thread.Sleep(r.Next(min, max)/60*10);
-            //           Thread.Sleep((int)(st[i].AverageTravleTime.TotalMilliseconds/20));
-            //                //break;
+        //    //                TripsOperator.Instance.LineTiming = TripBO;
+        //    //                int min = (int)( st[i].AverageTravleTime.TotalMilliseconds * 0.9);
+        //    //                int max = (int)(st[i].AverageTravleTime.TotalMilliseconds  * 2);
+        //    //            // Thread.Sleep(r.Next(min, max)/60*10);
+        //    //           Thread.Sleep((int)(st[i].AverageTravleTime.TotalMilliseconds/20));
+        //    //                //break;
 
-            //           // break;
-            //        }
-            //        TripBO.ArriveTime += st[j].AverageTravleTime;
+        //    //           // break;
+        //    //        }
+        //    //        TripBO.ArriveTime += st[j].AverageTravleTime;
 
-            //    }
-            //    TripBO.ArriveTime = TimeSpan.Zero;
-            //    if (st[i].StationId == id)
-            //    {
-            //        //TripBO.ArriveTime = TimeSpan.Zero;
-            //        TripsOperator.Instance.LineTiming = TripBO;
-            //        Thread th = Thread.CurrentThread;
-            //        th.Abort();
-            //        break;
-            //    }
+        //    //    }
+        //    //    TripBO.ArriveTime = TimeSpan.Zero;
+        //    //    if (st[i].StationId == id)
+        //    //    {
+        //    //        //TripBO.ArriveTime = TimeSpan.Zero;
+        //    //        TripsOperator.Instance.LineTiming = TripBO;
+        //    //        Thread th = Thread.CurrentThread;
+        //    //        th.Abort();
+        //    //        break;
+        //    //    }
         
             
-        }
+        //}
 
         public void StopSimulator()
         {
-            watch.cancel = true;
+            WatchSimulator.Instance.cancel = true;
         }
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
-            OperatorWorker = new BackgroundWorker();
-            id =station;
-            TripsOperatorObserver observe = new TripsOperatorObserver(updateBus);
-            OperatorWorker.DoWork += (object sender, DoWorkEventArgs e) =>
-            {
-                //void operate(int lineId)
-                //{
-                //int id = 0;//the station id
-                BO.Station st = GetStation(id);
-                List<DO.LineTrip> trips = new List<DO.LineTrip>();
-                //(from line in st.lines  let item= dl.GetAllLinesTripBy(lt => lt.LineId == line.LineId)                                                    
-                //         select dl.GetAllLinesTripBy(lt => lt.LineId == line.LineId).ToList());
-                foreach (var line in st.lines)
-                {
-                    var b = dl.GetAllLinesTripBy(lt => lt.LineId == line.LineId).ToList();
-                    foreach (var l in b)
-                    {
-                        trips.Add(l);
-                    }
-                }
-                //trips.Sort();--------------------need to fix
-                while (!watch.cancel)
-                {
-                  for (int i = 0; i < trips.Count; ++i)
-                  {
-                    TimeSpan ch = new TimeSpan(0, 0, 50);
-                    //for soft stop to this thread
+            //OperatorWorker = new BackgroundWorker();
+            //id =station;
+            //TripsOperatorObserver observe = new TripsOperatorObserver(updateBus);
+            //OperatorWorker.DoWork += (object sender, DoWorkEventArgs e) =>
+            //{
+            //    //void operate(int lineId)
+            //    //{
+            //    //int id = 0;//the station id
+            //    BO.Station st = GetStation(id);
+            //    List<DO.LineTrip> trips = new List<DO.LineTrip>();
+            //    //(from line in st.lines  let item= dl.GetAllLinesTripBy(lt => lt.LineId == line.LineId)                                                    
+            //    //         select dl.GetAllLinesTripBy(lt => lt.LineId == line.LineId).ToList());
+            //    foreach (var line in st.lines)
+            //    {
+            //        var b = dl.GetAllLinesTripBy(lt => lt.LineId == line.LineId).ToList();
+            //        foreach (var l in b)
+            //        {
+            //            trips.Add(l);
+            //        }
+            //    }
+            //    //trips.Sort();--------------------need to fix
+            //    while (!watch.cancel)
+            //    {
+            //      for (int i = 0; i < trips.Count; ++i)
+            //      {
+            //        TimeSpan ch = new TimeSpan(0, 0, 50);
+            //        //for soft stop to this thread
                    
-                        if (watch.Time - trips[i].StartTime > TimeSpan.Zero && watch.Time - trips[i].StartTime < ch)
-                        {
-                            //string str = $" {trips[i].Id}+{trips[i].LineId}+{trips[i].StartTime}";
-                            tripWorker = new BackgroundWorker();
-                            tripWorker.DoWork += TripWorker_DoWork;
-                            tripWorker.RunWorkerAsync(trips[i]);
-                       }
-                        //int next = i + 1;
-                        //if (i == trips.Count - 1)
-                        //{
-                        //    i = 0;
-                        //    next = 0;
-                        //}
+            //            if (watch.Time - trips[i].StartTime > TimeSpan.Zero && watch.Time - trips[i].StartTime < ch)
+            //            {
+            //                //string str = $" {trips[i].Id}+{trips[i].LineId}+{trips[i].StartTime}";
+            //                tripWorker = new BackgroundWorker();
+            //                tripWorker.DoWork += TripWorker_DoWork;
+            //                tripWorker.RunWorkerAsync(trips[i]);
+            //           }
+            //            //int next = i + 1;
+            //            //if (i == trips.Count - 1)
+            //            //{
+            //            //    i = 0;
+            //            //    next = 0;
+            //            //}
 
-                        //TimeSpan time = new TimeSpan(23, 59, 59);
-                        //int sleepTime;
-                        //if (trips[next].StartTime > trips[i].StartTime)
-                        //{
-                        //    sleepTime = trips[i + 1].StartTime.Milliseconds - trips[i].StartTime.Milliseconds;
-                        //}
-                        //else
-                        //{
-                        //    sleepTime = (int)(trips[i + 1].StartTime.TotalMilliseconds + time.TotalMilliseconds
-                        //    - trips[i].StartTime.TotalMilliseconds);
-                        //}
-                        Thread.Sleep(200);
-                    }
-                }
-            };
-            OperatorWorker.RunWorkerAsync();
+            //            //TimeSpan time = new TimeSpan(23, 59, 59);
+            //            //int sleepTime;
+            //            //if (trips[next].StartTime > trips[i].StartTime)
+            //            //{
+            //            //    sleepTime = trips[i + 1].StartTime.Milliseconds - trips[i].StartTime.Milliseconds;
+            //            //}
+            //            //else
+            //            //{
+            //            //    sleepTime = (int)(trips[i + 1].StartTime.TotalMilliseconds + time.TotalMilliseconds
+            //            //    - trips[i].StartTime.TotalMilliseconds);
+            //            //}
+            //            Thread.Sleep(200);
+            //        }
+            //    }
+            //};
+            //OperatorWorker.RunWorkerAsync();
         }
 
         //void trip(DO.LineTrip trip)
@@ -1021,9 +1024,9 @@ namespace BL
             return user1;
         }
 
-        public void AddUser(string userName, string paaword)
+        public void AddUser(string userName, string password)
         {
-            DO.User user = new DO.User { UserName = userName, Password = paaword, isAdmin = true };
+            DO.User user = new DO.User { UserName = userName, Password = password, isAdmin = true };
             try
             {
                 dl.AddUser(user);

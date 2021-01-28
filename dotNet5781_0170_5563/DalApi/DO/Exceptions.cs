@@ -23,6 +23,9 @@ namespace DO
         public override string ToString() => base.ToString() + $", bad bus Licence id: {ID}";
 
     }
+    /// <summary>
+    /// class for user exceptions
+    /// </summary>
     [Serializable]
     public class BadUSerNameException : Exception
     {

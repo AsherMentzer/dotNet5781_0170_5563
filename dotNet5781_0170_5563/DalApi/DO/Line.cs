@@ -10,6 +10,10 @@ namespace DO
     /// enum for the area of the line
     /// </summary>
     public enum Areas { General = 1, North, West, Center, Jerusalem };
+   /// <summary>
+   /// class with only properties
+   /// for defenition of line
+   /// </summary>
     public class Line 
     {
         public int LineId { get; set; }

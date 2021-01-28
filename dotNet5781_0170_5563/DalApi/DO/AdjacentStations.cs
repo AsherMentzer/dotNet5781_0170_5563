@@ -9,6 +9,10 @@ using System.Xml.Serialization;
 
 namespace DO
 {
+    /// <summary>
+    /// class with only properties to stor data
+    /// for time and distance between 2 stations
+    /// </summary>
     [Serializable]
     public class AdjacentStations 
     {
