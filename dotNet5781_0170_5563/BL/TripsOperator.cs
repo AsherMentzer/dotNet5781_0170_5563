@@ -27,13 +27,79 @@ namespace BL
         }
 
 
-        internal void startPanel()
-        {
-            new Thread(() =>
-                {
+        //internal void startPanel()
+        //{
+        //    new Thread(() =>
+        //        {
+        //            DO.LineTrip trip = (DO.LineTrip)e.Argument;
+        //            BO.Line line = GetBusLine(trip.LineId);
+        //            DO.Station station = dl.GetStation(line.LastStation);
+        //            TimeSpan time = TimeSpan.Zero;
+        //            List<BO.StationLine> st = line.Stations.ToList();
+        //            BO.LineTiming TripBO = new BO.LineTiming()
+        //            {
+        //                StartTime = trip.StartTime,
+        //                LineId = trip.LineId,
+        //                LineNumber = line.LineNumber,
+        //                LastStationName = station.StationName,
+        //                ArriveTime = time
+        //            };
+        //            for (int i = 0; i < st.Count; ++i)
+        //            {
+        //                if (st[i].StationId == id)
+        //                {
+        //                    TripsOperator.Instance.LineTiming = TripBO;
+        //                }
+        //                TripBO.ArriveTime += st[i].AverageTravleTime;
+        //            }
+        //            int counter = TripBO.ArriveTime.Minutes;
+        //            for (int i = 0; i < counter; ++i)
+        //            {
+        //                Thread.Sleep(3000);
+        //                TripBO.ArriveTime -= new TimeSpan(0, 1, 0);
+        //                TripsOperator.Instance.LineTiming = TripBO;
+        //            }
+        //            TripBO.ArriveTime = TimeSpan.Zero;
+        //            TripsOperator.Instance.LineTiming = TripBO;
+        //        for (int i = 0; i < st.Count; ++i)
+        //        {
+        //            for (int j = i; j < st.Count; ++j)
+        //            {
+        //                //if you reach to the selected station
+        //                if (st[j].StationId == id)
+        //                {
+        //                    //for soft stop to this thread
+        //                    //while (!watch.cancel)
 
-                }).Start();
-        }
+        //                    TripsOperator.Instance.LineTiming = TripBO;
+        //                    int min = (int)(st[i].AverageTravleTime.TotalMilliseconds * 0.9);
+        //                    int max = (int)(st[i].AverageTravleTime.TotalMilliseconds * 2);
+        //                    // Thread.Sleep(r.Next(min, max)/60*10);
+        //                    Thread.Sleep((int)(st[i].AverageTravleTime.TotalMilliseconds / 20));
+        //                    //break;
+
+        //                    // break;
+        //                }
+        //                TripBO.ArriveTime += st[j].AverageTravleTime;
+
+        //            }
+        //            TripBO.ArriveTime = TimeSpan.Zero;
+        //            if (st[i].StationId == id)
+        //            {
+        //                //TripBO.ArriveTime = TimeSpan.Zero;
+        //                TripsOperator.Instance.LineTiming = TripBO;
+        //                Thread th = Thread.CurrentThread;
+        //                th.Abort();
+        //                break;
+
+
+
+
+
+
+
+        //            }).Start();
+        //}
         //    protected void OnTimeChanged()
         //    {
         //        if (TimingChange != null)
