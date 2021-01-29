@@ -78,16 +78,6 @@ namespace PLGUI
         TimeSpan startTime;
         string userName, password;
         ObservableCollection<BO.LineTiming> linesTiming = new ObservableCollection<BO.LineTiming>();
-        //{
-        //    new BO.LineTiming
-        //    {
-        //        LineId=1,
-        //        LineNumber=66,
-        //        LastStationName="בדיקה",
-        //        StartTime=new TimeSpan(12,58,00),
-        //        ArriveTime=new TimeSpan(0,10,20)
-        //    }
-        //};
         public MainWindow()
         {
             getAllLines();
@@ -112,6 +102,20 @@ namespace PLGUI
             Operatorworker.ProgressChanged += Operatorworker_ProgressChanged;
             Operatorworker.WorkerReportsProgress = true;
             Operatorworker.WorkerSupportsCancellation = true;
+
+            BO.Station station;//=new BO.Station();
+            PO.Station s=new PO.Station();
+            station = bl.GetStation(32267);
+            station.DeepCopyTo(s);
+            foreach (var i in station.lines)
+            {
+                PO.LineStation ls = new PO.LineStation();
+                i.DeepCopyTo(ls);
+                ls.LastStationName = bl.GetStation(ls.LastStationId).StationName;
+                s.Lines.Add(ls);
+            }
+            // ObservableCollection<PO.LineStation> Pls= s.Lines;
+            dgBoard.ItemsSource = s.Lines;
         }
 
         #region Lines
@@ -508,6 +512,8 @@ namespace PLGUI
                     Simulatorworker.CancelAsync();
                 if (Operatorworker.IsBusy)
                     Operatorworker.CancelAsync();
+                linesTiming = null;
+                lvPanel.ItemsSource = linesTiming;
             }
         }
 
@@ -543,31 +549,22 @@ namespace PLGUI
             if (temp == null)
             {
                 linesTiming.Add(timing);
-                //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
-                //ltime.Content = timing.ArriveTime.Minutes;
+                sort(ref linesTiming);
+               // linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
                 lvPanel.ItemsSource = linesTiming;
             }
             else if (timing.ArriveTime == TimeSpan.Zero)//the time is 0 remove it
             {
                 linesTiming.Remove(temp);
-                //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
+                sort(ref linesTiming);
                 lvPanel.ItemsSource = linesTiming;
             }
             else
             {
-               
-                //this.Dispatcher.Invoke(() =>
-                //{
-                //    temp.ArriveTime = timing.ArriveTime;
-                //});
-               int index = linesTiming.IndexOf(temp);
-                //linesTiming[index] = timing;
-                //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
-                //ltime.Content = timing.ArriveTime.Minutes;
-                
                 linesTiming.Remove(temp);
-                linesTiming.Insert(index,timing);
-                lvPanel.ItemsSource = linesTiming;
+                linesTiming.Add(timing);
+                sort(ref linesTiming);
+                lvPanel.DataContext = linesTiming;
             }
             lvPanel.ItemsSource = linesTiming;
                 //dgPanel.DataContext = linesTiming;
@@ -579,6 +576,12 @@ namespace PLGUI
             while (!Operatorworker.CancellationPending)
                 Thread.Sleep(3000);
         }
+
+        private void lvPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         void UpdateLineTiming(BO.LineTiming timing)
         {
             //TimeSpan time = new TimeSpan();
@@ -604,6 +607,28 @@ namespace PLGUI
             var v = tpTime.SelectedTime;
             if (v != null && startTime != null)
                 startTime = v.Value.TimeOfDay;
+        }
+       void sort(ref ObservableCollection<BO.LineTiming>lt)
+        {
+            for (int i = 0; i < lt.Count-1; i++)
+            {
+                for (int j = 0; j < lt.Count-1; j++)
+                {
+                    if (lt[j].ArriveTime > lt[j+1].ArriveTime)
+                    {
+                        BO.LineTiming temp1 = lt[j];
+                        lt[j] = lt[j + 1];
+                        lt[j + 1] = temp1;
+
+                        //BO.LineTiming temp2= lt[j+1];
+                        //lt.RemoveAt(j);
+                        //lt.Insert(j, temp2);
+                        //lt.RemoveAt(j + 1);
+                        //lt.Insert(j + 1, temp1);
+                    }
+                }
+            }
+            
         }
         #endregion
 

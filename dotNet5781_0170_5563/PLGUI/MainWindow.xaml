@@ -6,7 +6,7 @@
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="370" Width="300"
+        Title="MainWindow" Height="590" Width="960"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -32,7 +32,7 @@
     <Grid>
         <!--#region register-->
 
-        <Grid x:Name="enterGrid" Visibility="Visible" Height="370" Width="300" Background="AliceBlue">
+        <Grid x:Name="enterGrid" Visibility="Hidden" Height="370" Width="300" Background="AliceBlue">
             <StackPanel >
                 <Border Background="WhiteSmoke" Margin="10 20" CornerRadius="5">
                     <StackPanel Margin="25">
@@ -87,7 +87,7 @@
         </Grid>-->
         <!--#endregion-->
         <!--#region Main-->
-        <Grid x:Name="mainGrid" Visibility="Hidden">
+        <Grid x:Name="mainGrid" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
@@ -244,22 +244,23 @@
 
                                 <!--</DataGrid>-->
 
-                                <DataGrid x:Name="dgBoard" HorizontalAlignment="Left" Height="100" Margin="262,322,0,0" VerticalAlignment="Top" Width="315">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn x:Name="lineNum" Binding="{Binding LineNumber ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Line Number" Width="120"/>
-                                        <DataGridTextColumn x:Name="lastStation" Binding="{Binding LastStationName ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Last station" Width="190"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                                <ListView x:Name="lvPanel" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="243" Margin="25,26,0,0" VerticalAlignment="Top" Width="496">
+                                <ListView x:Name="dgBoard" HorizontalAlignment="Left" Height="143" Margin="269,322,0,0" VerticalAlignment="Top" Width="266">
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn x:Name="lineNumber" DisplayMemberBinding="{Binding LineNumber}"/>
-                                            <GridViewColumn x:Name="lastStationName" DisplayMemberBinding="{Binding LastStationName}"/>
-                                            <GridViewColumn x:Name="ArriveTime" DisplayMemberBinding="{Binding ArriveTime}"/>
+                                            <GridViewColumn x:Name="lineNum" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number" Width="120"/>
+                                            <GridViewColumn x:Name="lastStation" DisplayMemberBinding="{Binding LastStationName }" Header="Last station" Width="190"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-                                <Label x:Name="ltime" Content="0" FontSize="50" Margin="642,79,134.4,325.2" />
+                                <ListView x:Name="lvPanel" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="243" Margin="158,54,0,0" VerticalAlignment="Top" Width="496" Background="Yellow">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="lineNumber" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number"/>
+                                            <GridViewColumn x:Name="lastStationName" DisplayMemberBinding="{Binding LastStationName}" Header="Last station"/>
+                                            <GridViewColumn x:Name="ArriveTime" DisplayMemberBinding="{Binding ArriveTime}" Header="Arrive Time"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>

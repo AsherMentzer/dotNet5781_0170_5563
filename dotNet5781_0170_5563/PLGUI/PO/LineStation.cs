@@ -20,10 +20,11 @@ namespace PLGUI
             int lineId;
             int lineNumber;
             int lastStation;
-
+            string lastStationName;
             public int LineId { get { return lineId; } set { if (lineId != value) { lineId = value; OnPropertyChanged(); } } }
             public int LineNumber { get { return lineNumber; } set { if (lineNumber != value) { lineNumber = value; OnPropertyChanged(); } } }
             public int LastStationId { get { return lastStation; } set { if (lastStation != value) { lastStation = value; OnPropertyChanged(); } } }
+            public string LastStationName { get { return lastStationName; } set { if (lastStationName != value) { lastStationName = value; OnPropertyChanged(); } } }
         }
     }
 }

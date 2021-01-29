@@ -123,7 +123,25 @@ namespace BL
                     {
                         double d = rand.NextDouble();
                         d = (d * 1.1) + 0.9;
-                        Thread.Sleep((int)(stations[i].AverageTravleTime.TotalMilliseconds*d  / WatchSimulator.Instance.Rate));
+                        int temp= (int)(stations[i].AverageTravleTime.TotalMilliseconds * d / WatchSimulator.Instance.Rate);
+                        for (int k = 0; k < temp; k+=1000)
+                        {
+                            if (temp - k > 1000)
+                            {
+                                Thread.Sleep(1000);
+                                timing.ArriveTime = new TimeSpan(0,0,0,0,(int)(timing.ArriveTime.TotalMilliseconds- 1000 * WatchSimulator.Instance.Rate));
+                                observer(timing);
+                            }
+                            else
+                            {
+                                Thread.Sleep(temp-k);
+                               /// timing.ArriveTime -= new TimeSpan(0, 0, 0,0, (temp-k) * WatchSimulator.Instance.Rate);
+                               // observer(timing);
+                            }
+                                
+                            //timing.ArriveTime
+                        }
+                        //Thread.Sleep((int)(stations[i].AverageTravleTime.TotalMilliseconds*d  / WatchSimulator.Instance.Rate));
                     }
                     time = TimeSpan.Zero;
                 }

@@ -16,7 +16,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <wpf:Map x:Name="map"  CredentialsProvider="gHqGQf0LsHV64GAaTBJv~TOkd3LgsMb9m481Uu9pRgg~AhkYz1pq3k8AYAP1Jevo99bmjkF4JB6OlWcHPVX3PolB7brhDR-wZIetDs28JJYI"
-                 Grid.Column="1" Grid.Row="1" Mode="Road" ZoomLevel="18">
+                 Grid.Column="1" Grid.Row="1" Mode="Road" ZoomLevel="17">
             <wpf:MapItemsControl ItemsSource="{Binding Locations,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpf:MapItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -39,7 +39,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="lineId" Header="Line Id" Binding="{Binding Path=LineId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" MinWidth="0" MaxWidth="300" />
                 <DataGridTextColumn x:Name="lineNumber" Header="Line Number" Binding="{Binding  Path=LineNumber, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" MinWidth="0" MaxWidth="300"/>
-                <DataGridTextColumn x:Name="last" Header="Last Station" Binding="{Binding  Path=LastStationId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="0" MaxWidth="300"/>
+                <DataGridTextColumn x:Name="last" Header="Last Station" Binding="{Binding  Path=LastStationName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="0" MaxWidth="300"/>
                 
             </DataGrid.Columns>
         </DataGrid>
