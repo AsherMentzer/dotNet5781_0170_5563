@@ -95,9 +95,11 @@ namespace BL
             List<BO.StationLine> stations = line.Stations.ToList();
             BO.LineTiming timing = new BO.LineTiming()
             {
+                LineId=line.LineId,
                 StartTime = trip.StartTime,
                 LineNumber = line.LineNumber,
-                LastStationName = st.StationName
+                LastStationName = st.StationName,
+                ArriveTime=TimeSpan.Zero
             };
             Thread.CurrentThread.Name = $"{line.LineId},{line.LineNumber},{trip.StartTime}";
 
@@ -120,9 +122,10 @@ namespace BL
                     if (i != stations.Count - 1)
                     {
                         double d = rand.NextDouble();
-                        d = d * (1.1) + 0.9;
-                        Thread.Sleep((int)(stations[i].AverageTravleTime.TotalMilliseconds *( d +0.9)/ WatchSimulator.Instance.Rate));
+                        d = (d * 1.1) + 0.9;
+                        Thread.Sleep((int)(stations[i].AverageTravleTime.TotalMilliseconds*d  / WatchSimulator.Instance.Rate));
                     }
+                    time = TimeSpan.Zero;
                 }
                 else
                 {

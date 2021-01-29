@@ -544,7 +544,7 @@ namespace PLGUI
             {
                 linesTiming.Add(timing);
                 //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
-                ltime.Content = timing.ArriveTime.Minutes;
+                //ltime.Content = timing.ArriveTime.Minutes;
                 lvPanel.ItemsSource = linesTiming;
             }
             else if (timing.ArriveTime == TimeSpan.Zero)//the time is 0 remove it
@@ -560,13 +560,13 @@ namespace PLGUI
                 //{
                 //    temp.ArriveTime = timing.ArriveTime;
                 //});
-               // int index = linesTiming.IndexOf(temp);
+               int index = linesTiming.IndexOf(temp);
                 //linesTiming[index] = timing;
                 //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
-                ltime.Content = timing.ArriveTime.Minutes;
+                //ltime.Content = timing.ArriveTime.Minutes;
                 
                 linesTiming.Remove(temp);
-                linesTiming.Add(timing);
+                linesTiming.Insert(index,timing);
                 lvPanel.ItemsSource = linesTiming;
             }
             lvPanel.ItemsSource = linesTiming;
@@ -575,7 +575,7 @@ namespace PLGUI
 
         private void Operatorworker_DoWork(object sender, DoWorkEventArgs e)
         {
-            bl.SetStationPanel(32276, UpdateLineTiming);
+            bl.SetStationPanel(32267, UpdateLineTiming);
             while (!Operatorworker.CancellationPending)
                 Thread.Sleep(3000);
         }
@@ -608,5 +608,6 @@ namespace PLGUI
         #endregion
 
     }
+
 }
 
