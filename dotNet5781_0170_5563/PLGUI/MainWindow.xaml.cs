@@ -521,7 +521,7 @@ namespace PLGUI
 
         private void Simulatorworker_DoWork(object sender, DoWorkEventArgs e)
         {
-           // bl.StartSimulator(startTime, rate, GetTime);
+            bl.StartSimulator(startTime, rate, GetTime);
             while (!Simulatorworker.CancellationPending)
                 Thread.Sleep(1000);
         }
@@ -543,23 +543,33 @@ namespace PLGUI
             if (temp == null)
             {
                 linesTiming.Add(timing);
+                //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
                 ltime.Content = timing.ArriveTime.Minutes;
+                lvPanel.ItemsSource = linesTiming;
             }
             else if (timing.ArriveTime == TimeSpan.Zero)//the time is 0 remove it
+            {
                 linesTiming.Remove(temp);
+                //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
+                lvPanel.ItemsSource = linesTiming;
+            }
             else
             {
+               
                 //this.Dispatcher.Invoke(() =>
                 //{
                 //    temp.ArriveTime = timing.ArriveTime;
                 //});
-                //int index = linesTiming.IndexOf(temp);
+               // int index = linesTiming.IndexOf(temp);
+                //linesTiming[index] = timing;
+                //linesTiming.Sort((x, y) => (int)(x.ArriveTime - y.ArriveTime).TotalMilliseconds);
                 ltime.Content = timing.ArriveTime.Minutes;
+                
                 linesTiming.Remove(temp);
                 linesTiming.Add(timing);
-
+                lvPanel.ItemsSource = linesTiming;
             }
-            lvPanel.DataContext = linesTiming;
+            lvPanel.ItemsSource = linesTiming;
                 //dgPanel.DataContext = linesTiming;
         }
 

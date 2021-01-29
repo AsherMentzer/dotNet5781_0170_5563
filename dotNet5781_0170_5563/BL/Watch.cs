@@ -25,6 +25,8 @@ namespace BL
         internal Watch Simulator { get => simulator; private set => simulator = value; }
         internal volatile bool cancel;
         private int rate;
+        private TimeSpan curTime;
+        internal TimeSpan CurTime{ get { curTime = new TimeSpan(stopwatch.ElapsedTicks)+startTime;return curTime; } }
         internal int Rate { get => rate; private set => rate = value; }
         internal TimeSpan startTime;
         private Stopwatch stopwatch = new Stopwatch();
@@ -50,6 +52,7 @@ namespace BL
                     Thread.Sleep(100);
                 }
             }).Start();
+            TripsOperator.Instance.startPanel();
         }
 
 

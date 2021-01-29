@@ -786,7 +786,7 @@ namespace BL
         {
             WatchSimulator.Instance.Observer += updateTime;
             WatchSimulator.Instance.StartWatch(startTime, Rate);
-
+        }
             //BackgroundWorker SimulatorWorker;
             //Stopwatch stopwatch = new Stopwatch();
             //watch.Time = startTime;
@@ -807,7 +807,7 @@ namespace BL
             //SimulatorWorker.RunWorkerAsync();
            
            
-        }
+        
             
        
 
@@ -925,6 +925,8 @@ namespace BL
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
+            TripsOperator.Instance.stationId = station;
+            TripsOperator.Instance.Observer += updateBus;
             //OperatorWorker = new BackgroundWorker();
             //id =station;
             //TripsOperatorObserver observe = new TripsOperatorObserver(updateBus);

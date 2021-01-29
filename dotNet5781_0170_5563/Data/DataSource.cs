@@ -31,8 +31,8 @@ namespace Data
             //string UserPath = @"UserXml.xml"; //XElement
             //string BusOnTripPath = @"BusOnTripXml.xml"; //XElement
             string AdjacentStationsPath = @"AdjacentStationsXml.xml"; //XElement
-            //string LineTripPath = @"LineTripXml.xml"; //XElement
-           // string TripPath = @"TripXml.xml"; //XElement
+                                                                      //string LineTripPath = @"LineTripXml.xml"; //XElement
+                                                                      // string TripPath = @"TripXml.xml"; //XElement
             string StationLinePath = @"LineStationXml.xml"; //XElement 
             string SerialNumbers = @"SerialNumbersXml.xml";
             string LineTripPath = @"LineTripXml.xml";
@@ -435,7 +435,7 @@ namespace Data
             new AdjacentStations { StationId1 = 4218, StationId2 = 4116, Distance = 1.3, AverageTravleTime = new TimeSpan(0, 1, 0) },
             new AdjacentStations { StationId1 = 4116, StationId2 = 6248, Distance = 2, AverageTravleTime = new TimeSpan(0, 3, 0) },
             new AdjacentStations { StationId1 = 6248, StationId2 = 5666, Distance = 1.1, AverageTravleTime = new TimeSpan(0, 2, 45) },
-              };
+            };
             #endregion
 
 
@@ -470,28 +470,30 @@ namespace Data
                     LineId=1,
                     StartTime=new TimeSpan(13,0,0)
                 },
-                //new LineTrip
-                //{
-                //    LineId=1,
-                //    StartTime=new TimeSpan(13,5,0)
-                //},
-                //new LineTrip
-                //{
-                //    LineId=1,
-                //    StartTime=new TimeSpan(13,10,0)
-                //},
-                //new LineTrip
-                //{
-                //    LineId=2,
-                //    StartTime=new TimeSpan(13,12,0)
-                //},
-                //    new LineTrip
-                //{
-                //    LineId=3,
-                //    StartTime=new TimeSpan(13,0,0)
-                //},
+                new LineTrip
+                {
+                    LineId=1,
+                    StartTime=new TimeSpan(13,5,0)
+                },
+                new LineTrip
+                {
+                    LineId=1,
+                    StartTime=new TimeSpan(13,10,0)
+                },
+                new LineTrip
+                {
+                    LineId=2,
+                    StartTime=new TimeSpan(13,12,0)
+                },
+                new LineTrip
+                {
+                   LineId=3,
+                  StartTime=new TimeSpan(13,15,0)
+                 }
             };
             #endregion
+
         }
     }
 }
+
