@@ -1,0 +1,411 @@
+<?xml version="1.0"?>
+<ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Station>
+    <StationId>84</StationId>
+    <Latitude>31.790758</Latitude>
+    <Longitude>35.209791</Longitude>
+    <StationName>מלכי ישראל/הטורים</StationName>
+  </Station>
+  <Station>
+    <StationId>103</StationId>
+    <Latitude>31.8</Latitude>
+    <Longitude>35.214106</Longitude>
+    <StationName>גולדה/הרטום</StationName>
+  </Station>
+  <Station>
+    <StationId>173</StationId>
+    <Latitude>31.791204</Latitude>
+    <Longitude>35.195787</Longitude>
+    <StationName>גבעת שאול/כתב סופר</StationName>
+  </Station>
+  <Station>
+    <StationId>176</StationId>
+    <Latitude>31.792105</Latitude>
+    <Longitude>35.192721</Longitude>
+    <StationName>גבעת שאול/נג'ארה</StationName>
+  </Station>
+  <Station>
+    <StationId>277</StationId>
+    <Latitude>31.78751</Latitude>
+    <Longitude>35.188178</Longitude>
+    <StationName>מרכז שטנר/כנפי נשרים</StationName>
+  </Station>
+  <Station>
+    <StationId>317</StationId>
+    <Latitude>31.818019</Latitude>
+    <Longitude>35.189665</Longitude>
+    <StationName>רקאנטי/אידלזון</StationName>
+  </Station>
+  <Station>
+    <StationId>334</StationId>
+    <Latitude>31.816595</Latitude>
+    <Longitude>35.201537</Longitude>
+    <StationName>שיבת ציון/שירת הים</StationName>
+  </Station>
+  <Station>
+    <StationId>525</StationId>
+    <Latitude>31.7591</Latitude>
+    <Longitude>35.223334</Longitude>
+    <StationName>דרך חברון/אסתר המלכה</StationName>
+  </Station>
+  <Station>
+    <StationId>645</StationId>
+    <Latitude>31.790348</Latitude>
+    <Longitude>35.197526</Longitude>
+    <StationName>ויצמן/גבעת שאול</StationName>
+  </Station>
+  <Station>
+    <StationId>664</StationId>
+    <Latitude>31.799833</Latitude>
+    <Longitude>35.2156</Longitude>
+    <StationName>ישיבת חורב/שדרות גולדה מאיר</StationName>
+  </Station>
+  <Station>
+    <StationId>666</StationId>
+    <Latitude>31.796452</Latitude>
+    <Longitude>35.219221</Longitude>
+    <StationName>שמואל הנביא/בר אילן</StationName>
+  </Station>
+  <Station>
+    <StationId>1002</StationId>
+    <Latitude>31.772776</Latitude>
+    <Longitude>35.183006</Longitude>
+    <StationName>בית וגן/שדרות הרצל</StationName>
+  </Station>
+  <Station>
+    <StationId>1171</StationId>
+    <Latitude>31.792065</Latitude>
+    <Longitude>35.220651</Longitude>
+    <StationName>יחזקאל/רבנו גרשום</StationName>
+  </Station>
+  <Station>
+    <StationId>1352</StationId>
+    <Latitude>31.798562</Latitude>
+    <Longitude>35.223655</Longitude>
+    <StationName>שד' אשכול/משמר הגבול</StationName>
+  </Station>
+  <Station>
+    <StationId>1601</StationId>
+    <Latitude>31.784994</Latitude>
+    <Longitude>35.215658</Longitude>
+    <StationName>ככר הדוידקה/הנביאים</StationName>
+  </Station>
+  <Station>
+    <StationId>1625</StationId>
+    <Latitude>31.795967</Latitude>
+    <Longitude>35.22077</Longitude>
+    <StationName>חטיבת הראל/שמואל הנביא</StationName>
+  </Station>
+  <Station>
+    <StationId>1727</StationId>
+    <Latitude>31.792259</Latitude>
+    <Longitude>35.207975</Longitude>
+    <StationName>ירמיהו/שמגר</StationName>
+  </Station>
+  <Station>
+    <StationId>1927</StationId>
+    <Latitude>31.799996</Latitude>
+    <Longitude>35.231163</Longitude>
+    <StationName>שד' אשכול/בר לב</StationName>
+  </Station>
+  <Station>
+    <StationId>2524</StationId>
+    <Latitude>31.787175</Latitude>
+    <Longitude>35.181048</Longitude>
+    <StationName>מסוף אגד/כנפי נשרים</StationName>
+  </Station>
+  <Station>
+    <StationId>2539</StationId>
+    <Latitude>31.787352</Latitude>
+    <Longitude>35.1969</Longitude>
+    <StationName>מרכז הרב/הרב צבי יהודה</StationName>
+  </Station>
+  <Station>
+    <StationId>2583</StationId>
+    <Latitude>31.838017</Latitude>
+    <Longitude>35.234681</Longitude>
+    <StationName>שדרות נווה יעקב/משה דיין</StationName>
+  </Station>
+  <Station>
+    <StationId>2946</StationId>
+    <Latitude>31.773999</Latitude>
+    <Longitude>35.21895</Longitude>
+    <StationName>קרן היסוד/אחד העם</StationName>
+  </Station>
+  <Station>
+    <StationId>3287</StationId>
+    <Latitude>31.774226</Latitude>
+    <Longitude>35.186019</Longitude>
+    <StationName>בי''ח שערי צדק/בייט</StationName>
+  </Station>
+  <Station>
+    <StationId>3315</StationId>
+    <Latitude>31.746158</Latitude>
+    <Longitude>35.216946</Longitude>
+    <StationName>דרך חברון/הסדנא</StationName>
+  </Station>
+  <Station>
+    <StationId>3374</StationId>
+    <Latitude>31.784519</Latitude>
+    <Longitude>35.200768</Longitude>
+    <StationName>ביטוח לאומי</StationName>
+  </Station>
+  <Station>
+    <StationId>3633</StationId>
+    <Latitude>31.788651</Latitude>
+    <Longitude>35.217353</Longitude>
+    <StationName>ככר השבת/מלכי ישראל</StationName>
+  </Station>
+  <Station>
+    <StationId>3821</StationId>
+    <Latitude>31.800142</Latitude>
+    <Longitude>35.212823</Longitude>
+    <StationName>מסוף אגד/הר חוצבים</StationName>
+  </Station>
+  <Station>
+    <StationId>3855</StationId>
+    <Latitude>31.781537</Latitude>
+    <Longitude>35.216372</Longitude>
+    <StationName>המלך ג'ורג'/בן יהודה</StationName>
+  </Station>
+  <Station>
+    <StationId>4075</StationId>
+    <Latitude>31.79454</Latitude>
+    <Longitude>35.208029</Longitude>
+    <StationName>רב שפע/שמגר</StationName>
+  </Station>
+  <Station>
+    <StationId>4116</StationId>
+    <Latitude>31.793164</Latitude>
+    <Longitude>35.208542</Longitude>
+    <StationName>שמגר/ירמיהו</StationName>
+  </Station>
+  <Station>
+    <StationId>4156</StationId>
+    <Latitude>31.788603</Latitude>
+    <Longitude>35.202593</Longitude>
+    <StationName>ת. מרכזית ירושלים/יפו</StationName>
+  </Station>
+  <Station>
+    <StationId>4216</StationId>
+    <Latitude>31.787171</Latitude>
+    <Longitude>35.199532</Longitude>
+    <StationName>גשר המיתרים/שד' הרצל</StationName>
+  </Station>
+  <Station>
+    <StationId>4218</StationId>
+    <Latitude>31.787704</Latitude>
+    <Longitude>35.202644</Longitude>
+    <StationName>בנייני האומה/שז''ר</StationName>
+  </Station>
+  <Station>
+    <StationId>5060</StationId>
+    <Latitude>31.794101</Latitude>
+    <Longitude>35.216855</Longitude>
+    <StationName>בר אילן/רבנו גרשום</StationName>
+  </Station>
+  <Station>
+    <StationId>5062</StationId>
+    <Latitude>31.799615</Latitude>
+    <Longitude>35.21149</Longitude>
+    <StationName>קרית מדע/גולדה</StationName>
+  </Station>
+  <Station>
+    <StationId>5602</StationId>
+    <Latitude>31.798621</Latitude>
+    <Longitude>35.145723</Longitude>
+    <StationName>מחלף הראל</StationName>
+  </Station>
+  <Station>
+    <StationId>5666</StationId>
+    <Latitude>31.799489</Latitude>
+    <Longitude>35.213308</Longitude>
+    <StationName>שפע חיים/שדרות גולדה מאיר</StationName>
+  </Station>
+  <Station>
+    <StationId>6109</StationId>
+    <Latitude>31.789082</Latitude>
+    <Longitude>35.202487</Longitude>
+    <StationName>ת. מרכזית ירושלים/הורדה</StationName>
+  </Station>
+  <Station>
+    <StationId>6248</StationId>
+    <Latitude>31.796305</Latitude>
+    <Longitude>35.219594</Longitude>
+    <StationName>שמואל הנביא/הרב בלוי</StationName>
+  </Station>
+  <Station>
+    <StationId>9937</StationId>
+    <Latitude>31.792123</Latitude>
+    <Longitude>35.205389</Longitude>
+    <StationName>ירמיהו/אהליאב</StationName>
+  </Station>
+  <Station>
+    <StationId>20090</StationId>
+    <Latitude>32.096519</Latitude>
+    <Longitude>34.834567</Longitude>
+    <StationName>אברבנאל/המכבים</StationName>
+  </Station>
+  <Station>
+    <StationId>20163</StationId>
+    <Latitude>32.102516</Latitude>
+    <Longitude>34.827959</Longitude>
+    <StationName>אזור התעשייה</StationName>
+  </Station>
+  <Station>
+    <StationId>21109</StationId>
+    <Latitude>32.054798</Latitude>
+    <Longitude>34.833799</Longitude>
+    <StationName>כביש 4/מחלף אלוף שדה</StationName>
+  </Station>
+  <Station>
+    <StationId>21370</StationId>
+    <Latitude>32.091484</Latitude>
+    <Longitude>34.831208</Longitude>
+    <StationName>דרך ז'בוטינסקי/אבן עזרא</StationName>
+  </Station>
+  <Station>
+    <StationId>21558</StationId>
+    <Latitude>32.075695</Latitude>
+    <Longitude>34.833839</Longitude>
+    <StationName>האדמור מנדבורנא/חזון אי''ש</StationName>
+  </Station>
+  <Station>
+    <StationId>21616</StationId>
+    <Latitude>32.092587</Latitude>
+    <Longitude>34.836024</Longitude>
+    <StationName>דרך ז'בוטינסקי/הרב שך</StationName>
+  </Station>
+  <Station>
+    <StationId>22273</StationId>
+    <Latitude>32.093343</Latitude>
+    <Longitude>34.822094</Longitude>
+    <StationName>מגדל קונקורד/דרך בן גוריון</StationName>
+  </Station>
+  <Station>
+    <StationId>22942</StationId>
+    <Latitude>32.074823</Latitude>
+    <Longitude>34.843553</Longitude>
+    <StationName>מחלף גבעת שמואל/כביש 4</StationName>
+  </Station>
+  <Station>
+    <StationId>22980</StationId>
+    <Latitude>32.091435</Latitude>
+    <Longitude>34.825758</Longitude>
+    <StationName>דרך ז'בוטינסקי/רבי עקיבא</StationName>
+  </Station>
+  <Station>
+    <StationId>23064</StationId>
+    <Latitude>32.085267</Latitude>
+    <Longitude>34.836363</Longitude>
+    <StationName>חזון אי''ש/רבי עקיבא</StationName>
+  </Station>
+  <Station>
+    <StationId>25114</StationId>
+    <Latitude>32.091267</Latitude>
+    <Longitude>34.845151</Longitude>
+    <StationName>מחלף גהה/כביש 4</StationName>
+  </Station>
+  <Station>
+    <StationId>26416</StationId>
+    <Latitude>32.091396</Latitude>
+    <Longitude>34.829253</Longitude>
+    <StationName>דרך ז'בוטינסקי/דב גרונר</StationName>
+  </Station>
+  <Station>
+    <StationId>26544</StationId>
+    <Latitude>32.092321</Latitude>
+    <Longitude>34.834218</Longitude>
+    <StationName>דרך ז'בוטינסקי/סוקולוב</StationName>
+  </Station>
+  <Station>
+    <StationId>26946</StationId>
+    <Latitude>32.098763</Latitude>
+    <Longitude>34.82545</Longitude>
+    <StationName>קניון איילון</StationName>
+  </Station>
+  <Station>
+    <StationId>31582</StationId>
+    <Latitude>32.085236</Latitude>
+    <Longitude>34.882211</Longitude>
+    <StationName>רוטשילד / פרנקפורטר</StationName>
+  </Station>
+  <Station>
+    <StationId>32247</StationId>
+    <Latitude>32.08561</Latitude>
+    <Longitude>34.881445</Longitude>
+    <StationName>דוד פרנקפורטר/רוטשילד</StationName>
+  </Station>
+  <Station>
+    <StationId>32267</StationId>
+    <Latitude>32.092094</Latitude>
+    <Longitude>34.857857</Longitude>
+    <StationName>דרך זאב ז'בוטינסקי/הסיבים</StationName>
+  </Station>
+  <Station>
+    <StationId>32269</StationId>
+    <Latitude>32.091208</Latitude>
+    <Longitude>34.867399</Longitude>
+    <StationName>בי''ח בלינסון/ז'בוטינסקי</StationName>
+  </Station>
+  <Station>
+    <StationId>32270</StationId>
+    <Latitude>32.092397</Latitude>
+    <Longitude>34.854627</Longitude>
+    <StationName>ז'בוטינסקי/אלברט איינשטיין</StationName>
+  </Station>
+  <Station>
+    <StationId>32274</StationId>
+    <Latitude>32.092462</Latitude>
+    <Longitude>34.850598</Longitude>
+    <StationName>דרך זאב ז'בוטינסקי/היצירה</StationName>
+  </Station>
+  <Station>
+    <StationId>32276</StationId>
+    <Latitude>32.092361</Latitude>
+    <Longitude>34.847907</Longitude>
+    <StationName>מחלף גהה/ז'בוטינסקי</StationName>
+  </Station>
+  <Station>
+    <StationId>32376</StationId>
+    <Latitude>32.085554</Latitude>
+    <Longitude>34.869311</Longitude>
+    <StationName>ארלוזורוב/צה''ל</StationName>
+  </Station>
+  <Station>
+    <StationId>32411</StationId>
+    <Latitude>32.075781</Latitude>
+    <Longitude>34.886288</Longitude>
+    <StationName>מיכל פינס / רוטשילד</StationName>
+  </Station>
+  <Station>
+    <StationId>32779</StationId>
+    <Latitude>32.098998</Latitude>
+    <Longitude>34.876335</Longitude>
+    <StationName>קניון אם מושבות</StationName>
+  </Station>
+  <Station>
+    <StationId>36709</StationId>
+    <Latitude>32.08663</Latitude>
+    <Longitude>34.87814</Longitude>
+    <StationName>טרומפלדור/פיק''א</StationName>
+  </Station>
+  <Station>
+    <StationId>36780</StationId>
+    <Latitude>32.094938</Latitude>
+    <Longitude>34.88653</Longitude>
+    <StationName>ת. מרכזית פ''ת/רציפים עירוני</StationName>
+  </Station>
+  <Station>
+    <StationId>38315</StationId>
+    <Latitude>32.088538</Latitude>
+    <Longitude>34.868576</Longitude>
+    <StationName>בית חולים שניידר</StationName>
+  </Station>
+  <Station>
+    <StationId>38317</StationId>
+    <Latitude>32.097637</Latitude>
+    <Longitude>34.876071</Longitude>
+    <StationName>חנן לויתן/ברוריה בת תרדיון</StationName>
+  </Station>
+</ArrayOfStation>
