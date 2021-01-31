@@ -22,14 +22,11 @@ namespace DL
         #endregion
 
         #region DS XML Files
-        string BusPath = @"BusXml.xml"; //XElement
         string LinePath = @"LineXml.xml"; //XElement
         string StationPath = @"StationXml.xml"; //XElement
         string UserPath = @"UserXml.xml"; //XElement
-        string BusOnTripPath = @"BusOnTripXml.xml"; //XElement
         string AdjacentStationsPath = @"AdjacentStationsXml.xml"; //XElement
         string LineTripPath = @"LineTripXml.xml"; //XElement
-        string TripPath = @"TripXml.xml"; //XElement
         string StationLinePath = @"LineStationXml.xml"; //XElement
         string SerialNumbersPath = @"SerialNumbersXml.xml"; //XElement
 
@@ -73,6 +70,7 @@ namespace DL
         //}
         //#endregion
         //full with linq to xml
+
         #region Line
         public IEnumerable<Line> GetAllBusLines()
         {
@@ -170,12 +168,6 @@ namespace DL
             else
                 throw new DO.BadBusLineIdException(busLine.LineId, $"bad person id: {busLine.LineId}");
         }
-
-        public void UpdateBusLine(int lineId, Action<Line> update)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteBusLine(int lineId)
         {
             XElement LineRootElem = XMLTools.LoadListFromXMLElement(LinePath);
@@ -193,7 +185,7 @@ namespace DL
                 throw new DO.BadBusLineIdException(lineId, $"bad person id: {lineId}");
         }
         #endregion
-        //full
+        
         #region Station
         public IEnumerable<Station> GetAllStations()
         {
@@ -258,11 +250,6 @@ namespace DL
             XMLTools.SaveListToXMLSerializer(ListStations, StationPath);
         }
 
-        public void UpdateStation(int id, Action<Station> update)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteStation(int id)
         {
             List<Station> ListStations = XMLTools.LoadListFromXMLSerializer<Station>(StationPath);
@@ -280,7 +267,7 @@ namespace DL
             XMLTools.SaveListToXMLSerializer(ListStations, StationPath);
         }
         #endregion
-        //empty
+        
         #region LineTrip
         public IEnumerable<LineTrip> GetAllLinesTrip()
         {
@@ -291,12 +278,13 @@ namespace DL
                        Id = int.Parse(lt.Element("Id").Value),
                        LineId = int.Parse(lt.Element("LineId").Value),
                        StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                       //Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
-                       //EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
+                       Frequency = XmlConvert.ToTimeSpan(lt.Element("Frequency").Value),
+                       EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                    };
-            //List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
-            //return from line in ListLinesTrip
-            //       select line;
+            /*
+            List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            return from line in ListLinesTrip
+                   select line;*/
         }
 
         public IEnumerable<LineTrip> GetAllLinesTripBy(Predicate<LineTrip> predicate)
@@ -308,61 +296,63 @@ namespace DL
                        Id = int.Parse(lt.Element("Id").Value),
                        LineId = int.Parse(lt.Element("LineId").Value),
                        StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                       //Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
-                       //EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
+                       Frequency = XmlConvert.ToTimeSpan(lt.Element("Frequency").Value),
+                       EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                    }
                    where predicate(l1)
                    orderby l1.StartTime
                    select l1;
-
-            //List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
-            //return from line in ListLinesTrip
-            //       where predicate(line)
-            //       select line;
+                /*
+            List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            return from line in ListLinesTrip
+                   where predicate(line)
+                   select line;
+                */
         }
 
         public LineTrip GetLineTrip(int lineId, TimeSpan time)
         {
-            XElement LineTripRootElem = XMLTools.LoadListFromXMLElement(LineTripPath);
-            LineTrip line = (from lt in LineTripRootElem.Elements()
-                             where int.Parse(lt.Element("LineId").Value) == lineId &&
-                            XmlConvert.ToTimeSpan(lt.Element("StartTime").Value) == time
-                             select new LineTrip
-                             {
-                                 Id = int.Parse(lt.Element("Id").Value),
-                                 LineId = int.Parse(lt.Element("LineId").Value),
-                                 StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                                 //Frequncy = XmlConvert.ToTimeSpan(lt.Element("Frequncy").Value),
-                                 //EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
-                             }).FirstOrDefault();
+             XElement LineTripRootElem = XMLTools.LoadListFromXMLElement(LineTripPath);
+             LineTrip line = (from lt in LineTripRootElem.Elements()
+                              where int.Parse(lt.Element("LineId").Value) == lineId &&
+                             XmlConvert.ToTimeSpan(lt.Element("StartTime").Value) == time
+                              select new LineTrip
+                              {
+                                  Id = int.Parse(lt.Element("Id").Value),
+                                  LineId = int.Parse(lt.Element("LineId").Value),
+                                  StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
+                                  Frequency = XmlConvert.ToTimeSpan(lt.Element("Frequency").Value),
+                                  EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
+                              }).FirstOrDefault();
 
+             if (line != null)
+                 return line;
+             else
+                 throw new BadLineTripException(lineId, time, "bad line trip id:{lineId} starting at{time}");
+             /*
+            List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            LineTrip line = ListLinesTrip.Find(lt => lt.LineId == lineId && lt.StartTime == time);
             if (line != null)
                 return line;
             else
-                throw new BadLineTripException(lineId, time, "bad line trip id:{lineId} starting at{time}");
-            //List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
-            //LineTrip line = ListLinesTrip.Find(lt => lt.LineId == lineId && lt.StartTime == time);
-            //if (line != null)
-            //    return line;
-            //else
-            //    throw new BadLineTripException(lineId, time, "bad line trip id:{lineId} starting at{time}");
+                throw new BadLineTripException(lineId, time, "bad line trip id:{lineId} starting at{time*/
         }
 
         public void AddLineTrip(LineTrip line)
         {
             XElement LineTripRootElem = XMLTools.LoadListFromXMLElement(LineTripPath);
 
-            //XElement SerialNum = XMLTools.LoadListFromXMLElement(SerialNumbersPath);
-            // int id = int.Parse(SerialNum.Element("LineId").Value) + 1;
-            //SerialNum.Element("LineId").Value = (int.Parse(SerialNum.Element("LineId").Value) + 1).ToString();
-            //SerialNum.Save(SerialNumbersPath);
+            XElement SerialNum = XMLTools.LoadListFromXMLElement(SerialNumbersPath);
+             int id = int.Parse(SerialNum.Element("LineId").Value) + 1;
+            SerialNum.Element("LineId").Value = (int.Parse(SerialNum.Element("LineId").Value) + 1).ToString();
+            SerialNum.Save(SerialNumbersPath);
 
             XElement lt = new XElement("LineTrip",
                 new XElement("Id", line.Id),
                 new XElement("LineId", line.LineId),
-                new XElement("StartTime", XmlConvert.ToString(line.StartTime))
-                //new XElement("Frequncy", XmlConvert.ToString(line.Frequncy)),
-               // new XElement("EndTime", XmlConvert.ToString(line.EndTime))
+                new XElement("StartTime", XmlConvert.ToString(line.StartTime)),
+                new XElement("Frequency", XmlConvert.ToString(line.Frequency)),
+                new XElement("EndTime", XmlConvert.ToString(line.EndTime))
                 );
 
             LineTripRootElem.Add(lt);
@@ -375,16 +365,6 @@ namespace DL
             //XMLTools.SaveListToXMLSerializer(ListLinesTrip, LineTripPath);
         }
 
-        public void UpdateLineTrip(LineTrip lineExist)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateLineTrip(int lineId, Action<Line> update)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteLineTrip(int lineId, TimeSpan time)
         {
             List<LineTrip> ListLinesTrip = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
@@ -395,7 +375,7 @@ namespace DL
                 throw new BadLineTripException(lineId, time, "bad line trip id:{lineId} starting at{time}");
         }
         #endregion
-        //full
+
         #region AdjacentStations     
         public IEnumerable<AdjacentStations> GetAllPairs()
         {
@@ -542,11 +522,6 @@ namespace DL
             //XMLTools.SaveListToXMLSerializer(ListAdjacentStations, AdjacentStationsPath);
         }
 
-        public void UpdatePair(int id, Action<AdjacentStations> update)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeletePair(int id1, int id2)
         {
             List<AdjacentStations> ListAdjacentStations = XMLTools.LoadListFromXMLSerializer<AdjacentStations>(AdjacentStationsPath);
@@ -561,7 +536,7 @@ namespace DL
             XMLTools.SaveListToXMLSerializer(ListAdjacentStations, AdjacentStationsPath);
         }
         #endregion
-        //full
+        
         #region StationLine
         public IEnumerable<StationLine> GetAllStationsLine()
         {
@@ -642,11 +617,6 @@ namespace DL
             XMLTools.SaveListToXMLSerializer(ListStationsLine, StationLinePath);
         }
 
-        public void UpdateStationLine(int id, Action<StationLine> update)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteStationLine(int id, int sId)
         {
             List<StationLine> ListStationsLine = XMLTools.LoadListFromXMLSerializer<StationLine>(StationLinePath);
@@ -661,44 +631,8 @@ namespace DL
             XMLTools.SaveListToXMLSerializer(ListStationsLine, StationLinePath);
         }
         #endregion ///full
-        //empty
-        #region BusOnTrip
-        public IEnumerable<BusOnTrip> GetAllTravelBuses()
-        {
-            throw new NotImplementedException();
-        }
 
-        public IEnumerable<BusOnTrip> GetAllTravelBusesLineBy(Predicate<BusOnTrip> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Station GetTravelBus(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddTravelBus(BusOnTrip travelBus)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateTravelBus(BusOnTrip travelBus)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateTravelBus(int id, Action<BusOnTrip> update)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteTravelBus(int id)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
+        #region User
         public User GetUser(string userName)
         {
             XElement UserRootElem = XMLTools.LoadListFromXMLElement(UserPath);
@@ -723,5 +657,6 @@ namespace DL
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

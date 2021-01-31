@@ -78,6 +78,7 @@ namespace PLGUI
         TimeSpan startTime;
         string userName, password;
         ObservableCollection<BO.LineTiming> linesTiming = new ObservableCollection<BO.LineTiming>();
+        ObservableCollection<PO.LineStation> board = new ObservableCollection<PO.LineStation>();
         public MainWindow()
         {
             this.Closed += MainWindow_Closed;
@@ -87,6 +88,8 @@ namespace PLGUI
             cbLineNum.ItemsSource = lines;            
             cbLineNum.DisplayMemberPath = "LineNumber";
             cbLineNum.SelectedValuePath = "LineId";
+            cbstations.ItemsSource = stations;
+            cbstations.DisplayMemberPath = "StationId";
             getAllStations();
             stationsDataGrid.DataContext = stations;
             lvPanel.DataContext = linesTiming;
@@ -101,18 +104,7 @@ namespace PLGUI
             Operatorworker.WorkerReportsProgress = true;
             Operatorworker.WorkerSupportsCancellation = true;
 
-            BO.Station station;//=new BO.Station();
-            PO.Station s = new PO.Station();
-            station = bl.GetStation(32267);
-            station.DeepCopyTo(s);
-            foreach (var i in station.lines)
-            {
-                PO.LineStation ls = new PO.LineStation();
-                i.DeepCopyTo(ls);
-                ls.LastStationName = bl.GetStation(ls.LastStationId).StationName;
-                s.Lines.Add(ls);
-            }
-            dgBoard.ItemsSource = s.Lines;
+            
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -496,6 +488,7 @@ namespace PLGUI
                 tbrate.IsEnabled = false;
                 tpTime.IsEnabled = false;
                 linesTiming = new ObservableCollection<BO.LineTiming>();
+                simulatorGrid.Visibility = Visibility.Visible;
                 Operatorworker.RunWorkerAsync();
                 Simulatorworker.RunWorkerAsync();
             }
@@ -509,6 +502,10 @@ namespace PLGUI
                 rate = 0;
                 tbrate.Text = "";
                 bl.StopSimulator();
+                cbstations.SelectedIndex=-1;
+                cbstations.Text = "";
+                dgBoard.ItemsSource = null;
+                simulatorGrid.Visibility = Visibility.Hidden;
                 if (Simulatorworker.IsBusy)
                     Simulatorworker.CancelAsync();
                 if (Operatorworker.IsBusy)
@@ -518,7 +515,6 @@ namespace PLGUI
                 lvPanel.ItemsSource = linesTiming;
             }
         }
-
         private void Simulatorworker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
@@ -542,10 +538,11 @@ namespace PLGUI
                 Simulatorworker.ReportProgress((int)a.TotalSeconds);
             }
         }
-
+        
         private void Operatorworker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            //if(boarsSt !=null)
+            //dgBoard.ItemsSource = boarsSt.Lines;
             BO.LineTiming timing = (BO.LineTiming)e.UserState;
             BO.LineTiming temp = null;
             if (linesTiming != null)
@@ -585,14 +582,35 @@ namespace PLGUI
         
         private void Operatorworker_DoWork(object sender, DoWorkEventArgs e)
         {
-            bl.SetStationPanel(32267, UpdateLineTiming);
+            bl.SetStationPanel(-1, UpdateLineTiming);
             while (!Operatorworker.CancellationPending)
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
         }
 
         private void lvPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void cbstations_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {         
+                PO.Station st = cbstations.SelectedItem as PO.Station;
+                linesTiming.Clear();
+                lvPanel.DataContext = linesTiming;
+            if (st != null)
+            {
+                bl.SetStationPanel(st.StationId, UpdateLineTiming);
+                foreach (var l in st.Lines)
+                {
+                    BO.Station name = bl.GetStation(l.LastStationId);
+                    l.LastStationName = name.StationName;
+                }
+                dgBoard.ItemsSource = st.Lines;
+            }
+            else
+            {
+                bl.SetStationPanel(-1, UpdateLineTiming);
+            }
         }
 
         void UpdateLineTiming(BO.LineTiming timing)

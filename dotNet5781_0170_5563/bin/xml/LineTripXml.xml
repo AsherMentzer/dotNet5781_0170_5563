@@ -4,6 +4,7 @@
     <Id>0</Id>
     <LineId>1</LineId>
     <StartTime>PT13H</StartTime>
+    <Frequency>PT10M</Frequency>
     <EndTime>PT18H</EndTime>
   </LineTrip>
   <LineTrip>
@@ -52,36 +53,42 @@
     <Id>0</Id>
     <LineId>4</LineId>
     <StartTime>PT13H2M</StartTime>
+    <Frequency>PT10M</Frequency>
     <EndTime>PT18H</EndTime>
   </LineTrip>
   <LineTrip>
     <Id>0</Id>
     <LineId>5</LineId>
     <StartTime>PT13H2M</StartTime>
+    <Frequency>PT10M</Frequency>
     <EndTime>PT18H</EndTime>
   </LineTrip>
   <LineTrip>
     <Id>0</Id>
     <LineId>6</LineId>
     <StartTime>PT13H2M</StartTime>
+    <Frequency>PT10M</Frequency>
     <EndTime>PT18H</EndTime>
   </LineTrip>
   <LineTrip>
     <Id>0</Id>
     <LineId>7</LineId>
     <StartTime>PT13H2M</StartTime>
+    <Frequency>PT10M</Frequency>
     <EndTime>PT18H</EndTime>
   </LineTrip>
   <LineTrip>
     <Id>0</Id>
     <LineId>8</LineId>
     <StartTime>PT13H2M</StartTime>
+    <Frequency>PT10M</Frequency>
     <EndTime>PT18H</EndTime>
   </LineTrip>
   <LineTrip>
     <Id>0</Id>
     <LineId>9</LineId>
     <StartTime>PT13H2M</StartTime>
+    <Frequency>PT10M</Frequency>
     <EndTime>PT18H</EndTime>
   </LineTrip>
 </ArrayOfLineTrip>

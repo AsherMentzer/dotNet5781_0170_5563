@@ -26,11 +26,13 @@ namespace BL
         private event Action<BO.LineTiming> observer;
         internal event Action<BO.LineTiming> Observer
         {
-            add { observer += value; }
+            add { observer = value; }
             remove { observer -= value; }
         }
 
-
+        List<BO.Line> lines = new List<Line>();
+        List<BO.Station> LastStations = new List<Station>();
+        List<List<StationLine>> allStations = new List<List<StationLine>>();
         internal void startPanel()
         {
             new Thread(() =>
@@ -51,6 +53,23 @@ namespace BL
                     }
                     trips.Sort((x, y) => (int)(x.StartTime - y.StartTime).TotalMilliseconds);
 
+                    //BO.Line line = bl.GetBusLine(trip.LineId);
+                    //BO.Station st = bl.GetStation(line.LastStation);
+                    lines = (from item in allTrips
+                             select bl.GetBusLine(item.LineId)).ToList();
+                            
+                    
+                    foreach(var item in lines)
+                    {
+                        lines.Distinct();
+                    }
+                    foreach(var item in lines)
+                    {
+                        BO.Station st= bl.GetStation(item.LastStation);
+                        List<BO.StationLine> stations = item.Stations.ToList();
+                        LastStations.Add(st);
+                        allStations.Add(stations);
+                    }
                     int i = 0;
                     if (WatchSimulator.Instance.CurTime > trips[0].StartTime)
                     {
@@ -88,9 +107,9 @@ namespace BL
         }
         private void tripThread(BO.LineTrip trip)
         {
-            BO.Line line = bl.GetBusLine(trip.LineId);
-            BO.Station st = bl.GetStation(line.LastStation);
-            List<BO.StationLine> stations = line.Stations.ToList();
+            BO.Line line = lines.FirstOrDefault(x=>x.LineId==trip.LineId);
+            BO.Station st = LastStations.FirstOrDefault(x => x.StationId == line.LastStation);
+            List<BO.StationLine> stations = allStations.FirstOrDefault(x => x.Any(y => y.LineId == trip.LineId));
             BO.LineTiming timing = new BO.LineTiming()
             {
                 LineId = line.LineId,
@@ -102,23 +121,25 @@ namespace BL
             Thread.CurrentThread.Name = $"{line.LineId},{line.LineNumber},{trip.StartTime}";
 
             TimeSpan time = TimeSpan.Zero;
-
+            int id=-1;
+            int j;
             for (int i = 0; i < stations.Count && !WatchSimulator.Instance.cancel; ++i)
             {
                 if (stations[i].StationId != stationId)
                 {
-                    bool flag=false;
-                    for (int j = i; j < stations.Count && !WatchSimulator.Instance.cancel; ++j)
+                    bool flag = false;
+                    for (j = i; j < stations.Count && !WatchSimulator.Instance.cancel; ++j)
                     {
                         if (stations[j].StationId == stationId)
                         {
+                            id = stations[j].StationId;
                             timing.ArriveTime = time;
                             flag = true;
                             break;
                         }
                         time += stations[j].AverageTravleTime;
                     }
-                    if (i != stations.Count - 1 && flag)
+                    if (i != stations.Count - 1 && flag && stations[j].StationId == stationId)
                     {
                         double d = rand.NextDouble();
                         d = (d * 1.1) + 0.9;
@@ -126,7 +147,7 @@ namespace BL
                         timing.ArriveTime += new TimeSpan(0, 0, (int)(stations[i].AverageTravleTime.TotalSeconds * d - stations[i].AverageTravleTime.TotalSeconds));
                         if (!WatchSimulator.Instance.cancel)
                             observer(timing);
-                        for (int k = 0; k < temp && !WatchSimulator.Instance.cancel; k += 1000)
+                        for (int k = 0; k < temp && !WatchSimulator.Instance.cancel && id == stationId; k += 1000)
                         {
                             if (temp - k > 1000)
                             {
@@ -140,6 +161,12 @@ namespace BL
                         }
                     }
                     time = TimeSpan.Zero;
+                    if (id != stationId)
+                    {
+                        timing.ArriveTime = TimeSpan.Zero;
+                        break;
+                        observer(timing);
+                    }
                 }
                 else
                 {

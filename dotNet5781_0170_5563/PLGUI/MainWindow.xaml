@@ -20,26 +20,7 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="Turquoise"/>
         </Style>
-        
-        <!--<Style x:Key="panel" TargetType="ListView">
-            <Setter Property="ListView.View">
-                <Setter.Value>
-                    <GridView>
-                        <GridViewColumn x:Name="lineNum" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number" Width="120"/>
-                        <GridViewColumn x:Name="lastStation" DisplayMemberBinding="{Binding LastStationName }" Header="Last station" Width="190"/>
-                    </GridView>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Background" Value="Yellow"/>
-        </Style>-->
-        <!--<Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            -->
-        <!--<Setter Property="Background" Value="Turquoise"/>
-            <Setter Property="BorderThickness" Value="0,0,1,2"/>
-            <Setter Property="BorderBrush" Value="Black" />-->
-        <!--
-        </Style>-->
+
     </Window.Resources>
     <Grid>
         <!--#region register-->
@@ -245,7 +226,7 @@
 
                     <TabItem x:Name="simulator" Header="simulator" Margin="0,145.6,-2,-219.6">
                         <TabItem.Content>
-                            <Grid>
+                            <Grid x:Name="simulatorGrid" Visibility="Visible">
                                 <ListView x:Name="dgBoard"  HorizontalAlignment="Left" Height="189" Margin="207,286,0,0" VerticalAlignment="Top" Width="383">
                                     <ListView.View>
                                         <GridView>
@@ -255,21 +236,25 @@
                                     </ListView.View>
                                 </ListView>
 
-                                <ListView x:Name="lvPanel" MaxHeight="230"  ItemsSource="{Binding}" HorizontalAlignment="Left" Height="256" Margin="185,-7,0,0" VerticalAlignment="Top" Width="496" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" >
+                                <ListView x:Name="lvPanel" MaxHeight="230"  ItemsSource="{Binding}" HorizontalAlignment="Left" Height="256" Margin="207,-7,0,0" VerticalAlignment="Top" Width="587" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" >
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn x:Name="lineNumber" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number"/>
-                                            <GridViewColumn x:Name="lastStationName" DisplayMemberBinding="{Binding LastStationName}" Header="Last station"/>
-                                            <GridViewColumn x:Name="ArriveTime" DisplayMemberBinding="{Binding ArriveTime}" Header="Arrive Time"/>
+                                            <GridViewColumn x:Name="lineNumber" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number" Width="140"/>
+                                            <GridViewColumn x:Name="lastStationName" DisplayMemberBinding="{Binding LastStationName}"
+                                                          Header="Last station" Width="200"/>
+                                            <GridViewColumn x:Name="ArriveTime" DisplayMemberBinding="{Binding ArriveTime}" Header="Arrive Time" Width="160"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
                                 <Border BorderThickness="2" BorderBrush="Black" Margin="274,249,292.4,180.2" Background="Transparent">
                                     <TextBlock x:Name="tblast" TextWrapping="Wrap" Text="{Binding}" Margin="10,0,0,0"/>
                                 </Border>
+                                <ComboBox x:Name="cbstations"  Height="70" SelectionChanged="cbstations_SelectionChanged" Margin="10,60,679.4,345.2"/>
+                                <Label Content="Select the Station to observ:" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" Width="167"/>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
+
 
 
 
