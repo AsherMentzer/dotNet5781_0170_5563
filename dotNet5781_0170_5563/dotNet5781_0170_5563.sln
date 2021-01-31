@@ -32,6 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		bin\xml\SerialNumbersXml.xml = bin\xml\SerialNumbersXml.xml
 		bin\xml\StationXml.xml = bin\xml\StationXml.xml
 		bin\xml\UserXml.xml = bin\xml\UserXml.xml
+		..\..\..\..\Downloads\Telegram Desktop\מידע כללי.docx = ..\..\..\..\Downloads\Telegram Desktop\מידע כללי.docx
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLGUI", "PLGUI\PLGUI.csproj", "{7350C025-5A79-4AF6-83C1-15C3DD56C101}"

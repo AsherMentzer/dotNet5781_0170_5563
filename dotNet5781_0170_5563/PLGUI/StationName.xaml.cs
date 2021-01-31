@@ -51,7 +51,7 @@ namespace PLGUI
                 bl.UpdateStation(s);
                 
             }
-            catch(BO.BadStationIdException ex) { }
+            catch(BO.BadStationIdException) { }
             station.StationName = newName;
             this.Close();
         }

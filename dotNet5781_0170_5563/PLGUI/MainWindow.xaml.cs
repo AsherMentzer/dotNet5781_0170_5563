@@ -30,17 +30,15 @@ namespace PLGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        Stopwatch watch = new Stopwatch();
         #region get the data
         IBL bl = BLFactory.GetBL("1");
-        void GetAllStations()
-        {
-            var v = bl.GetAllStations();
-        }
         PO.BusLine line;
         ObservableCollection<PO.BusLine> lines = new ObservableCollection<PO.BusLine>();
         ObservableCollection<PO.Station> stations = new ObservableCollection<PO.Station>();
         List<BO.Line> alines = new List<BO.Line>();
+        /// <summary>
+        /// get all the stations from the data to dhow in the presention
+        /// </summary>
         void getAllLines()
         {
             foreach (BO.Line b in bl.GetAllBusLines())
@@ -55,13 +53,15 @@ namespace PLGUI
                 lines.Add(line);
             }
         }
+        /// <summary>
+        /// get all the stations from the data to dhow in the presention
+        /// </summary>
         void getAllStations()
         {
             foreach (var item in bl.GetAllStations())
             {
                 PO.Station station = new PO.Station();
                 item.DeepCopyTo(station);
-                //item.lines.DeepCopyTo(station.Lines);
                 foreach (var i in item.lines)
                 {
                     PO.LineStation ls = new PO.LineStation();
@@ -79,12 +79,12 @@ namespace PLGUI
         string userName, password;
         ObservableCollection<BO.LineTiming> linesTiming = new ObservableCollection<BO.LineTiming>();
         ObservableCollection<PO.LineStation> board = new ObservableCollection<PO.LineStation>();
+        Stopwatch watch = new Stopwatch();
         public MainWindow()
         {
             this.Closed += MainWindow_Closed;
             getAllLines();
-            InitializeComponent();
-           // GetAllStations();           
+            InitializeComponent();         
             cbLineNum.ItemsSource = lines;            
             cbLineNum.DisplayMemberPath = "LineNumber";
             cbLineNum.SelectedValuePath = "LineId";
@@ -102,11 +102,14 @@ namespace PLGUI
             Operatorworker.DoWork += Operatorworker_DoWork;
             Operatorworker.ProgressChanged += Operatorworker_ProgressChanged;
             Operatorworker.WorkerReportsProgress = true;
-            Operatorworker.WorkerSupportsCancellation = true;
-
-            
+            Operatorworker.WorkerSupportsCancellation = true;            
         }
 
+        /// <summary>
+        /// func to close all the threads when  you close the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             Environment.Exit(Environment.ExitCode);
@@ -116,11 +119,8 @@ namespace PLGUI
         void RefreshAllLinesComboBox()
         {
             cbLineNum.ItemsSource = lines;
-            // lines = (ObservableCollection<BusLine>)bl.GetAllBusLines();
-            // lines = bl.GetAllBusLines().ToList(); //ObserListOfStudents;
         }
-
-
+        //when you selscct specific line show all the line preaention
         private void cbLineNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             line = cbLineNum.SelectedItem as PO.BusLine;
@@ -130,10 +130,9 @@ namespace PLGUI
                 b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
                 lineDataGrid.DataContext = line.Stations;
-
             }
         }
-
+        //open window to enter the new details of the station to update
         private void btUpdateStation_Click(object sender, RoutedEventArgs e)
         {
             var v = sender as Button;
@@ -143,7 +142,6 @@ namespace PLGUI
             {
                 pair.StationId1 = station.StationId;
                 pair.StationId2 = line.Stations[station.NumInLine].StationId;
-                //updateStation up = new updateStation(pair, station.NumInLine - 2);
                 updateStation up = new updateStation(pair);
                 up.ShowDialog();
 
@@ -152,14 +150,6 @@ namespace PLGUI
                 BO.Line b = new BO.Line();
                 b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
-                //getAllLines();
-
-                //foreach(var l in lines)
-                //{
-                //    if
-                //}
-
-
                 DataGrid d = lineDataGrid;
                 d.DataContext = line.Stations;
             }
@@ -171,7 +161,6 @@ namespace PLGUI
             var v = sender as Button;
             PO.StationLine station = v.DataContext as PO.StationLine;
 
-            //MessageBox.Show(station.StationName);
             MessageBoxResult res = MessageBox.Show("Delete selected Station?", "Verification", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.No)
                 return;
@@ -179,7 +168,6 @@ namespace PLGUI
             if (line != null && station != null)
             {
                 BO.AdjacentStations pair = new BO.AdjacentStations();
-                //BO.StationLine stationLine = new BO.StationLine();
                 try
                 {
                     bl.DeleteStationLine(line.LineId, station.StationId);
@@ -202,7 +190,6 @@ namespace PLGUI
                     { }
                 }
             }
-
             //update the presentation
             BO.Line lineBO = bl.GetBusLine(line.LineId);
             lineBO.DeepCopyTo(line);
@@ -247,7 +234,6 @@ namespace PLGUI
 
         private void btAddStation_Click(object sender, RoutedEventArgs e)
         {
-
             DataGrid d = new DataGrid();
             d = lineDataGrid;
             AddStationToLine add = new AddStationToLine(bl, line, d);
@@ -258,9 +244,7 @@ namespace PLGUI
                 b = bl.GetBusLine(line.LineId);
                 b.DeepCopyTo(line);
                 lineDataGrid.DataContext = line.Stations;
-
             }
-
         }
 
         private void cbLineNum_Scroll(object sender, ScrollEventArgs e)
@@ -268,6 +252,7 @@ namespace PLGUI
             RefreshAllLinesComboBox();
         }
         #endregion
+
         #region stations
         private void stationsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -373,6 +358,7 @@ namespace PLGUI
 
         #endregion
         #endregion
+
         #region user
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -481,7 +467,6 @@ namespace PLGUI
                 return;
             }
 
-            //string str = "Start";
             if ((string)bsimulator.Content != "Stop")
             {
                 bsimulator.Content = "Stop";
@@ -520,6 +505,7 @@ namespace PLGUI
             int progress = e.ProgressPercentage;
             time = new TimeSpan(0, 0, progress);
             tpTime.SelectedTime = new DateTime((long)(time.TotalSeconds * 10000000));
+            //loop to check every 5 seconds if the last line
             TimeSpan timePast = new TimeSpan(0, 0, 5);
             if (watch.ElapsedMilliseconds > timePast.TotalMilliseconds)
                 tblast.Text = "";
@@ -531,6 +517,11 @@ namespace PLGUI
             while (!Simulatorworker.CancellationPending)
                 Thread.Sleep(1000);
         }
+        /// <summary>
+        /// the func that sent to the observ
+        /// that update the watch in the presention
+        /// </summary>
+        /// <param name="a"></param>
         void GetTime(TimeSpan a)
         {
             if (a != null)
@@ -541,8 +532,6 @@ namespace PLGUI
         
         private void Operatorworker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //if(boarsSt !=null)
-            //dgBoard.ItemsSource = boarsSt.Lines;
             BO.LineTiming timing = (BO.LineTiming)e.UserState;
             BO.LineTiming temp = null;
             if (linesTiming != null)
@@ -587,11 +576,6 @@ namespace PLGUI
                 Thread.Sleep(1000);
         }
 
-        private void lvPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void cbstations_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {         
                 PO.Station st = cbstations.SelectedItem as PO.Station;
@@ -599,13 +583,13 @@ namespace PLGUI
                 lvPanel.DataContext = linesTiming;
             if (st != null)
             {
-                bl.SetStationPanel(st.StationId, UpdateLineTiming);
+                bl.SetStationPanel(st.StationId, UpdateLineTiming);//set the panel with the selected station
                 foreach (var l in st.Lines)
                 {
                     BO.Station name = bl.GetStation(l.LastStationId);
                     l.LastStationName = name.StationName;
                 }
-                dgBoard.ItemsSource = st.Lines;
+                dgBoard.ItemsSource = st.Lines;//set the board of the station
             }
             else
             {

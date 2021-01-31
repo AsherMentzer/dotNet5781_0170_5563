@@ -102,8 +102,14 @@ namespace BL
         //    throw new NotImplementedException();
         //}
         //#endregion
+
         #region Bus Line
-        TimeSpan getTime(DO.StationLine d)
+        /// <summary>
+        /// private func to get the average travel time to next station in line
+        /// </summary>
+        /// <param name="d">the current station</param>
+        /// <returns>TimeSpan</returns>
+        private TimeSpan getTime(DO.StationLine d)
         {
             DO.StationLine s;
             try
@@ -112,7 +118,7 @@ namespace BL
             }
             catch (DO.BadStatioLinenIdException)
             {
-                return new TimeSpan();
+                return new TimeSpan();/////////////-----------
             }
             if (s != null)
             {
@@ -121,7 +127,7 @@ namespace BL
                 {
                     p = dl.GetPair(d.StationId, s.StationId);
                 }
-                catch (DO.BadPairIdException ex)
+                catch (DO.BadPairIdException)
                 {
                     throw new BO.BadPairIdException(d.StationId, s.StationId, "no pair enter details");
                 }
@@ -132,7 +138,12 @@ namespace BL
             }
             else return new TimeSpan();
         }
-        double getDistance(DO.StationLine d)
+        /// <summary>
+        /// private func to get the distance to next station in line
+        /// </summary>
+        /// <param name="d">the current station</param>
+        /// <returns>double</returns>
+        private double getDistance(DO.StationLine d)
         {
             DO.StationLine s;
             try
@@ -150,7 +161,7 @@ namespace BL
                 {
                     p = dl.GetPair(d.StationId, s.StationId);
                 }
-                catch (DO.BadPairIdException ex)
+                catch (DO.BadPairIdException)
                 {
                     throw new BO.BadPairIdException(d.StationId, s.StationId, "no pair enter details");
                 }
@@ -160,7 +171,12 @@ namespace BL
             }
             else return 0;
         }
-        string getName(int id)
+        /// <summary>
+        /// private func to get the name of the station in line
+        /// </summary>
+        /// <param name="id">the id of the station</param>
+        /// <returns>string</returns>
+        private string getName(int id)
         {
             DO.Station s=null;
             try
@@ -175,10 +191,16 @@ namespace BL
                 return s.StationName;
             return null;
         }
+        /// <summary>
+        /// func that get DO.BusLine and creat BO.BusLine with all the details that needed
+        /// </summary>
+        /// <param name="line">the DO.BusLine</param>
+        /// <returns>BO.BusLine</returns>
         BO.Line BusLineDoBoADapter(DO.Line line)
         {
             BO.Line bl = new BO.Line();
             line.CopyPropertiesTo(bl);
+            //get all the stations line of this line to add to BO.BusLine
             bl.Stations = from sl in dl.GetAllStationsLineBy(sl => sl.LineId == line.LineId)
                           let station = new BO.StationLine()
                           {
@@ -189,13 +211,19 @@ namespace BL
                               AverageTravleTime = getTime(sl),
                               Distance = getDistance(sl),
                           }
-
                           orderby station.NumInLine
                           select station;
 
             return bl;
         }
-
+        /// <summary>
+        /// func that get all the details of the line and create new line
+        /// </summary>
+        /// <param name="LineNum">the line number</param>
+        /// <param name="fId">the first station id</param>
+        /// <param name="lId">the last station id</param>
+        /// <param name="myArea">the area of the line</param>
+        /// <returns>BO.Line</returns>
         BO.Line IBL.CreateBusLine(int LineNum, int fId, int lId, BO.Areas myArea)
         {
             try
@@ -214,13 +242,44 @@ namespace BL
             {
                 throw new BO.BadStationIdException(lId, "Station ID is illegal", ex);
             }
-            AddStationLine(Data.DataSource.linesId, fId, 1);
-            AddStationLine(Data.DataSource.linesId, lId, 2);
-            DO.Line line = new DO.Line { FirstStation = fId, LastStation = lId, LineNumber = LineNum, LineId = Data.DataSource.linesId++, area = (DO.Areas)myArea };
+            Random rand = new Random();
+            int id = rand.Next(10, 999);
+            bool flag=true;
+            while(flag)
+            {
+                DO.Line l = null;
+                try
+                {
+                    l = dl.GetBusLine(id);
+                }
+                catch (DO.BadBusLineIdException) { }
+                if (l == null)
+                    flag = false;
+                else
+                    id = rand.Next();
+            }
+            
+            DO.Line line = new DO.Line
+            {
+                FirstStation = fId, LastStation = lId,
+                LineNumber = LineNum,
+                LineId = id,
+                area = (DO.Areas)myArea
+            };
             BO.Line newLine = BusLineDoBoADapter(line);
             dl.AddBusLine(line);
+            try
+            {
+                AddStationLine(id, fId, 1);
+                AddStationLine(id, lId, 2);
+            }
+            catch(DO.BadStatioLinenIdException)
+            {
+                throw new BO.BadStationIdException(id);
+            }
             return newLine;
         }
+
         public IEnumerable<BO.Line> GetAllBusLines()
         {
             return from l in dl.GetAllBusLines()
@@ -234,7 +293,7 @@ namespace BL
             {
                 line = dl.GetBusLine(lineId);
             }
-            catch (DO.BadBusLicenceIdException ex)
+            catch (DO.BadBusLicenceIdException)
             {
                 throw new BO.BadBusLineIdException(lineId);
             }
@@ -249,11 +308,12 @@ namespace BL
             {
                 dl.AddBusLine(line);
             }
-            catch (DO.BadBusLicenceIdException e) 
+            catch (DO.BadBusLicenceIdException) 
             {
                 throw new BO.BadBusLineIdException(busLine.LineId);
             }
             DO.StationLine s = new DO.StationLine();
+            //need to add all the stations in the new line
             foreach (var sl in busLine.Stations)
             {
                 sl.CopyPropertiesTo(s);
@@ -261,11 +321,12 @@ namespace BL
                 {
                     dl.AddStationLine(s);
                 }
-                catch (DO.BadBusLicenceIdException e)
+                catch (DO.BadBusLicenceIdException)
                 {
                     throw new BO.BadStationIdException(s.StationId);
                 }
             }
+            //UpdateBusLine all the details for all the station line in the line
             for (int i = 1; i < busLine.Stations.Count(); ++i)
             {
                 BO.StationLine s1 = new BO.StationLine();
@@ -292,7 +353,6 @@ namespace BL
             dl.UpdateBusLine(line);
         }
 
-       
         public void DeleteBusLine(BO.Line line)
         {
             int id = line.LineId;
@@ -330,7 +390,7 @@ namespace BL
             {
                 p = dl.GetPair(id1, id2);
             }
-            catch (DO.BadPairIdException ex)
+            catch (DO.BadPairIdException)
             {
                 throw new BO.BadPairIdException(id1, id2);
             }
@@ -360,11 +420,18 @@ namespace BL
         }
 
         #endregion
+
         #region station
+        /// <summary>
+        /// func to get DO.station and make BO.station with all other details that needed
+        /// </summary>
+        /// <param name="stationDO">the DO.station</param>
+        /// <returns>the BO.station</returns>
         BO.Station StationDoBoADapter(DO.Station stationDO)
         {
             BO.Station stationBO = new BO.Station();
             stationDO.CopyPropertiesTo(stationBO);
+            //get all the lines that  stop in this station and add them to the BO.station
             stationBO.lines = from sl in dl.GetAllStationsLineBy(sl => sl.StationId == stationBO.StationId)
                               let line = new LineStation()
                               {
@@ -378,15 +445,12 @@ namespace BL
             return stationBO;
         }
 
-
-
         public IEnumerable<BO.Station> GetAllStations()
         {
             return from item in dl.GetAllStations()
                    select StationDoBoADapter(item);
         }
-
-       
+    
         public BO.Station GetStation(int id)
         {
             DO.Station station;
@@ -423,20 +487,18 @@ namespace BL
             {
                 dl.UpdateStation(s);
             }
-            catch (DO.BadStationIdException ex)
+            catch (DO.BadStationIdException)
             {
                 throw new BO.BadStationIdException(s.StationId);
             }
-        }
-
-       
+        }      
         #endregion
+
         #region station Line
         BO.StationLine StationLineDoBoADapter(DO.StationLine stDO)
         {
             BO.StationLine stBO = new BO.StationLine();
             stDO.CopyPropertiesTo(stBO);
-            //DO.StationLine s2 = dl.GetStationLine(stDO.LineId, stDO.NumInLine + 1);
             return stBO;
         }
         public IEnumerable<BO.StationLine> GetAllStationsLine()
@@ -446,7 +508,7 @@ namespace BL
         }
         public BO.StationLine GetStationLine(int LineId, int StationId)
         {
-            DO.StationLine st;/// = new BO.StationLine();
+            DO.StationLine st;
 
             try
             {
@@ -454,7 +516,7 @@ namespace BL
             }
             catch (DO.BadStatioLinenIdException)
             {
-                throw new BO.BadStationIdException(StationId);////////change the exception
+                throw new BO.BadStationIdException(StationId);
             }
             return StationLineDoBoADapter(st);
         }
@@ -586,7 +648,7 @@ namespace BL
                         AverageTravleTime = pair.AverageTravleTime,
                         StationName = stat.StationName
                     };
-                    UpdateStationLine(stationLine1);                  //(stationLine);
+                    UpdateStationLine(stationLine1);  
                 }
             }
             if (update1 && update2)
@@ -631,7 +693,7 @@ namespace BL
             {
                 dl.DeleteStationLine(lId, stId);
             }
-            catch (DO.BadBusLineIdException ex)
+            catch (DO.BadBusLineIdException)
             { }
             //in case is the last station in line so no need 
             //to get details for the next station only the prev station to 0
@@ -671,14 +733,9 @@ namespace BL
         #endregion
      
         #region simulator
-        //static Watch watch = Watch.Instance;
-        BackgroundWorker SimulatorWorker;
-        BackgroundWorker OperatorWorker;
-        BackgroundWorker tripWorker;
-        int id;
         public void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
         {
-            WatchSimulator.Instance.Observer += updateTime;
+            WatchSimulator.Instance.Observer += updateTime;//add the func to observ
             WatchSimulator.Instance.StartWatch(startTime, Rate);
         }
    
@@ -690,9 +747,10 @@ namespace BL
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
             TripsOperator.Instance.stationId = station;
-            TripsOperator.Instance.Observer += updateBus;
+            TripsOperator.Instance.Observer += updateBus;//add the func to observ
         }
         #endregion
+
         #region User
         public BO.User GetUser(string userName)
         {

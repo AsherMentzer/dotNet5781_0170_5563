@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 using BO;
 namespace BL
 {
-
+    /// <summary>
+    /// class that start to operate all the lines that we have 
+    /// and if we get station id show all the arriving lines 
+    /// and update the arrival time every second
+    /// </summary>
     public class TripsOperator
     {
         #region singelton
@@ -24,12 +28,13 @@ namespace BL
         private BO.LineTiming lineTiming;
         internal int stationId = -1;
         private event Action<BO.LineTiming> observer;
+        //add only 1 func to be ocserver
         internal event Action<BO.LineTiming> Observer
         {
             add { observer = value; }
             remove { observer -= value; }
         }
-
+       //get all the details that needed to operate all the lines
         List<BO.Line> lines = new List<Line>();
         List<BO.Station> LastStations = new List<Station>();
         List<List<StationLine>> allStations = new List<List<StationLine>>();
@@ -53,8 +58,6 @@ namespace BL
                     }
                     trips.Sort((x, y) => (int)(x.StartTime - y.StartTime).TotalMilliseconds);
 
-                    //BO.Line line = bl.GetBusLine(trip.LineId);
-                    //BO.Station st = bl.GetStation(line.LastStation);
                     lines = (from item in allTrips
                              select bl.GetBusLine(item.LineId)).ToList();
                             
@@ -105,8 +108,13 @@ namespace BL
                 }).Start();
 
         }
+        /// <summary>
+        /// operate one trip in  new thread
+        /// </summary>
+        /// <param name="trip">the trip to operate</param>
         private void tripThread(BO.LineTrip trip)
         {
+            //get all the details to Show in the panel
             BO.Line line = lines.FirstOrDefault(x=>x.LineId==trip.LineId);
             BO.Station st = LastStations.FirstOrDefault(x => x.StationId == line.LastStation);
             List<BO.StationLine> stations = allStations.FirstOrDefault(x => x.Any(y => y.LineId == trip.LineId));
@@ -123,11 +131,13 @@ namespace BL
             TimeSpan time = TimeSpan.Zero;
             int id=-1;
             int j;
+            //go for all the stations in the line
             for (int i = 0; i < stations.Count && !WatchSimulator.Instance.cancel; ++i)
             {
                 if (stations[i].StationId != stationId)
                 {
                     bool flag = false;
+                    //each  station in the line clculate the time to arrive to any station
                     for (j = i; j < stations.Count && !WatchSimulator.Instance.cancel; ++j)
                     {
                         if (stations[j].StationId == stationId)
@@ -139,6 +149,8 @@ namespace BL
                         }
                         time += stations[j].AverageTravleTime;
                     }
+                    //add random time to the travel from this station to the other by random number that
+                    //multiply the average travel time by random number between  0.9-2    
                     if (i != stations.Count - 1 && flag && stations[j].StationId == stationId)
                     {
                         double d = rand.NextDouble();
@@ -147,6 +159,7 @@ namespace BL
                         timing.ArriveTime += new TimeSpan(0, 0, (int)(stations[i].AverageTravleTime.TotalSeconds * d - stations[i].AverageTravleTime.TotalSeconds));
                         if (!WatchSimulator.Instance.cancel)
                             observer(timing);
+                        //update the time every second
                         for (int k = 0; k < temp && !WatchSimulator.Instance.cancel && id == stationId; k += 1000)
                         {
                             if (temp - k > 1000)

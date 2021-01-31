@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfAdjacentStations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <AdjacentStations>
     <AverageTravleTime>PT5M</AverageTravleTime>
@@ -485,5 +485,29 @@
     <StationId1>6248</StationId1>
     <StationId2>5666</StationId2>
     <Distance>1.1</Distance>
+  </AdjacentStations>
+  <AdjacentStations>
+    <StationId1>84</StationId1>
+    <StationId2>103</StationId2>
+    <Distance>2.5</Distance>
+    <AverageTravleTime>PT5M</AverageTravleTime>
+  </AdjacentStations>
+  <AdjacentStations>
+    <StationId1>103</StationId1>
+    <StationId2>317</StationId2>
+    <Distance>2.5</Distance>
+    <AverageTravleTime>PT5M</AverageTravleTime>
+  </AdjacentStations>
+  <AdjacentStations>
+    <StationId1>103</StationId1>
+    <StationId2>176</StationId2>
+    <Distance>2.5</Distance>
+    <AverageTravleTime>PT5M</AverageTravleTime>
+  </AdjacentStations>
+  <AdjacentStations>
+    <StationId1>84</StationId1>
+    <StationId2>277</StationId2>
+    <Distance>3.5</Distance>
+    <AverageTravleTime>PT5M</AverageTravleTime>
   </AdjacentStations>
 </ArrayOfAdjacentStations>

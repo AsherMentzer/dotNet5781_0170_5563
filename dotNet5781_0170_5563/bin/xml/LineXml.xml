@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Line>
     <LineId>1</LineId>
@@ -69,5 +69,19 @@
     <FirstStation>1002</FirstStation>
     <LastStation>3821</LastStation>
     <area>Jerusalem</area>
+  </Line>
+  <Line>
+    <LineId>11</LineId>
+    <LineNumber>100</LineNumber>
+    <FirstStation>84</FirstStation>
+    <LastStation>103</LastStation>
+    <area>0</area>
+  </Line>
+  <Line>
+    <LineId>11</LineId>
+    <LineNumber>100</LineNumber>
+    <FirstStation>103</FirstStation>
+    <LastStation>176</LastStation>
+    <area>0</area>
   </Line>
 </ArrayOfLine>

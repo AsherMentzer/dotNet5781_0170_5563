@@ -6,11 +6,10 @@
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="590" Width="960"
+        Title="MainWindow" Height="370" Width="300"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <!--<Setter Property="Background" Value="Turquoise"/>-->
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="BorderThickness" Value="0,0,1,2"/>
             <Setter Property="BorderBrush" Value="Black" />
@@ -24,8 +23,7 @@
     </Window.Resources>
     <Grid>
         <!--#region register-->
-
-        <Grid x:Name="enterGrid" Visibility="Hidden" Height="370" Width="300" Background="AliceBlue">
+        <Grid x:Name="enterGrid" Visibility="Visible" Height="370" Width="300" Background="AliceBlue">
             <StackPanel >
                 <Border Background="WhiteSmoke" Margin="10 20" CornerRadius="5">
                     <StackPanel Margin="25">
@@ -70,17 +68,9 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <!--<Grid x:Name="enterGrid" Visibility="Hidden">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="bUser" Content="User" Grid.Column="0" Click="bUser_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="120.2,246,113.6,190.4" Width="163" Height="74"/>
-            <Button x:Name="bAdmin" Content="Admin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Click="bAdmin_Click" Margin="120.2,246,113.6,190.4" Width="163" Height="74"/>
-        </Grid>-->
         <!--#endregion-->
         <!--#region Main-->
-        <Grid x:Name="mainGrid" Visibility="Visible">
+        <Grid x:Name="mainGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
@@ -108,7 +98,6 @@
                                       CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" MouseDoubleClick="stationsDataGrid_MouseDoubleClick" >
                                         <DataGrid.Resources>
                                             <Style TargetType="{x:Type DataGridColumnHeader}">
-                                                <!--<Setter Property="Background" Value="Turquoise"/>-->
                                                 <Setter Property="FontWeight" Value="SemiBold"/>
                                                 <Setter Property="BorderThickness" Value="0,0,1,2"/>
                                                 <Setter Property="BorderBrush" Value="Black" />
@@ -162,7 +151,6 @@
                                         <Button x:Name="bAdd" Click="bAdd_Click" Content="ADD" HorizontalAlignment="Left" Margin="588,14,0,0" VerticalAlignment="Top" Width="75" Height="49" RenderTransformOrigin="0.555,0.349"/>
                                         <Button x:Name="bCancel" Content="cancel" HorizontalAlignment="Left" Margin="588,81,0,0" VerticalAlignment="Top" Width="75" Click="bCancel_Click"/>
 
-
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -184,8 +172,6 @@
                   Grid.Row="0" Height="25" Margin="134,5,0,0" Width="123"
                   ItemsSource="{Binding}" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
                                       SelectionChanged="cbLineNum_SelectionChanged"/>
-
-
 
                                 <DataGrid x:Name="lineDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding }" Margin="10,35,0.4,61.2" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3">
                                     <DataGrid.Columns>
@@ -216,17 +202,15 @@
 
                                 <Button x:Name="btDeleteLine" Content="Delete Current Line" HorizontalAlignment="Left" Margin="461,165.4,0,0" VerticalAlignment="Top" Width="215" Height="30" Background="#FFC56853" Click="btDeleteLine_Click"  Grid.Row="2"/>
                                 <Button x:Name="btAddLine" Content="Add New Line" HorizontalAlignment="Left" Margin="294,165.4,0,0" VerticalAlignment="Top" Width="141" Height="34" Background="#FF6DB469" Grid.Row="2" Click="btAddLine_Click"  RenderTransformOrigin="0.504,3.529"/>
-
                                 <Button x:Name="btAddStation" Content="Add Station To Current Line" HorizontalAlignment="Left" Margin="10,167.6,0,0" VerticalAlignment="Top" Width="234" Height="28" Background="#FFD1DA16" Click="btAddStation_Click"  Grid.Row="2"/>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
                     <!--#endregion-->
                     <!--#region simulator-->
-
                     <TabItem x:Name="simulator" Header="simulator" Margin="0,145.6,-2,-219.6">
                         <TabItem.Content>
-                            <Grid x:Name="simulatorGrid" Visibility="Visible">
+                            <Grid x:Name="simulatorGrid" Visibility="Hidden">
                                 <ListView x:Name="dgBoard"  HorizontalAlignment="Left" Height="189" Margin="207,286,0,0" VerticalAlignment="Top" Width="383">
                                     <ListView.View>
                                         <GridView>
@@ -236,7 +220,8 @@
                                     </ListView.View>
                                 </ListView>
 
-                                <ListView x:Name="lvPanel" MaxHeight="230"  ItemsSource="{Binding}" HorizontalAlignment="Left" Height="256" Margin="207,-7,0,0" VerticalAlignment="Top" Width="587" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" >
+                                <ListView x:Name="lvPanel" MaxHeight="230"  ItemsSource="{Binding}" HorizontalAlignment="Left" Height="256" Margin="207,-7,0,0" 
+                                    VerticalAlignment="Top" Width="587" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" >
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn x:Name="lineNumber" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number" Width="140"/>
@@ -254,10 +239,6 @@
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
-
-
-
-
                     <!--#endregion-->
                 </TabControl.Items>
             </TabControl>

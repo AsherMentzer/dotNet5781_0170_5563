@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="AddLine" Height="450" Width="800">
+        Title="AddLine" Height="450" Width="300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -18,15 +18,15 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Content="enter line number:" Grid.Row="0" Grid.Column="0"/>
-        <TextBox x:Name="tbLineNumber" Grid.Row="0" Grid.Column="1" TextChanged="tbLineNumber_TextChanged"/>
-        <Label Content="enter first station id:" Grid.Row="1" Grid.Column="0"/>
+        <Label Content="enter line number:" Grid.Row="0" Grid.Column="0" Margin="0,41,0.2,43" Grid.RowSpan="2"/>
+        <TextBox x:Name="tbLineNumber" Grid.Row="0" TextChanged="tbLineNumber_TextChanged" Grid.ColumnSpan="2" Margin="147,41,-0.4,0"/>
+        <Label Content="enter first station id:" Grid.Row="1" Grid.Column="0" Margin="0,28,0.2,0"/>
         <ComboBox x:Name="cbFStationId" Grid.Row="1" Grid.Column="1" SelectionChanged="cbFStationId_SelectionChanged"/>
-        <Label Content="enter last station id:" Grid.Row="2" Grid.Column="0"/>
+        <Label Content="enter last station id:" Grid.Row="2" Grid.Column="0" Margin="0,28,0.2,0"/>
         <ComboBox x:Name="cbLStationId" Grid.Row="2" Grid.Column="1" SelectionChanged="cbLStationId_SelectionChanged"/>
-        <Label Content="enter the area:" Grid.Row="3" Grid.Column="0"/>
+        <Label Content="enter the area:" Grid.Row="3" Grid.Column="0" Height="56" Margin="0,0,0.2,0" VerticalAlignment="Bottom"/>
         <ComboBox x:Name="cbArea" Grid.Row="3" Grid.Column="1" SelectionChanged="cbArea_SelectionChanged"/>
         <Button x:Name="bAddLine" Content="Add Line" Click="bAddLine_Click" Grid.Column="1" Grid.Row="4"/>
     </Grid>
-   
+
 </Window>

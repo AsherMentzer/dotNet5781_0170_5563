@@ -456,10 +456,10 @@ namespace DL
                 throw new DO.BadStationIdException(id2, "Missing station ID");
 
             XElement ad = new XElement("AdjacentStations",
-                 new XElement("StationId1", ads.StationId1),
-                 new XElement("StationId2", ads.StationId2),
-                 new XElement("Distance", ads.Distance),
-               new XElement("AverageTravleTime", XmlConvert.ToString(ads.AverageTravleTime))
+                 new XElement("StationId1", id1),
+                 new XElement("StationId2", id2),
+                 new XElement("Distance", distance),
+               new XElement("AverageTravleTime", XmlConvert.ToString(time))
                );
 
             AdjacentStationsRootElem.Add(ad);

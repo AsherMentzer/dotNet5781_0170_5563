@@ -39,8 +39,7 @@ namespace PLGUI
         IBL bl;
         
         public ShowLines(int id, IBL _bl)
-        {
-           
+        {  
             InitializeComponent();          
             bl = _bl;
             station = bl.GetStation(id);
@@ -58,8 +57,6 @@ namespace PLGUI
             }
             lines = s.Lines;
             linesDataGrid.DataContext = s.Lines;
-        
-
         }
     }
 }

@@ -104,7 +104,6 @@
     <Compile Include="PO\Bus.cs" />
     <Compile Include="PO\BusLine.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
-    <Compile Include="MainWindow.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

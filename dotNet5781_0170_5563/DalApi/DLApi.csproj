@@ -55,7 +55,6 @@
     <Compile Include="DO\Tools.cs" />
     <Compile Include="DO\BusOnTrip.cs" />
     <Compile Include="DO\User.cs" />
-    <Compile Include="DO\Trip.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

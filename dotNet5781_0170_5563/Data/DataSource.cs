@@ -24,27 +24,9 @@ namespace Data
 
         static DataSource()
         {
-            string BusPath = @"BusXml.xml"; //XElement
-            string UserPath = @"UserXml.xml"; //XElement
-            string LinePath = @"LineXml.xml"; //XElement
-            string StationPath = @"StationXml.xml"; //XElement
-            //string UserPath = @"UserXml.xml"; //XElement
-            //string BusOnTripPath = @"BusOnTripXml.xml"; //XElement
-            string AdjacentStationsPath = @"AdjacentStationsXml.xml"; //XElement
-                                                                      //string LineTripPath = @"LineTripXml.xml"; //XElement
-                                                                      // string TripPath = @"TripXml.xml"; //XElement
-            string StationLinePath = @"LineStationXml.xml"; //XElement 
-            string SerialNumbers = @"SerialNumbersXml.xml";
-            string LineTripPath = @"LineTripXml.xml";
             InitialAllList();
-            XMLTools.SaveListToXMLSerializer<Bus>(buses, BusPath);
-            XMLTools.SaveListToXMLSerializer<User>(users, UserPath);
-            XMLTools.SaveListToXMLSerializer<Station>(stations, StationPath);
-            XMLTools.SaveListToXMLSerializer<Line>(lines, LinePath);
-            XMLTools.SaveListToXMLSerializer<StationLine>(stationsLine, StationLinePath);
-            XMLTools.SaveListToXMLSerializer<AdjacentStations>(pairs, AdjacentStationsPath);
-            XMLTools.SaveListToXMLSerializer<int>(serialNumbers, SerialNumbers);
-            XMLTools.SaveListToXMLSerializer<LineTrip>(linesTrip, LineTripPath);
+
+           
         }
         static void InitialAllList()
         {
@@ -563,3 +545,24 @@ namespace Data
     }
 }
 
+//string BusPath = @"BusXml.xml"; //XElement
+//string UserPath = @"UserXml.xml"; //XElement
+//string LinePath = @"LineXml.xml"; //XElement
+//string StationPath = @"StationXml.xml"; //XElement
+//string UserPath = @"UserXml.xml"; //XElement
+
+//string AdjacentStationsPath = @"AdjacentStationsXml.xml"; //XElement
+//string LineTripPath = @"LineTripXml.xml"; //XElement
+//                                                          // string TripPath = @"TripXml.xml"; //XElement
+//string StationLinePath = @"LineStationXml.xml"; //XElement 
+//string SerialNumbers = @"SerialNumbersXml.xml";
+//string LineTripPath = @"LineTripXml.xml";
+//
+//XMLTools.SaveListToXMLSerializer<Bus>(buses, BusPath);
+//XMLTools.SaveListToXMLSerializer<User>(users, UserPath);
+//XMLTools.SaveListToXMLSerializer<Station>(stations, StationPath);
+//XMLTools.SaveListToXMLSerializer<Line>(lines, LinePath);
+//XMLTools.SaveListToXMLSerializer<StationLine>(stationsLine, StationLinePath);
+//XMLTools.SaveListToXMLSerializer<AdjacentStations>(pairs, AdjacentStationsPath);
+//XMLTools.SaveListToXMLSerializer<int>(serialNumbers, SerialNumbers);
+//XMLTools.SaveListToXMLSerializer<LineTrip>(linesTrip, LineTripPath);

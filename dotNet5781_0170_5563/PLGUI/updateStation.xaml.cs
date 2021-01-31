@@ -25,8 +25,6 @@ namespace PLGUI
         BO.AdjacentStations update;
         public updateStation(BO.AdjacentStations p)
         {
-            //index = _index;
-           // dis = a;time = b;
             update = p;
             InitializeComponent();
         }

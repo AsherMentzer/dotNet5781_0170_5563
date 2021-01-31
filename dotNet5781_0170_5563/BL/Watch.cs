@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace BL
 {
+    /// <summary>
+    /// class that create watch to update the presention time by the selected rate
+    /// </summary>
     public class WatchSimulator
     {
         #region singelton
@@ -31,6 +34,9 @@ namespace BL
         internal TimeSpan startTime;
         private Stopwatch stopwatch = new Stopwatch();
         private event Action<TimeSpan> observer = null;
+        /// <summary>
+        /// only 1 func can register to be observer
+        /// </summary>
         internal event Action<TimeSpan> Observer
         {
             add { observer = value; }
@@ -45,6 +51,8 @@ namespace BL
             stopwatch.Restart();
             new Thread(() =>
             {
+                //update the time in the pl overy 1/10  second by the observ func
+                //until the user will cancel the simulator
                 while (!cancel)
                 {
                     var watch = new Watch(startTime + new TimeSpan(stopwatch.ElapsedTicks * rate));

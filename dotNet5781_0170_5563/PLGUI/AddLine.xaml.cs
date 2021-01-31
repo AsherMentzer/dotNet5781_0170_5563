@@ -51,24 +51,33 @@ namespace PLGUI
             {
                pair= bl.GetPair(fId, lId);
             }
-            catch (BO.BadPairIdException ex)
+            catch (BO.BadPairIdException)
             {
-               
-                //line.DeepCopyTo(busLine);
-                //updateStation up = new updateStation(pair, 0);
                 updateStation up = new updateStation(pair);
                 up.ShowDialog();
                 bl.AddPair(fId, lId, pair.Distance, pair.AverageTravleTime);
             }
             try
             {
+                //BO.Line newLine = new BO.Line()
+                //{
+                //    area = myArea,
+                //    FirstStation = fId,
+                //    LastStation = lId,
+                //    LineNumber = num
+                //};
+                //bl.AddStationLine()
+                //bl.AddBusLine(newLine);
                 line=bl.CreateBusLine(num, fId, lId, myArea);
             }
-            catch(BO.BadStationIdException ex)
+            catch(BO.BadBusLineIdException ex)
             {
                 MessageBox.Show(ex.Message);
             }
-           
+           catch(BO.BadStationIdException)
+            {
+                MessageBox.Show("faild");
+            }
             if (line.FirstStation>0)
             {
                 PO.BusLine l = new PO.BusLine();
@@ -78,20 +87,6 @@ namespace PLGUI
             this.Close();
            
         }
-
-        //private void tbArea_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    var v = sender as TextBox;
-        //    int str = int.Parse(v.Text);
-        //    myArea = (BO.Areas)str;
-        //}
-
-        //private void tbLastStation_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    var v = sender as TextBox;
-        //    int.TryParse(v.Text, out lId);
-        //}
-
         private void cbFStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Station s= cbFStationId.SelectedItem as BO.Station;
@@ -108,13 +103,6 @@ namespace PLGUI
         {
             BO.Areas area = (BO.Areas)cbArea.SelectedItem;
         }
-
-        //private void tbFirstStation_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    var v = sender as TextBox;
-        //    int.TryParse(v.Text, out fId);
-        //}
-
         private void tbLineNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             var v = sender as TextBox;
