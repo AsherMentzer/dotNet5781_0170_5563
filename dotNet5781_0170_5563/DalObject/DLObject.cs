@@ -145,6 +145,8 @@ namespace DL
             }
             else
                 throw new BadBusLineIdException(lineId, $"bad Bus Line Id: {lineId}");
+
+            
         }
         #endregion
 
@@ -164,7 +166,7 @@ namespace DL
 
         public LineTrip GetLineTrip(int id, TimeSpan time)
         {
-            LineTrip line = DataSource.linesTrip.Find(l => l.LineId == id);
+            LineTrip line = DataSource.linesTrip.Find(l => l.LineId == id && l.StartTime == time);
 
             if (line != null)
                 return line.Clone();
@@ -174,14 +176,14 @@ namespace DL
 
         public void AddLineTrip(LineTrip lineTrip)
         {
-            if (DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineTrip.LineId) != null)
+            if (DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineTrip.LineId && l.StartTime==lineTrip.StartTime) != null)
                 throw new BadLineTripException(lineTrip.LineId,lineTrip.StartTime ,"Duplicate  Line exist number");
             DataSource.linesTrip.Add(lineTrip.Clone());
         }
 
         public void UpdateLineTrip(LineTrip lineTrip)
         {
-            LineTrip line = DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineTrip.LineId);
+            LineTrip line = DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineTrip.LineId && l.StartTime == lineTrip.StartTime);
             if (line != null)
             {
                 DataSource.linesTrip.Remove(line);
@@ -198,7 +200,7 @@ namespace DL
 
         public void DeleteLineTrip(int lineId, TimeSpan time)
         {
-            LineTrip line = DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineId);
+            LineTrip line = DataSource.linesTrip.FirstOrDefault(l => l.LineId == lineId && l.StartTime == time);
             if (line != null)
             {
                 DataSource.linesTrip.Remove(line);

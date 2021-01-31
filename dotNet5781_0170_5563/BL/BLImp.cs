@@ -17,91 +17,91 @@ namespace BL
     {
         IDL dl = DLFactory.GetDL();
 
-        #region Bus
-        BO.Bus BusDoBoADapter(DO.Bus busDO)
-        {
-            BO.Bus busBO = new BO.Bus();
-            busDO.CopyPropertiesTo(busBO);
-            return busBO;
-        }
-        IEnumerable<BO.Bus> GetAllBuses()
-        {
-            return from item in dl.GetAllBuses()
-                   select BusDoBoADapter(item);
-        }
-        IEnumerable<BO.Bus> GetAllBusesBy(Predicate<BO.Bus> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        //#region Bus
+        //BO.Bus BusDoBoADapter(DO.Bus busDO)
+        //{
+        //    BO.Bus busBO = new BO.Bus();
+        //    busDO.CopyPropertiesTo(busBO);
+        //    return busBO;
+        //}
+        //IEnumerable<BO.Bus> GetAllBuses()
+        //{
+        //    return from item in dl.GetAllBuses()
+        //           select BusDoBoADapter(item);
+        //}
+        //IEnumerable<BO.Bus> GetAllBusesBy(Predicate<BO.Bus> predicate)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        BO.Bus GetBus(string licenseId)
-        {
-            DO.Bus busDO;
-            try
-            {
-                busDO = dl.GetBus(licenseId);
-            }
-            catch (DO.BadBusLicenceIdException ex)
-            {
-                return null;///////need to throw exception
-            }
-            return BusDoBoADapter(busDO);
-        }
+        //BO.Bus GetBus(string licenseId)
+        //{
+        //    DO.Bus busDO;
+        //    try
+        //    {
+        //        busDO = dl.GetBus(licenseId);
+        //    }
+        //    catch (DO.BadBusLicenceIdException ex)
+        //    {
+        //        return null;///////need to throw exception
+        //    }
+        //    return BusDoBoADapter(busDO);
+        //}
 
-        void AddBus(BO.Bus bus)
-        {
-            throw new NotImplementedException();
-        }
-        void UpdateBus(BO.Bus bus)
-        {
-            throw new NotImplementedException();
-        }
-        //method that knows to updt specific fields in bus
-        void UpdateBus(string licenceId, Action<BO.Bus> update)
-        {
-            throw new NotImplementedException();
-        }
-        void DeleteBus(string licenceId)
-        {
-            throw new NotImplementedException();
-        }
+        //void AddBus(BO.Bus bus)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //void UpdateBus(BO.Bus bus)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        ////method that knows to updt specific fields in bus
+        //void UpdateBus(string licenceId, Action<BO.Bus> update)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //void DeleteBus(string licenceId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        IEnumerable<BO.Bus> IBL.GetAllBuses()
-        {
-            return from item in dl.GetAllBuses()
-                   select BusDoBoADapter(item);
-        }
+        //IEnumerable<BO.Bus> IBL.GetAllBuses()
+        //{
+        //    return from item in dl.GetAllBuses()
+        //           select BusDoBoADapter(item);
+        //}
 
-        IEnumerable<BO.Bus> IBL.GetAllBusesBy(Predicate<BO.Bus> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        //IEnumerable<BO.Bus> IBL.GetAllBusesBy(Predicate<BO.Bus> predicate)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        BO.Bus IBL.GetBus(string licenseId)
-        {
-            throw new NotImplementedException();
-        }
+        //BO.Bus IBL.GetBus(string licenseId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        void IBL.AddBus(BO.Bus bus)
-        {
-            throw new NotImplementedException();
-        }
+        //void IBL.AddBus(BO.Bus bus)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        void IBL.UpdateBus(BO.Bus bus)
-        {
-            throw new NotImplementedException();
-        }
+        //void IBL.UpdateBus(BO.Bus bus)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        void IBL.UpdateBus(string licenceId, Action<BO.Bus> update)
-        {
-            throw new NotImplementedException();
-        }
+        //void IBL.UpdateBus(string licenceId, Action<BO.Bus> update)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        void IBL.DeleteBus(string licenceId)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
+        //void IBL.DeleteBus(string licenceId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //#endregion
         #region Bus Line
         TimeSpan getTime(DO.StationLine d)
         {
@@ -219,11 +219,6 @@ namespace BL
                    select BusLineDoBoADapter(l);
         }
 
-        public IEnumerable<BO.Line> GetAllBusLinesBy(Predicate<BO.Line> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public BO.Line GetBusLine(int lineId)
         {
             DO.Line line;
@@ -233,7 +228,7 @@ namespace BL
             }
             catch (DO.BadBusLicenceIdException ex)
             {
-                return null;///////need to throw exception
+                throw new BO.BadBusLineIdException(lineId);
             }
             return BusLineDoBoADapter(line);
         }
@@ -246,7 +241,10 @@ namespace BL
             {
                 dl.AddBusLine(line);
             }
-            catch (DO.BadBusLicenceIdException e) { }//-----------------------need to add exception
+            catch (DO.BadBusLicenceIdException e) 
+            {
+                throw new BO.BadBusLineIdException(busLine.LineId);
+            }
             DO.StationLine s = new DO.StationLine();
             foreach (var sl in busLine.Stations)
             {
@@ -255,7 +253,10 @@ namespace BL
                 {
                     dl.AddStationLine(s);
                 }
-                catch (DO.BadBusLicenceIdException e) { }//-----------------------need to add exception
+                catch (DO.BadBusLicenceIdException e)
+                {
+                    throw new BO.BadStationIdException(s.StationId);
+                }
             }
             for (int i = 1; i < busLine.Stations.Count(); ++i)
             {
@@ -281,14 +282,9 @@ namespace BL
             DO.Line line = new DO.Line();
             busLine.CopyPropertiesTo(line);
             dl.UpdateBusLine(line);
-            //throw new NotImplementedException();
         }
 
-        public void UpdateBusLine(int lineId, Action<BO.Line> update)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public void DeleteBusLine(BO.Line line)
         {
             int id = line.LineId;
@@ -309,55 +305,16 @@ namespace BL
                 dl.DeleteStationLine(s.LineId, s.StationId);
             }
 
+            IEnumerable<DO.LineTrip> trips = from t in dl.GetAllLinesTripBy(lt => lt.LineId == line.LineId)
+                                             select t;
+            foreach(var t in trips)
+            {
+                dl.DeleteLineTrip(t.LineId, t.StartTime);
+            }
         }
         #endregion
-        #region Line Exist
-        public IEnumerable<BO.LineTrip> GetAllExistsLines()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<BO.LineTrip> GetAllExistsLinesBy(Predicate<BO.LineTrip> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BO.LineTrip GetLineExist(int lineId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddLineExist(BO.LineTrip lineExist)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateLineExist(BO.LineTrip lineExist)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateLineExist(int lineId, Action<BO.Line> update)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteLineExist(int lineId)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
+        
         #region Pairs
-        public IEnumerable<BO.AdjacentStations> GetAllPairs()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<BO.AdjacentStations> GetAllPairsBy(Predicate<BO.Station> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public BO.AdjacentStations GetPair(int id1, int id2)
         {
             DO.AdjacentStations p;
@@ -394,15 +351,6 @@ namespace BL
             dl.UpdatePair(p);
         }
 
-        public void UpdatePair(int id, Action<BO.AdjacentStations> update)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeletePair(int id1, int id2)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
         #region station
         BO.Station StationDoBoADapter(DO.Station stationDO)
@@ -430,11 +378,7 @@ namespace BL
                    select StationDoBoADapter(item);
         }
 
-        public IEnumerable<BO.Station> GetAllStationsBy(Predicate<BO.Station> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public BO.Station GetStation(int id)
         {
             DO.Station station;
@@ -477,15 +421,7 @@ namespace BL
             }
         }
 
-        public void UpdateStation(int id, Action<BO.Station> update)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteStation(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
         #endregion
         #region station Line
         BO.StationLine StationLineDoBoADapter(DO.StationLine stDO)
@@ -500,12 +436,6 @@ namespace BL
             return from s in dl.GetAllStationsLine()
                    select StationLineDoBoADapter(s);
         }
-
-        public IEnumerable<BO.StationLine> GetAllStationsLineBy(Predicate<BO.StationLine> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public BO.StationLine GetStationLine(int LineId, int StationId)
         {
             DO.StationLine st;/// = new BO.StationLine();
@@ -667,11 +597,6 @@ namespace BL
             dl.UpdateStationLine(s);
         }
 
-        public void UpdateStationLine(int id, Action<BO.StationLine> update)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteStationLine(int lId, int stId)
         {
             BO.Line line = GetBusLine(lId);
@@ -736,46 +661,7 @@ namespace BL
             UpdateStationLine(newSt);
         }
         #endregion
-        #region travle Line
-        public IEnumerable<BO.BusOnTrip> GetAllTravelBuses()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<BO.BusOnTrip> GetAllTravelBusesLineBy(Predicate<BO.BusOnTrip> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BO.Station GetTravelBus(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddTravelBus(BO.BusOnTrip travelBus)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateTravelBus(BO.BusOnTrip travelBus)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateTravelBus(int id, Action<BO.BusOnTrip> update)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteTravelBus(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-        #endregion
+     
         #region simulator
         //static Watch watch = Watch.Instance;
         BackgroundWorker SimulatorWorker;

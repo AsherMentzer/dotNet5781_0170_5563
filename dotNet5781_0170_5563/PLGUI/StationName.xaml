@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PLGUI"
         mc:Ignorable="d"
-        Title="StationName" Height="150" Width="200">
+        Title="StationName" Height="161.658" Width="279.663">
     <Grid>
         <Label Content="enter the new station name" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbname" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="name_TextChanged" Margin="44,35,40.6,35.8" Width="109"/>
-        <Button x:Name="ok" Height="30" Content="ok" Click="ok_Click" VerticalAlignment="Bottom" Margin="137,0,-0.4,-0.2"/>
+        <TextBox x:Name="tbname" materialDesign:HintAssist.Hint="New Name" materialDesign:HintAssist.Foreground="Green"
+                materialDesign:TextFieldAssist.UnderlineBrush="Green" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="name_TextChanged" Margin="24,35,9.6,47"/>
+        <Button x:Name="ok" Height="30" Content="ok" Click="ok_Click" VerticalAlignment="Bottom" Margin="158,0,9.6,4" />
+        <Button x:Name="cancel" Height="30" Content="Cancel" Click="cancel_Click"  VerticalAlignment="Bottom" Margin="10,0,157.6,4"/>
+
     </Grid>
 </Window>

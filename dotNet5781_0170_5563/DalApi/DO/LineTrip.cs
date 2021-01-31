@@ -13,43 +13,45 @@ namespace DO
     /// class with only properties
     /// for defenition of line trip
     /// </summary>
+    //public class LineTrip
+    //{
+    //    public int Id { get; set; }
+    //    public int LineId { get; set; }
+    //    public TimeSpan StartTime { get; set; }
+    //}
+
+
+
+    //}
     public class LineTrip
     {
         public int Id { get; set; }
         public int LineId { get; set; }
-        public TimeSpan StartTime { get; set; }
+
+        private TimeSpan startTime;
+        private TimeSpan freqTime;
+        private TimeSpan endTime;
+
+        [XmlIgnore]
+        public TimeSpan StartTime { get { return startTime; } set { startTime = value; } }
+        
+        [XmlElement("StartTime", DataType = "duration")]
+        [DefaultValue("PT10M")]
+        public string Stime { get { return XmlConvert.ToString(startTime); } set { startTime = XmlConvert.ToTimeSpan(value); } }
+        
+        [XmlIgnore]
+        public TimeSpan Frequency { get { return freqTime; } set { freqTime = value; } }
+
+        [XmlElement("Frequency", DataType = "duration")]
+        [DefaultValue("PT10M")]
+        public string Freqtime { get { return XmlConvert.ToString(freqTime); } set { freqTime = XmlConvert.ToTimeSpan(value); } }
+
+        [XmlIgnore]
+        public TimeSpan EndTime { get { return endTime; } set { endTime = value; } }
+        [XmlElement("EndTime", DataType = "duration")]
+        [DefaultValue("PT10M")]
+
+        public string Etime { get { return XmlConvert.ToString(endTime); } set { endTime = XmlConvert.ToTimeSpan(value); } }
+
     }
-
-
-
-        //}
-        //public class LineTrip
-        //{
-        //    public int Id { get; set; }
-        //    public int LineId { get; set; }
-
-        //    private TimeSpan startTime;
-        //    //private TimeSpan freqTime;
-        //    //private TimeSpan endTime;
-
-        //    [XmlIgnore]
-        //    public TimeSpan StartTime { get { return startTime; } set { startTime = value; } }
-        //    [XmlElement("starttime", DataType  = "duration")]
-        //    [DefaultValue("pt10m")]
-        //    public string Stime { get { return XmlConvert.ToString(startTime); } set { startTime = XmlConvert.ToTimeSpan(value); } }
-
-        //    //[xmlignore]
-        //    //public timespan frequency { get { return freqtime; } set { freqtime = value; } }
-        //    //[xmlelement("frequency", datatype = "duration")]
-        //    //[defaultvalue("pt10m")]
-        //    //public string freqtime { get { return xmlconvert.tostring(freqtime); } set { freqtime = xmlconvert.totimespan(value); } }
-
-        //    //[xmlignore]
-        //    //public timespan endtime { get { return endtime; } set { endtime = value; } }
-        //    //[xmlelement("endtime", datatype = "duration")]
-        //    //[defaultvalue("pt10m")]
-
-        //    //public string etime { get { return xmlconvert.tostring(endtime); } set { endtime = xmlconvert.totimespan(value); } }
-
-        //}
-    }
+}

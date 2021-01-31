@@ -55,5 +55,10 @@ namespace PLGUI
             station.StationName = newName;
             this.Close();
         }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

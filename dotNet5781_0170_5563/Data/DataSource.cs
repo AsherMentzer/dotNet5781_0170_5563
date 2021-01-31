@@ -468,28 +468,94 @@ namespace Data
                 new LineTrip
                 {
                     LineId=1,
-                    StartTime=new TimeSpan(13,0,0)
+                    StartTime=new TimeSpan(13,0,0),
+                    Frequency=new TimeSpan(0,10,0),
+                    EndTime=new TimeSpan(18,0,0)
                 },
                 new LineTrip
                 {
                     LineId=1,
-                    StartTime=new TimeSpan(13,5,0)
+                   StartTime=new TimeSpan(7,0,0),
+                    Frequency=new TimeSpan(0,20,0),
+                    EndTime=new TimeSpan(12,30,0)
                 },
                 new LineTrip
                 {
                     LineId=1,
-                    StartTime=new TimeSpan(13,10,0)
+                    StartTime=new TimeSpan(18,20,0),
+                    Frequency=new TimeSpan(0,30,0),
+                    EndTime=new TimeSpan(23,0,0)
                 },
                 new LineTrip
                 {
                     LineId=2,
-                    StartTime=new TimeSpan(13,12,0)
+                     StartTime=new TimeSpan(13,4,0),
+                    Frequency=new TimeSpan(0,5,0),
+                    EndTime=new TimeSpan(18,0,0)
+                },
+                new LineTrip
+                {
+                    LineId=2,
+                     StartTime=new TimeSpan(6,4,0),
+                    Frequency=new TimeSpan(0,40,0),
+                    EndTime=new TimeSpan(12,50,0)
+                },
+                new LineTrip
+                {
+                    LineId=3,
+                     StartTime=new TimeSpan(5,45,0),
+                    Frequency=new TimeSpan(0,12,0),
+                    EndTime=new TimeSpan(11,50,0)
                 },
                 new LineTrip
                 {
                    LineId=3,
-                  StartTime=new TimeSpan(13,15,0)
-                 }
+                   StartTime=new TimeSpan(13,2,0),
+                    Frequency=new TimeSpan(0,5,0),
+                    EndTime=new TimeSpan(18,0,0)
+                 },
+                new LineTrip
+                {
+                   LineId=4,
+                   StartTime=new TimeSpan(13,2,0),
+                    Frequency=new TimeSpan(0,10,0),
+                    EndTime=new TimeSpan(18,0,0)
+                 },
+                new LineTrip
+                {
+                   LineId=5,
+                   StartTime=new TimeSpan(13,2,0),
+                    Frequency=new TimeSpan(0,10,0),
+                    EndTime=new TimeSpan(18,0,0)
+                 },
+                new LineTrip
+                {
+                   LineId=6,
+                   StartTime=new TimeSpan(13,2,0),
+                    Frequency=new TimeSpan(0,10,0),
+                    EndTime=new TimeSpan(18,0,0)
+                 },
+                new LineTrip
+                {
+                   LineId=7,
+                   StartTime=new TimeSpan(13,2,0),
+                    Frequency=new TimeSpan(0,10,0),
+                    EndTime=new TimeSpan(18,0,0)
+                 },
+                new LineTrip
+                {
+                   LineId=8,
+                   StartTime=new TimeSpan(13,2,0),
+                    Frequency=new TimeSpan(0,10,0),
+                    EndTime=new TimeSpan(18,0,0)
+                 },
+                new LineTrip
+                {
+                   LineId=9,
+                   StartTime=new TimeSpan(13,2,0),
+                    Frequency=new TimeSpan(0,10,0),
+                    EndTime=new TimeSpan(18,0,0)
+                 },
             };
             #endregion
 

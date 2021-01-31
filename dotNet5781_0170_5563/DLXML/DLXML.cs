@@ -35,43 +35,43 @@ namespace DL
 
         #endregion
 
-        //empty
-        #region Bus
-        public IEnumerable<Bus> GetAllBuses()
-        {
-            throw new NotImplementedException();
-        }
+        ////empty
+        //#region Bus
+        //public IEnumerable<Bus> GetAllBuses()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        //public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Bus GetBus(string licenseId)
-        {
-            throw new NotImplementedException();
-        }
+        //public Bus GetBus(string licenseId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void AddBus(Bus bus)
-        {
-            throw new NotImplementedException();
-        }
+        //public void AddBus(Bus bus)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void UpdateBus(Bus bus)
-        {
-            throw new NotImplementedException();
-        }
+        //public void UpdateBus(Bus bus)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void UpdateBus(string licenceId, Action<Bus> update)
-        {
-            throw new NotImplementedException();
-        }
+        //public void UpdateBus(string licenceId, Action<Bus> update)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void DeleteBus(string licenceId)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
+        //public void DeleteBus(string licenceId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //#endregion
         //full with linq to xml
         #region Line
         public IEnumerable<Line> GetAllBusLines()

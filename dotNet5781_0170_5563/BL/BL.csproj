@@ -63,8 +63,6 @@
     <Compile Include="BO\BusOnTrip.cs" />
     <Compile Include="BO\User.cs" />
     <Compile Include="TripsOperator.cs" />
-    <Compile Include="TripsOperatorObserver.cs" />
-    <Compile Include="WachObserver.cs" />
     <Compile Include="Watch.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +78,6 @@
       <Project>{c6d11688-985d-40a1-aa92-0e6a5adf4517}</Project>
       <Name>Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

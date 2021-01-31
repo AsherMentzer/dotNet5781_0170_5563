@@ -20,6 +20,18 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="Turquoise"/>
         </Style>
+        
+        <!--<Style x:Key="panel" TargetType="ListView">
+            <Setter Property="ListView.View">
+                <Setter.Value>
+                    <GridView>
+                        <GridViewColumn x:Name="lineNum" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number" Width="120"/>
+                        <GridViewColumn x:Name="lastStation" DisplayMemberBinding="{Binding LastStationName }" Header="Last station" Width="190"/>
+                    </GridView>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="Yellow"/>
+        </Style>-->
         <!--<Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             -->
@@ -234,25 +246,16 @@
                     <TabItem x:Name="simulator" Header="simulator" Margin="0,145.6,-2,-219.6">
                         <TabItem.Content>
                             <Grid>
-
-                                <!--<DataGrid x:Name="dgPanel" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="274" Margin="101,10,0,0" VerticalAlignment="Top" Width="579">-->
-                                <!--<DataGrid.Columns>
-                                        <DataGridTextColumn x:Name="lineNumber" Binding="{Binding LineNumber ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Line Number" Width="120"/>
-                                        <DataGridTextColumn x:Name="lastStationName" Binding="{Binding LastStationName ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Last station"  Width="190"/>
-                                        <DataGridTextColumn x:Name="arriveTime" Binding="{Binding ArriveTime ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Arrive Time" Width="sizeToHeader"/>
-                                    </DataGrid.Columns>-->
-
-                                <!--</DataGrid>-->
-
-                                <ListView x:Name="dgBoard" HorizontalAlignment="Left" Height="143" Margin="269,322,0,0" VerticalAlignment="Top" Width="266">
+                                <ListView x:Name="dgBoard"  HorizontalAlignment="Left" Height="189" Margin="207,286,0,0" VerticalAlignment="Top" Width="383">
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn x:Name="lineNum" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number" Width="120"/>
+                                            <GridViewColumn x:Name="lineNum" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number" Width="150"/>
                                             <GridViewColumn x:Name="lastStation" DisplayMemberBinding="{Binding LastStationName }" Header="Last station" Width="190"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-                                <ListView x:Name="lvPanel" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="243" Margin="158,54,0,0" VerticalAlignment="Top" Width="496" Background="Yellow">
+
+                                <ListView x:Name="lvPanel" MaxHeight="230"  ItemsSource="{Binding}" HorizontalAlignment="Left" Height="256" Margin="185,-7,0,0" VerticalAlignment="Top" Width="496" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" >
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn x:Name="lineNumber" DisplayMemberBinding="{Binding LineNumber}" Header="Line Number"/>
@@ -261,9 +264,13 @@
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
+                                <Border BorderThickness="2" BorderBrush="Black" Margin="274,249,292.4,180.2" Background="Transparent">
+                                    <TextBlock x:Name="tblast" TextWrapping="Wrap" Text="{Binding}" Margin="10,0,0,0"/>
+                                </Border>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
+
 
 
                     <!--#endregion-->

@@ -15,18 +15,27 @@ namespace DLAPI
     // Delete - delete an instance
     public interface IDL
     {
-        #region Bus
-        IEnumerable<Bus> GetAllBuses();
-        IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate);
-        Bus GetBus(string licenseId);
-        void AddBus(Bus bus);
-        void UpdateBus(Bus bus);
-        void UpdateBus(string licenceId, Action<Bus> update); //method that knows to updt specific fields in bus
-        void DeleteBus(string licenceId);
-        #endregion
+        //#region Bus
+        //IEnumerable<Bus> GetAllBuses();
+        //IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate);
+        //Bus GetBus(string licenseId);
+        //void AddBus(Bus bus);
+        //void UpdateBus(Bus bus);
+        //void UpdateBus(string licenceId, Action<Bus> update); //method that knows to updt specific fields in bus
+        //void DeleteBus(string licenceId);
+        //#endregion
 
         #region Line
+        /// <summary>
+        /// func to get all the lines from the data bale
+        /// </summary>
+        /// <returns>IEnumerable<Line></returns>
         IEnumerable<Line> GetAllBusLines();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         IEnumerable<Line> GetAllBusLinesBy(Predicate<Line> predicate);
         Line GetBusLine(int lineId);
         void AddBusLine(Line busLine);

@@ -26,7 +26,7 @@ namespace BL
         internal volatile bool cancel;
         private int rate;
         private TimeSpan curTime;
-        internal TimeSpan CurTime{ get { curTime = new TimeSpan(stopwatch.ElapsedTicks)+startTime;return curTime; } }
+        internal TimeSpan CurTime { get { curTime = new TimeSpan(stopwatch.ElapsedTicks) + startTime; return curTime; } }
         internal int Rate { get => rate; private set => rate = value; }
         internal TimeSpan startTime;
         private Stopwatch stopwatch = new Stopwatch();
@@ -57,51 +57,11 @@ namespace BL
 
 
     }
-
-
-
-
-
-
-
-
-      //  prev version
-    //    private event EventHandler timeChange;
-    //    public event EventHandler TimeChange
-    //    {
-    //        add { timeChange = value; }
-    //        remove { timeChange -= value; }
-    //    }
-    //    protected void OnTimeChanged(TimeChangedEventArgs args)
-    //    {
-    //        if (timeChange != null)
-    //        {
-    //            timeChange(this, args);
-    //        }
-    //    }
-
-    //    public TimeSpan Time
-    //    {
-    //        get { return time; }
-
-    //        set
-    //        {
-    //            TimeChangedEventArgs args = new TimeChangedEventArgs(time, value);
-    //            time = value;
-    //            OnTimeChanged(args);
-    //        }
-    //    }
-    //}
-
-    //public class TimeChangedEventArgs : EventArgs
-    //{
-    //    public readonly TimeSpan Oldtime, Newtime;
-
-    //    public TimeChangedEventArgs(TimeSpan oldTemp, TimeSpan newTemp)
-    //    {
-    //        Oldtime = oldTemp;
-    //        Newtime = newTemp;
-    //    }
-    //}
 }
 
+
+
+
+
+
+ 
